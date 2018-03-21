@@ -2,8 +2,8 @@ library(dplyr)
 library(ggplot2)
 library(lubridate)
 
-vids <- read.csv("data/videos.csv")
-IDlist <- read.csv("data/repID.csv")
+vids <- read.csv("Data/Visitation/videos.csv")
+IDlist <- read.csv("Data/Visitation/repID.csv")
 
 str(vids)
 
@@ -76,7 +76,6 @@ mean <- flr %>% group_by(uniID) %>% summarise(mean.visit.length = mean(dec.total
 
 all.data <- right_join(mean, all.data, by = "uniID")
 
-all.data <- mutate(all.data, mean.fl.visits.per.hour = mean.fl.visits.per.visit/dec.Length, mean.un.visits.per.hour = mean.un.visits.per.visit/dec.Length)
 
 write.csv(all.data, "byrep_cleaned.csv")
 write.csv(flr, "byobs_cleaned.csv")
