@@ -29,8 +29,10 @@ vids$uniID <- gsub('\\s+', "", vids$uniID)
 
 #subset flower visits where insect flies on
 flr <- filter(vids, flowers.visits != 0 & flies.on == "Y") 
+#flr <- filter(vids, flowers.visits != 0) 
 summary(flr)
 str(flr)
+
 #flr$unique.fl.visited <- as.numeric(flr$unique.fl.visited)
 flr$pos.total.time <- as.POSIXct(strptime(flr$total.time, "%H:%M:%S"))
 flr$dec.total.time <- (hour(flr$pos.total.time) * 3600 + minute(flr$pos.total.time) * 60 + second(flr$pos.total.time)) / 3600
@@ -66,6 +68,7 @@ all.data <- IDlist %>% dplyr::select(Length, uniID) %>% right_join(all.data,., b
 
 #join covariates
 cov <- read.csv("Data/video/cov.csv")
+str(cov)
 cov$uniID <- paste(cov$Cam, cov$Date)
 cov$uniID <- gsub('\\s+', "", cov$uniID)
 all.data <- right_join(cov, all.data, by = "uniID")
@@ -89,8 +92,23 @@ weather <- read.csv("Data/videoweather.csv")
 weather.av <- weather %>% group_by(., Date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
 all.data <- right_join(weather.av, all.data, by = "Date")
 
+#want to test out standardizing by visits/flower/hr
+fov <- select(flr, uniID, flower.fov)
+fov <- distinct(fov)
+fov <- fov[-c(191,187),] #get rid of weird bit
+all.data <- right_join(fov, all.data, by = "uniID")
+
+#calculate per flower/per hour
+
+all.data <- mutate(all.data, visits.flower.hr = total.visits/flower.fov/dec.Length)
+all.data <- mutate(all.data, flowers.flower.hr = total.flowers/flower.fov/dec.Length)
+#replace NA with zeros
+all.data$visits.flower.hr[is.na(all.data$visits.flower.hr)] <- 0
+all.data$flowers.flower.hr[is.na(all.data$flowers.flower.hr)] <- 0
+
 
 write.csv(all.data, "byrep_cleaned.csv")
+#write.csv(all.data, "byrep_cleaned_all.csv")
 write.csv(flr, "byobs_cleaned.csv")
 
 #I also want a dataframe grouped by rtu: Bees, syrphids, bombyliids, leps and others.
@@ -147,5 +165,10 @@ all.rtu <- mutate(all.rtu, visits.per.hour = total.visits/dec.Length)
 all.rtu <- mutate(all.rtu, flowers.per.hour = total.flowers/dec.Length)
 
 all.rtu <- dplyr::select(all.rtu, -SecondaryID, -Cam)
+
+
+
+
+
 
 write.csv(all.rtu, "rtu_by_rep.csv")
