@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527728890368.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "82C4E60C",
+    "lastKnownWriteTime" : 1523985312,
+    "last_content_update" : 1523985312,
+    "path" : "F:/School/Chapter 2/larrea.facilitation/Scripts/summarystats.R",
+    "project_path" : "Scripts/summarystats.R",
+    "properties" : {
+        "cursorPosition" : "7,19",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,7 +1,8 @@
 library(dplyr)
 library(ggplot2)
 library(MASS)
-library(lsmeans)
+library(lme4)
+
 byobs <- read.csv("byobs_cleaned.csv")
 byrep <- read.csv("byrep_cleaned.csv")
 str(byrep)
