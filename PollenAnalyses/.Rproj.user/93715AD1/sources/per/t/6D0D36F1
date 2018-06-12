@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517450836911.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "852125623",
+    "id" : "6D0D36F1",
+    "lastKnownWriteTime" : 1517467892,
+    "last_content_update" : 1517467891839,
+    "path" : "F:/School/Pollen Project/PollenAnalyses/pollensizes.R",
+    "project_path" : "pollensizes.R",
+    "properties" : {
+        "cursorPosition" : "10,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
