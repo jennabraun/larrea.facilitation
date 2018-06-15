@@ -1,0 +1,13 @@
+library(ggplot2)
+library(dplyr)
+counts <- read.csv("Data/Pollen_Corrected.csv")
+counts$X <- as.numeric(as.character(counts$X))   
+counts <- counts %>% replace(is.na(.), 0)
+counts <- counts %>% mutate(all.con = rowSums(.[5:18]))
+counts <- select(counts, Rep:Het.Grains, all.con)                
+counts.ag <- counts %>% group_by(Rep, Slide) %>% summarise(Het = sum(Het.Grains), Con = sum(all.con))             
+counts.ag <- counts.ag %>% mutate(., microsite = ifelse(substr(Rep,start = 1, stop = 1) == "S", "shrub", "open"))
+
+ggplot(data =counts.ag,(aes(microsite, Con))) + geom_boxplot()
+ggplot(data =counts.ag,(aes(microsite, Het))) + geom_boxplot()
+t.test(counts.ag$Con ~ counts.ag$microsite)
