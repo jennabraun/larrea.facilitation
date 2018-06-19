@@ -29,6 +29,7 @@ vids <- read.csv("Clean Data/videos_clean.csv")
 IDlist <- read.csv("Clean Data/video_repID.csv")
 
 
+
 str(vids)
 #clear up incosistencies in capitalization and escape characters
 vids$Rep <- gsub('\\s+', "", vids$Rep)
@@ -193,10 +194,90 @@ all.rtu <- dplyr::select(all.rtu, -SecondaryID, -Cam)
 write.csv(all.rtu, "rtu_by_rep.csv")
 ```
 
+### Pan traps
+```{r}
+#data is in long format
+#aggregrate counts by rep
 
+long <- read.csv("Clean Data/pantraps_id.csv")
+#sp.key <- read.csv("species_key.csv")
+long$Microsite <- gsub(" ","", long$Microsite)
+long$uniID <- paste(long$Date, long$PlantID, long$Microsite)
+#long <- inner_join(long, sp.key, by = "highest.rtu")
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+#need to collapse & add up the Quantity
+long.fil <- dplyr::select(long, uniID, highest.rtu, Quantity)
+long.ag <- long.fil %>% group_by(uniID, highest.rtu) %>% summarise(Quantity = sum(Quantity)) 
+
+write.csv(long.ag, "pantraps_long.csv")
+
+wide <- long.ag %>% spread(highest.rtu, Quantity)
+#wide$unknown <- wide$"?"
+#wide <- dplyr::select(wide, -wide$"?")
+wide[is.na(wide)] <- 0
+write.csv(wide, "pantraps_wide.csv")
+```
 ```
 
+
+
+
+
+
+# Data visualization
+Exploratory data analysis
+
+### Video data viz
+
+```{r video data viz}
+byrep <- read.csv("byrep_cleaned.csv")
+byobs <- read.csv("byobs_cleaned.csv")
+byrtu <- read.csv("rtu_by_rep.csv")
+str(byrep)
+
+
+shapiro.test(byrep$visits.per.hour)
+ggplot(data = byrep, aes(visits.per.hour)) + geom_freqpoly()
+
+shapiro.test(byrep$total.visits)
+ggplot(data = byrep, aes(total.visits)) + geom_freqpoly()
+
+shapiro.test(byrep$flowers.per.hour)
+ggplot(data = byrep, aes(flowers.per.hour)) + geom_freqpoly()
+
+shapiro.test(byrep$total.flowers)
+ggplot(data = byrep, aes(total.flowers)) + geom_freqpoly()
+
+shapiro.test(byrep$total.flowers)
+ggplot(data = byrep, aes(total.flowers)) + geom_freqpoly()
+
+shapiro.test(byrep$total.flowers)
+ggplot(data = byrep, aes(total.flowers)) + geom_freqpoly()
+
+#length of flower visit
+#need to join simplified rtu
+rtu.key <- read.csv("Clean Data/video_rtu_key.csv")
+rtu.data <- right_join(rtu.key, byobs, by = "highest.rtu")
+times <- rtu.data %>% group_by(., microsite, flowering, rtu.ag) %>% summarise(mean(dec.total.time))
+ggplot(rtu.data, aes(rtu.ag, dec.total.time)) + geom_boxplot() + facet_grid(microsite~flowering)
+ggplot(byrtu, aes(rtu, visits.per.hour)) + geom_bar(stat = "identity") + facet_grid(flowering~treatment)
+ggplot(byrtu, aes(rtu, flowers.per.hour)) + geom_bar(stat = "identity") + facet_grid(flowering~treatment)
+ggplot(byrtu, aes(rtu, flowers.per.hour)) + geom_boxplot() + facet_grid(flowering~treatment)
+
+
+```
+
+# Stats and Models
+### Visitation Models
+```{r}
+
+```
+### Vegetation 
+```{r}
+
+```
+### Pan traps
+```{r}
+
+```
 
