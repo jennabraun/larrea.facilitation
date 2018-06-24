@@ -146,26 +146,7 @@ min(lar.fl$flowers.shrub)
 max(lar.fl$flowers.shrub)
 
 
-#try to do a correlation between pans and visitation
-pans <- read.csv("F:/School/Chapter 2/MojaveInsectDiversity/data/metadata_nobeetle.csv")
-pans$joinID <- paste(pans$plant.id, pans$blooming, pans$treatment)
-byrep$joinID <- paste(byrep$PlantID, byrep$flowering, byrep$treatment)
-pansjoin <- left_join(pans, byrep, by = "joinID")
 
-cor.test(pansjoin$abun, pansjoin$flowers.per.hour)
-cor.test(pansjoin$abun, pansjoin$visits.per.hour)
-cor.test(pansjoin$H, pansjoin$flowers.per.hour)
-cor.test(pansjoin$H, pansjoin$visits.per.hour)
-
-
-reps <- byrep
-reps$flowering <- gsub("blooming", "post", reps$flowering)
-reps$flowering <- gsub("bloom", "post", reps$flowering)
-reps$repID <- paste(reps$PlantID, reps$flowering)
-visitsjoin <- right_join(fl.count, reps, by = "repID")
-
-cor.test(visitsjoin$per.hour, visitsjoin$visits.per.hour)
-cor.test(visitsjoin$per.hour, visitsjoin$flowers.per.hour)
 
 #length of flower visit
 #need to join simplified rtu
@@ -185,28 +166,9 @@ means <- byrtu %>% group_by(.,flowering,treatment, rtu) %>% summarise(., mean = 
 
 ggplot(means, aes(flowering, mean, color = rtu)) + geom_bar() + facet_grid(~treatment)                                                   
 
-chisq.test()
-?wilcox.test
-wilcox.test(pre$flowers.per.hour ~ pre$treatment)
-wilcox.test(post$flowers.per.hour ~ post$treatment)
-kruskal.test(pre$flowers.per.hour ~ pre$treatment)
-kruskal.test(post$flowers.per.hour ~ post$treatment)
-
 mean(byrep$understory.richness, na.rm = TRUE)
 str(byrep)
 byrep %>% group_by(., treatment) %>% summarise(mean(understory.richness, na.rm = TRUE))
 byrep %>% group_by(., flowering, treatment) %>% summarise(mean(het.annual.floral.density, na.rm = TRUE))
 
-pre <- byrep %>% filter(., flowering == "pre")
-t.test(pre$het.annual.floral.density ~ pre$treatment)
-t.test(pre$understory.richness ~ pre$treatment)
-post <- byrep %>% filter(., flowering == "bloom")
-t.test(post$het.annual.floral.density ~ post$treatment)
-t.test(post$understory.richness ~ post$treatment)
-t.test(byrep$understory.richness ~ byrep$flowering)
-t.test(byrep$het.annual.floral.density ~ byrep$flowering)
-?aov
-a1 <- aov(byrep$visits.per.hour ~ byrep$flowering * byrep$treatment)
-summary(a1)
-TukeyHSD(a1)
-byrep %>% group_by(., flowering, treatment) %>% summarise(mean(visits.per.hour, na.rm = TRUE))
+

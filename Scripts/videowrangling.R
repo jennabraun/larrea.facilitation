@@ -1,3 +1,5 @@
+#data wrangling for video data
+
 library(dplyr)
 library(ggplot2)
 library(lubridate)
@@ -102,6 +104,7 @@ all.data <- right_join(fov, all.data, by = "uniID")
 
 all.data <- mutate(all.data, visits.flower.hr = total.visits/flower.fov/dec.Length)
 all.data <- mutate(all.data, flowers.flower.hr = total.flowers/flower.fov/dec.Length)
+
 #replace NA with zeros
 all.data$visits.flower.hr[is.na(all.data$visits.flower.hr)] <- 0
 all.data$flowers.flower.hr[is.na(all.data$flowers.flower.hr)] <- 0

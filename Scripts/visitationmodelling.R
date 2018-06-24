@@ -1,11 +1,15 @@
-#visitation models and stats
+#pollination facilitation models and stats
+
 library(dplyr)
 library(ggplot2)
 library(lme4)
+library(lsmeans)
+source(system.file("utils", "allFit.R", package="lme4"))
 
 byobs <- read.csv("byobs_cleaned.csv")
 byrep <- read.csv("byrep_cleaned.csv")
 byrtu <- read.csv("rtu_by_rep.csv")
+
 byrep$repID <- paste(byrep$PlantID, byrep$treatment)
 byrep$treatment <- relevel(byrep$treatment, "open")
 byrep$flowering <- relevel(byrep$flowering, "pre")
@@ -18,32 +22,12 @@ count(byrep, total.flowers)
 
 
 fm1 <- glmer.nb(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
-summary(m1)
 
-
+#check model problems
 diag.vals <- getME(fm1,"theta")[getME(fm1,"lower") == 0]
 any(diag.vals < 1e-6) # FALSE
 
-fm1.restart <- update(fm1, start=pars)
-summary(fm1.restart)
-shapiro.test(residuals(fm1.restart))
-overdisp_fun(fm1.restart)
-plot(residuals(fm1.restart)~predict(fm1.restart))
-car::Anova(fm1.restart, type = 2)
-
-
-m2 <- glmer.nb(total.flowers ~ treatment * flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
-m2.restart <- update(m2, start=1)
-summary(m2)
-
-m3 <- glmer.nb(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
-m3.restart <- update(m3, start=pars)
-summary(m3.restart)
-car::Anova(m3.restart, type = 2)
-
-
-
-
+#recompute Hessian
 devfun <- update(fm1, devFunOnly=TRUE)
 if (isLMM(fm1)) {
   pars <- getME(fm1,"theta")
@@ -60,24 +44,69 @@ if (require("numDeriv")) {
 ## compare with internal calculations:
 fm1@optinfo$derivs
 
+#restart model from different point
+fm1.restart <- update(fm1, start=pars)
+#no errors
+all <- allFit(fm1.restart)
+summary(all)
+#3 models converged
 
-m3 <- glmer.nb(total.visits ~ treatment + (1|repID/PlantID), data = byrep)
-summary(m3)
-overdisp_fun(m3)
+summary(fm1.restart)
+shapiro.test(residuals(fm1.restart))
+overdisp_fun(fm1.restart)
+plot(residuals(fm1.restart)~predict(fm1.restart))
+car::Anova(fm1.restart, type = 2)
+m1 <- fm1.restart
+
+m2 <- glmer.nb(total.flowers ~ treatment * flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
+fm1 <- m2
+
+#recomputing
+recompute_fun(fm1)
+
+#restart model from different point
+fm1.restart <- update(fm1, start=pars)
+
+#no errors
+all <- allFit(fm1.restart)
+summary(all)
+#3 models converged
+#bobyqa is the real MVP
+
+m2 <- all
 
 
 
-shapiro.test(residuals(m3))
+
+m3 <- glmer.nb(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
+
+fm1 <- m3
+
+recompute_fun(fm1)
+
+m3.restart <- update(fm1, start=pars)
+all <- allFit(m3.restart)
+summary(all)
+
+summary(m3.restart)
+car::Anova(m3.restart, type = 2)
+
+
+overdisp_fun(m3.restart)
+
+shapiro.test(residuals(m3.restart))
 
 #rtu stats
 byrtu$repID <- paste(byrtu$PlantID, byrtu$treatment)
 byrtu$treatment <- relevel(byrtu$treatment, "open")
 byrtu$flowering <- relevel(byrtu$flowering, "pre")
 
-m4 <- glmer.nb(total.flowers ~ treatment * rtu * flowering + flowers.pot +  offset(log(dec.Length)) + (1|repID), data = byrtu)
+
+m4 <- glmer.nb(total.flowers ~ treatment * rtu + flowering + flowers.pot +  offset(log(dec.Length)) + (1|repID), data = byrtu)
 m4.restart <- update(m4, start=3)
+
 summary(m4.restart)
-library(lsmeans)
+
 lsmeans(m4.restart, pairwise~rtu*treatment*blooming)
 summary(m4)
 
@@ -108,13 +137,12 @@ summary(m3)
 m4 <- glmer(dec.total.time ~ flowering + microsite + (1|repID), family = Gamma(link = "inverse"), data = rtu.data)
 summary(m4)
 
+
 rtu.data <- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 
 ggplot(rtu.data, aes(prop.visited)) + geom_freqpoly()
+
 m1 <- glmer(prop.visited ~ flowering*rtu.ag + (1|repID), family = Gamma(link = "inverse"), data = rtu.data)
-summary(m1)
 
-m2 <- glmer.nb(total.flowers ~ flowers.shrub+ flowers.pot + offset(log(dec.Length)) +(1|repID), data = flowering)
 
-flowering <- filter(byrep, flowering == "bloom")
-summary(m2)
+

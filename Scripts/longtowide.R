@@ -1,9 +1,10 @@
-#long to wide
+#converts pan trap data from a long to a wide format for ordinations and using vegan
+
 library(dplyr)
 library(tidyr)
 
 #by rep
-long <- read.csv("F:/School/Chapter 2/MojaveInsectDiversity/Data/id.csv")
+long <- read.csv("Clean Data/pantraps_id.csv")
 sp.key <- read.csv("species_key.csv")
 long$Microsite <- gsub(" ","", long$Microsite)
 long$uniID <- paste(long$Date, long$PlantID, long$Microsite)
@@ -34,14 +35,14 @@ write.csv(wide, "pantraps_wide.csv")
 #only pollinators
 long.simp <- dplyr::select(long, uniID, sp.simp, Quantity)
 simp.ag <- long.simp %>% group_by(uniID, sp.simp) %>% summarise(Quantity = sum(Quantity)) 
-write.csv(long.simp, "pantraps_long_simp.csv")
+write.csv(long.simp, "pantraps_long_pol.csv")
 
 wide.simp <- simp.ag %>% spread(sp.simp, Quantity)
 wide.simp$unknown <- wide.simp$"?"
 wide.simp <- dplyr::select(wide.simp, -wide.simp$"?")
 wide.simp[is.na(wide.simp)] <- 0
 
-write.csv(wide.simp, "pantraps_wide_simp.csv")
+write.csv(wide.simp, "pantraps_wide_pol.csv")
 
 
 

@@ -10,10 +10,6 @@ sum(metadata$abun)
 #have to add zero rows to take means - done
 metadata %>% group_by(blooming, treatment) %>% summarise(., mean(Even))
 
-pca <- rda(insects)
-plot(pca)
-#horseshoe, major horseshoe
-#try a cluster dendrogram to see what's up
 
 
 
