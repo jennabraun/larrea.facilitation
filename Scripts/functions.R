@@ -16,35 +16,8 @@ overdisp_fun <- function(model) {
 }
 
 
-recompute_fun <- function(fm1) {devfun <- update(fm1, devFunOnly=TRUE)
-if (isLMM(fm1)) {
-  pars <- getME(fm1,"theta")
-} else {
-  ## GLMM: requires both random and fixed parameters
-  pars <- getME(fm1, c("theta","fixef"))
-}
-if (require("numDeriv")) {
-  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
-  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
-  cat("scaled gradient:\n")
-  print(scgrad <- solve(chol(hess), grad))
-}}
 
 
-
-devfun <- update(fm1, devFunOnly=TRUE)
-if (isLMM(fm1)) {
-  pars <- getME(fm1,"theta")
-} else {
-  ## GLMM: requires both random and fixed parameters
-  pars <- getME(fm1, c("theta","fixef"))
-}
-if (require("numDeriv")) {
-  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
-  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
-  cat("scaled gradient:\n")
-  print(scgrad <- solve(chol(hess), grad))
-}
 
 theme_Publication <- function(base_size=14, base_family="helvetica") {
   library(grid)

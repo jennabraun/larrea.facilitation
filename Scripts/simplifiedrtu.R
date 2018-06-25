@@ -1,9 +1,11 @@
+#code to run analyses based on guild but need to better clean species names first 
+
 library(dplyr)
 library(tidyr)
 library(vegan)
 library(ggplot2)
 
-simp.rtu <- read.csv("pantraps_long_simp.csv")
+simp.rtu <- read.csv("pantraps_long_pol.csv")
 sum(simp.rtu$Quantity)
 simp.rtu <- right_join(metadata, simp.rtu, by = "uniID")
 sum(simp.rtu$Quantity)

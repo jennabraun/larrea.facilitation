@@ -1,9 +1,11 @@
+#pollen counts & wrangling
+
 library(ggplot2)
 library(dplyr)
 library(lme4)
 
-counts <- read.csv("Data/Pollen_Corrected.csv")
-cov <- read.csv("pollen_cov.csv")
+counts <- read.csv("Clean Data/Pollen_Corrected.csv")
+cov <- read.csv("Clean Data/pollen_cov.csv")
 counts$X <- as.numeric(as.character(counts$X))   
 counts <- counts %>% replace(is.na(.), 0)
 counts <- counts %>% mutate(all.con = rowSums(.[5:18]))
@@ -17,9 +19,9 @@ counts.ag$Flower <- substr(counts.ag$Slide, 1, 1)
 
 counts.ag <- right_join(counts.ag, cov, by = "Rep")
 
-ggplot(data =counts.ag,(aes(microsite, Con))) + geom_boxplot()
-ggplot(data =counts.ag,(aes(microsite, Het))) + geom_boxplot()
-t.test(counts.ag$Con ~ counts.ag$microsite)
+ggplot(data =counts.ag,(aes(microsite.x, Con))) + geom_boxplot()
+ggplot(data =counts.ag,(aes(microsite.x, Het))) + geom_boxplot()
+t.test(counts.ag$Con ~ counts.ag$microsite.x)
 
 ggplot(data = counts.ag, (aes(Con))) + geom_freqpoly()
 shapiro.test(counts.ag$Con)
