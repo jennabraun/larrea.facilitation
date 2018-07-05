@@ -5,8 +5,8 @@ library(ggplot2)
 library(lubridate)
 library(tidyr)
 
-vids <- read.csv("Data/Video/videos_clean.csv")
-IDlist <- read.csv("Data/Video/repID.csv")
+vids <- read.csv("Clean Data/videos_clean.csv")
+IDlist <- read.csv("Clean Data/video_repID.csv")
 
 
 str(vids)
@@ -22,6 +22,8 @@ vids$microsite <-gsub("Shrub", "shrub", vids$microsite)
 vids$id.check <- paste(vids$video.date, vids$plant.id, vids$Rep, vids$microsite, vids$flowering)
 
 id.counts <- count(vids, id.check)
+sum(id.counts$n)
+
 #it looks like 30 empty videos
 
 #subset out floral visits only
@@ -35,12 +37,15 @@ flr <- filter(vids, flowers.visits != 0 & flies.on == "Y")
 summary(flr)
 str(flr)
 
+
+
 #flr$unique.fl.visited <- as.numeric(flr$unique.fl.visited)
 flr$pos.total.time <- as.POSIXct(strptime(flr$total.time, "%H:%M:%S"))
 flr$dec.total.time <- (hour(flr$pos.total.time) * 3600 + minute(flr$pos.total.time) * 60 + second(flr$pos.total.time)) / 3600
 flr <- mutate(flr, prop.fl.visited = flowers.visits/flower.fov, prop.un.fl.visited = unique.fl.visited/flower.fov)
 
-count(flr, uniID)
+counts <- count(flr, uniID)
+sum(counts$n)
 
 #count(flr, Rep)
 #count(flr, uniID)
@@ -53,7 +58,7 @@ IDlist <- filter(IDlist, Exclude != "Y")
 
 #count visits per rep
 counts <- flr %>% group_by(uniID) %>% summarise(total.visits = n()) 
-
+sum(counts$total.visits)
 #count the total number of flowers visited per video
 count.fl <- flr %>% group_by(uniID) %>% summarise(total.flowers = sum(flowers.visits)) 
 
@@ -69,7 +74,7 @@ all.data$total.visits[is.na(all.data$total.visits)] <- 0
 all.data <- IDlist %>% dplyr::select(Length, uniID) %>% right_join(all.data,., by = "uniID")
 
 #join covariates
-cov <- read.csv("Data/video/cov.csv")
+cov <- read.csv("Clean Data/video_cov.csv")
 str(cov)
 cov$uniID <- paste(cov$Cam, cov$Date)
 cov$uniID <- gsub('\\s+', "", cov$uniID)
@@ -90,7 +95,7 @@ all.data$total.flowers[is.na(all.data$total.flowers)] <- 0
 all.data <- mutate(all.data, flowers.per.hour = total.flowers/dec.Length)
 
 #add weather data
-weather <- read.csv("Data/videoweather.csv")
+weather <- read.csv("Clean Data/video_weather.csv")
 weather.av <- weather %>% group_by(., Date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
 all.data <- right_join(weather.av, all.data, by = "Date")
 

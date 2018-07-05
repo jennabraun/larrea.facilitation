@@ -5,10 +5,27 @@ library(tidyr)
 library(vegan)
 library(ggplot2)
 
-simp.rtu <- read.csv("pantraps_long_pol.csv")
+long <- read.csv("pantraps_long.csv")
+simp <- read.csv("sp_key.csv")
+
+#sum(long$Quantity)
+#counts <- count(long, highest.rtu)
+#write.csv(counts, "sp_key.csv")
+
+simp.rtu <- right_join(long, simp, by = "highest.rtu")
 sum(simp.rtu$Quantity)
-simp.rtu <- right_join(metadata, simp.rtu, by = "uniID")
-sum(simp.rtu$Quantity)
+
+bees <- filter(simp.rtu, guild == "bee")
+bees.ag <- bees %>% group_by(uniID, guild) %>% summarise(Quantity = sum(Quantity)) 
+sum(bees.ag$Quantity)
+
+bee <- right_join(bees.ag, env, by = "uniID")
+
+bee$Quantity[is.na(bee$Quantity)] <- 0
+ggplot(bee, aes(treatment, Quantity)) + geom_boxplot() + facet_grid(~blooming)
+a1 <- aov(bee$Quantity ~ bee$blooming + bee$treatment)
+summary(a1)
+TukeyHSD(a1)
 
 simp.rtu <- filter(simp.rtu, sp.simp == "bee" | sp.simp == "syrphid" | sp.simp == "micro beefly" | sp.simp == "beetle" | sp.simp == "fly")
 count <- simp.rtu %>% group_by(., sp.simp) %>% summarise(.,sum(Quantity))

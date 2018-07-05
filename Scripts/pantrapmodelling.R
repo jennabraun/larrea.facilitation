@@ -17,17 +17,26 @@ ggplot(data = metadata, aes(abun)) + geom_freqpoly()
 mean(metadata$abun)
 sd(metadata$abun)
 shapiro.test(metadata$abun)
+ggplot(data = metadata, aes(treatment, abun)) + geom_boxplot() + facet_grid(~blooming)
 
-
-m1 <- glmer.nb(abun ~ blooming * treatment + (1|repID), data = metadata)
+m1 <- glmer.nb(abun ~ treatment * blooming + (1|repID), data = metadata)
 summary(m1)
-lsmeans(m1, pairwise~treatment|blooming)
+lsmeans(m1, pairwise~blooming|treatment)
 car::Anova(m1, type = 3)
+
+cat_plot(m1, pred = treatment, modx = blooming, plot.points = TRUE)
+summ(m1)
+plot_summs(m1)
+effect_plot(m1, pred = treatment)
+
+
 ggplot(metadata, aes(treatment, abun)) + geom_boxplot() + facet_grid(~blooming)
 
-m2 <- glmer.nb(abun ~ treatment + blooming + (1|repID), data = metadata)
+m2 <- glmer.nb(abun ~ treatment + blooming + (1|repID), data = nobeetle)
 fm1 <- m2
 devfun <- update(fm1, devFunOnly=TRUE)
+
+
 if (isLMM(fm1)) {
   pars <- getME(fm1,"theta")
 } else {
@@ -63,6 +72,8 @@ sd(beetle$abun)
 m1 <- glmer.nb(abun ~ blooming + treatment + (1|repID), data = beetle)
 summary(m1)
 car::Anova(m1, type = 2)
+cat_plot(m1, pred = blooming, modx = treatment)
+
 
 m2 <- glmer(abun ~ treatment + blooming + (1|repID), family = poisson(link="log"), data = beetle)
 anova(m1, m2, test = "Chisq")
@@ -115,6 +126,8 @@ summary(m1)
 plot(m1)
 shapiro.test(residuals(m1))
 #linear probably ok
+cat_plot(m1, pred = treatment, modx = blooming)
+
 
 m2 <- lmer(Species ~ treatment * blooming + (1|repID), data = beetle)
 summary(m2)
@@ -150,13 +163,13 @@ shapiro.test(metadata$H)
 #m4 <- glmer.nb(H ~ blooming + treatment + (1|repID), data = beetle)
 #not sure what distribution to use
 ggplot(beetle, aes(H)) + geom_density()
-ggplot(beetle, aes(treatment, H)) + geom_boxplot()
+ggplot(beetle, aes(treatment, Species)) + geom_boxplot() + facet_grid(~blooming)
 ggplot(beetle, aes(treatment, Even)) + geom_boxplot()
 ggplot(beetle, aes(treatment, Simpson)) + geom_boxplot()
 summary(m4)
 
 
-
+simulate(m1)
 
 
 
