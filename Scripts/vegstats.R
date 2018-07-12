@@ -29,16 +29,20 @@ visits$repID <- paste(visits$PlantID, visits$treatment)
 shapiro.test(metadata$percent.cover)
 mean(metadata$percent.cover)
 sd(metadata$percent.cover)
-
+ggplot(metadata, aes(percent.cover)) + geom_density()
 
 g1.nb <- glmer.nb(percent.cover ~ treatment + blooming + (1|repID), data = metadata)
 g1.nb1 <- glmer.nb(percent.cover ~ treatment * blooming + (1|repID), data = metadata)
 g1.nb.null <- glmer.nb(percent.cover ~ 1 + (1|repID), data = metadata)
 
-
+g1.ps <- glmer(percent.cover ~ treatment * blooming + (1|repID), family = poisson, data = metadata)
+summary(g1.ps)
+overdisp_fun(g1.ps)
 summary(g1.nb)
 summary(g1.nb1)
 summary(g1.nb.null)
+
+AIC(g1.ps, g1.nb1)
 
 anova(g1.nb, g1.nb1, g1.nb.null)
 AIC(g1.nb, g1.nb1, g1.nb.null)
@@ -58,6 +62,9 @@ ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot() + facet_grid(~b
 plot(fitted(g1.nb1), residuals(g1.nb1), xlab = "Fitted Values", ylab = "Residuals")
 abline(h = 0, lty = 2)
 lines(smooth.spline(fitted(g1.nb1), residuals(g1.nb1)))
+
+ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot() + facet_grid(~blooming, labeller=labeller(blooming = labels)) + theme_Publication() + xlab("Microsite") + ylab("Percent Annual Cover")
+
 
 #richness
 
@@ -83,7 +90,10 @@ overdisp_fun(g2)
 
 sjt.glmer(g2)
 
-ggplot(visits, aes(treatment, understory.richness)) + geom_boxplot() + facet_grid(~flowering)
+ggplot(visits, aes(treatment, understory.richness)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + theme_Publication() + xlab("Microsite") + ylab("Annual Species Richness")
+
+
+
 
 plot(fitted(g2), residuals(g2), xlab = "Fitted Values", ylab = "Residuals")
 abline(h = 0, lty = 2)
@@ -93,7 +103,7 @@ lines(smooth.spline(fitted(g2), residuals(g2)))
 mean(visits$het.annual.floral.density, na.rm = TRUE)
 sd(visits$het.annual.floral.density, na.rm = TRUE)
 
-ggplot(visits, aes(het.annual.floral.density)) + geom_density(kernel = "gaussian")
+ggplot(visits, aes(het.annual.floral.density)) + geom_density()
 
 g3.nb <- glmer.nb(het.annual.floral.density ~ flowering * treatment + (1|repID), data = visits)
 #model breaks. Recompute gradient & Hessian
@@ -118,7 +128,7 @@ fm1.restart <- update(fm1, start=pars)
 summary(fm1.restart)
 all <- allFit(fm1.restart)
 summary(all)
-g3.nb <- fm1
+g3.nb <- fm1.restart
 
 g3.nb.1 <- glmer.nb(het.annual.floral.density ~ flowering + treatment + (1|repID), data = visits)
 g3.nb.null <- glmer.nb(het.annual.floral.density ~ 1 + (1|repID), data = visits)
@@ -132,6 +142,11 @@ AIC(g3.nb, g3.nb.1, g3.nb.null)
 shapiro.test(residuals(g3.nb.1))
 overdisp_fun(g3.nb.1)
 sjt.glmer(g3.nb.1)
+
+ggplot(visits, aes(treatment, het.annual.floral.density)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + theme_Publication() + xlab("Microsite") + ylab("Heterospecific Annual Floral Density")
+
+
+
 
 #blooming shrubs
 mean(visits$het.shrub.blooming.neighbours, na.rm = TRUE)
@@ -225,6 +240,10 @@ g5.ps <- glmer(het.cactus.blooming.neighbours ~ flowering * treatment + (1|repID
 g5.ps.1 <- glmer(het.cactus.blooming.neighbours ~ flowering + treatment + (1|repID), family = poisson(link = "log"), data = visits)
 g5.ps.null <- glmer(het.cactus.blooming.neighbours ~ 1 + (1|repID), family = poisson(link ="log"), data = visits)
 
+
+ggplot(visits, aes(treatment, het.shrub.blooming.neighbours)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + theme_Publication() + xlab("Microsite") + ylab("Blooming Shrub Density within 2m")
+
+ggplot(visits, aes(treatment, het.cactus.blooming.neighbours)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + theme_Publication() + xlab("Microsite") + ylab("Blooming Cactus Density within 2m")
 
 summary(g5.ps)
 summary(g5.ps.1)

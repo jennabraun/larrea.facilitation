@@ -58,6 +58,11 @@ m3 <- glmer.nb(abun ~ (1|repID), data = metadata)
 anova(m1, m2, m3, test = "Chisq")
 AIC(m1, m2, m3)
 
+
+m4 <- glmer.nb(abun ~  treatment + blooming + (1|repID), data = metadata)
+summary(m4)
+
+
 #with beetles
 beetle <- read.csv("Clean Data/metadata_yesbeetle.csv")
 beetle$repID <- paste(beetle$plant.id, beetle$treatment)
@@ -83,7 +88,7 @@ AIC(m1, m2)
 onlybeetle <- read.csv("Clean Data/metadata_onlybeetle.csv")
 onlybeetle$repID <- paste(onlybeetle$plant.id, onlybeetle$treatment)
 onlybeetle$blooming <- relevel(onlybeetle$blooming, "pre")
-sum(beetle$abun)
+sum(onlybeetle$abun)
 str(beetle)
 
 ggplot(data = onlybeetle, aes(abun)) + geom_freqpoly()
@@ -92,22 +97,22 @@ sd(onlybeetle$abun)
 
 m1 <- glmer.nb(abun ~ blooming * treatment + (1|repID), data = onlybeetle)
 summary(m1)
-car::Anova(m1, type = 2)
+car::Anova(m1, type = 3)
 
 m2 <- glmer(abun ~ treatment + blooming + (1|repID), family = poisson(link="log"), data = onlybeetle)
 
 m3 <- glmer(abun ~ treatment * blooming + (1|repID), family = poisson(link="log"), data = onlybeetle)
 
 m4 <- glmer.nb(abun ~ blooming + treatment + (1|repID), data = onlybeetle)
-
-anova(m1, m2, m3, m4, test = "Chisq")
+AIC(m1, m3)
+# cant do this not nested anova(m1, m2, m3, m4, test = "Chisq")
 
 AIC(m1, m2)
 car::Anova(m1, type = 3)
 car::Anova(m2, type = 2)
 AIC(m1)
 anova(m1)
-overdisp_fun(m2)
+overdisp_fun(m3)
 
 ggplot(metadata, aes(blooming, abun)) + geom_boxplot() + facet_grid(~treatment)
 
@@ -127,7 +132,7 @@ plot(m1)
 shapiro.test(residuals(m1))
 #linear probably ok
 cat_plot(m1, pred = treatment, modx = blooming)
-
+plot(resid(m1))
 
 m2 <- lmer(Species ~ treatment * blooming + (1|repID), data = beetle)
 summary(m2)
@@ -160,6 +165,16 @@ plot(specaccum(insects), xlab = "# of samples", ylab = "# of species")
 metadata$date <- as.ordered(metadata$date)
 
 shapiro.test(metadata$H)
+shapiro.test(metadata$logH)
+metadata$logH <- log(metadata$H)
+metadata$sqrH <- sqrt(metadata$H)
+
+shapiro.test(metadata$logH)
+shapiro.test(metadata$sqrH)
+
+ggplot(metadata, aes(sqrH)) + geom_density()
+       
+       
 #m4 <- glmer.nb(H ~ blooming + treatment + (1|repID), data = beetle)
 #not sure what distribution to use
 ggplot(beetle, aes(H)) + geom_density()
@@ -173,9 +188,10 @@ simulate(m1)
 
 
 
-
-
-
+#syrphids
+pans <- read.csv("pantraps_long.csv")
+syr <- filter(pans, highest.rtu == "Scaeva/Eupeodes")
+ggplot(syr, aes(Quantity)) + geom_bar(stat = "identity", position = "dodge")
 
 
 

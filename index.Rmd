@@ -12,6 +12,8 @@ library(dplyr)
 library(ggplot2)
 library(lubridate)
 library(tidyr)
+
+source("Scripts/functions.R")
 ```
 
 # Overview
@@ -248,11 +250,6 @@ ggplot(data = byrep, aes(flowers.per.hour)) + geom_freqpoly()
 shapiro.test(byrep$total.flowers)
 ggplot(data = byrep, aes(total.flowers)) + geom_freqpoly()
 
-shapiro.test(byrep$total.flowers)
-ggplot(data = byrep, aes(total.flowers)) + geom_freqpoly()
-
-shapiro.test(byrep$total.flowers)
-ggplot(data = byrep, aes(total.flowers)) + geom_freqpoly()
 
 #length of flower visit
 #need to join simplified rtu
@@ -270,6 +267,11 @@ ggplot(byrtu, aes(rtu, flowers.per.hour)) + geom_boxplot() + facet_grid(flowerin
 # Stats and Models
 ### Visitation Models
 ```{r}
+#replicate based analyses
+byrep$repID <- paste(byrep$PlantID, byrep$treatment)
+byrep$treatment <- relevel(byrep$treatment, "open")
+byrep$flowering <- relevel(byrep$flowering, "pre")
+
 
 ```
 ### Vegetation 

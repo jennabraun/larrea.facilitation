@@ -38,7 +38,6 @@ summary(flr)
 str(flr)
 
 
-
 #flr$unique.fl.visited <- as.numeric(flr$unique.fl.visited)
 flr$pos.total.time <- as.POSIXct(strptime(flr$total.time, "%H:%M:%S"))
 flr$dec.total.time <- (hour(flr$pos.total.time) * 3600 + minute(flr$pos.total.time) * 60 + second(flr$pos.total.time)) / 3600
@@ -62,13 +61,18 @@ sum(counts$total.visits)
 #count the total number of flowers visited per video
 count.fl <- flr %>% group_by(uniID) %>% summarise(total.flowers = sum(flowers.visits)) 
 
+sum(count.fl$total.flowers)
 #add reps with zero visits
+
 zeros <- anti_join(IDlist, counts, by = "uniID")
 all.data <- bind_rows(zeros, counts)
 all.data <- dplyr::select(all.data, uniID, total.visits)
 
+
+
 #replace NAs with zeros
 all.data$total.visits[is.na(all.data$total.visits)] <- 0
+sum(all.data$total.visits)
 
 #join video length
 all.data <- IDlist %>% dplyr::select(Length, uniID) %>% right_join(all.data,., by = "uniID")
@@ -79,7 +83,7 @@ str(cov)
 cov$uniID <- paste(cov$Cam, cov$Date)
 cov$uniID <- gsub('\\s+', "", cov$uniID)
 all.data <- right_join(cov, all.data, by = "uniID")
-
+sum(all.data$total.visits)
 
 #convert to decimal time to standardize visits
 all.data$pos.Length <- as.POSIXct(strptime(all.data$Length, "%H:%M:%S"))
@@ -88,36 +92,40 @@ all.data$dec.Length <- (hour(all.data$pos.Length) * 3600 + minute(all.data$pos.L
 
 #plant visits per hour
 all.data <- mutate(all.data, visits.per.hour = total.visits/dec.Length)
+sum(all.data$total.visits)
 
 #number of flowers visited per hour
 all.data <- left_join(all.data, count.fl, by = "uniID")
 all.data$total.flowers[is.na(all.data$total.flowers)] <- 0
 all.data <- mutate(all.data, flowers.per.hour = total.flowers/dec.Length)
+sum(all.data$total.visits)
 
 #add weather data
 weather <- read.csv("Clean Data/video_weather.csv")
 weather.av <- weather %>% group_by(., Date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
 all.data <- right_join(weather.av, all.data, by = "Date")
+sum(all.data$total.visits)
 
 #want to test out standardizing by visits/flower/hr
-fov <- select(flr, uniID, flower.fov)
-fov <- distinct(fov)
-fov <- fov[-c(191,187),] #get rid of weird bit
-all.data <- right_join(fov, all.data, by = "uniID")
+#fov <- select(flr, uniID, flower.fov)
+#fov <- distinct(fov)
+#fov <- fov[-c(191,187),] #get rid of weird bit
+#all.data <- right_join(fov, all.data, by = "uniID")
 
 #calculate per flower/per hour
 
-all.data <- mutate(all.data, visits.flower.hr = total.visits/flower.fov/dec.Length)
-all.data <- mutate(all.data, flowers.flower.hr = total.flowers/flower.fov/dec.Length)
+#all.data <- mutate(all.data, visits.flower.hr = total.visits/flower.fov/dec.Length)
+#all.data <- mutate(all.data, flowers.flower.hr = total.flowers/flower.fov/dec.Length)
 
 #replace NA with zeros
-all.data$visits.flower.hr[is.na(all.data$visits.flower.hr)] <- 0
-all.data$flowers.flower.hr[is.na(all.data$flowers.flower.hr)] <- 0
+#all.data$visits.flower.hr[is.na(all.data$visits.flower.hr)] <- 0
+#all.data$flowers.flower.hr[is.na(all.data$flowers.flower.hr)] <- 0
 
 
 write.csv(all.data, "byrep_cleaned.csv")
 #write.csv(all.data, "byrep_cleaned_all.csv")
 write.csv(flr, "byobs_cleaned.csv")
+
 
 #I also want a dataframe grouped by rtu: Bees, syrphids, bombyliids, leps and others.
 

@@ -8,6 +8,10 @@ incbeetle <- read.csv("Clean Data/metadata_yesbeetle.csv")
 onlybeetle <- read.csv("Clean Data/metadata_onlybeetle.csv")
 
 labels <- c(pre = "Pre-blooming", post = "Blooming", bloom = "Blooming")
+visits$flowering <- relevel(visits$flowering, "pre")
+metadata$blooming <- relevel(metadata$blooming, "pre")
+incbeetle$blooming <- relevel(incbeetle$blooming, "pre")
+onlybeetle$blooming <- relevel(onlybeetle$blooming, "pre")
 
 ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot() + theme_Publication() + ylab("Percent Annual Vegetation Cover") + xlab("Microsite")
 ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot() + theme_Publication() + ylab("Percent Annual Vegetation Cover") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
@@ -54,32 +58,41 @@ ggplot(rtu.data, aes(rtu.ag, dec.total.time)) + geom_boxplot() + facet_grid(flow
 
 ggplot(metadata, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Insect Abundance") + xlab("Microsite")
 
-ggplot(metadata, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Insect Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
+ggplot(metadata, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Arthopod Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
 
-ggplot(incbeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Insect Abundance") + xlab("Microsite")
+ggplot(incbeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Arthopod Abundance") + xlab("Microsite")
 
-ggplot(incbeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Insect Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
+ggplot(incbeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Arthopod Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
 
 
 ggplot(onlybeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Insect Abundance") + xlab("Microsite")
 
-ggplot(onlybeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Insect Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
+ggplot(onlybeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Melyridae Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
+
+
+#Diversity figures
 
 
 ggplot(incbeetle, aes(treatment, Species)) + geom_boxplot() + theme_Publication() + ylab("Insect Species Richness") + xlab("Microsite")
 
-ggplot(incbeetle, aes(treatment, Species)) + geom_boxplot() + theme_Publication() + ylab("Insect Species Richness") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
+ggplot(incbeetle, aes(treatment, Species)) + geom_boxplot() + theme_Publication() + ylab("Arthropod Species Richness") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
 
 ggplot(incbeetle, aes(treatment, H)) + geom_violin() + theme_Publication() + ylab("Shannon Diversity Index") + xlab("Microsite")
 
 ggplot(incbeetle, aes(treatment, H)) + geom_violin() + theme_Publication() + ylab("Shannon Diversity Index") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
 
+ggplot(incbeetle, aes(treatment, H)) + geom_boxplot() + theme_Publication() + ylab("Shannon Diversity Index") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
 
 
 #visitation
-ggplot(byrep, aes(treatment, flowers.per.hour)) + geom_bar(stat ="identity") + facet_grid(~flowering)
-ggplot(byrep, aes(treatment, flowers.per.hour)) + geom_boxplot() + facet_grid(~flowering, scales = "free") 
 
-boxplot(byrep$flowers.per.hour~byrep$treatment+byrep$flowering, notch = TRUE)
+
+ggplot(visits, aes(treatment, flowers.per.hour)) + geom_boxplot() + facet_grid(~flowering, scales = "free") 
+
+
+
+ggplot(visits, aes(treatment, flowers.per.hour)) + geom_bar(stat = "identity") + facet_grid(~flowering, scales = "free") 
+
+boxplot(visits$flowers.per.hour~visits$treatment+visits$flowering, notch = TRUE)
 summary(fm1.restart)
 car::Anova(fm1.restart, type = 2)

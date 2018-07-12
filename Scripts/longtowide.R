@@ -22,6 +22,11 @@ long.fil <- dplyr::select(long, uniID, highest.rtu, Quantity)
 long.ag <- long.fil %>% group_by(uniID, highest.rtu) %>% summarise(Quantity = sum(Quantity)) 
 sum(long.ag$Quantity)
 
+
+
+sp_by_rep <- long %>% group_by(Flowering, highest.rtu) %>% summarise(Quantity = sum(Quantity))
+
+
 #sum(long.ag$Quantity)
 write.csv(long.ag, "pantraps_long.csv")
 

@@ -40,9 +40,17 @@ shapiro.test(all.rii$flowers.per.hour)
 t.test(all.rii$visits.per.hour ~ all.rii$flowering)
 
 
+ggplot(all.rii,(aes(flowering, flowers.per.hour))) + geom_pointrange()
+
+
+
 t.test(all.rii$flowers.per.hour)
+
+
+
 t.test(rii.data$visits.per.hour)
 t.test(rii.data2$visits.per.hour)
+t.test(rii.data2$flowers.per.hour)
 
 boxplot(all.rii$flowers.per.hour ~ all.rii$flowering)
 
@@ -79,6 +87,51 @@ mean(rii.open$visits.per.hour)
 t.test(rii.shrub$visits.per.hour)
 t.test(rii.open$visits.per.hour)
 t.test(rii.shrub$flowers.per.hour, rii.open$flowers.per.hour)
+
+
+#abundance RII
+prepan <- filter(metadata, blooming == "pre")
+prepan <- dplyr::select(prepan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, blooming, abun, Species)
+#split into 2 dataframes, rename the visitation columns and then rbind
+#there are 2 unmatched reps
+prepan <- arrange(pre, plant.id)
+pre <- filter(pre, PlantID != 266 & PlantID != 275 & PlantID != 276 & PlantID != 196)
+
+
+rii.data.pan <- rii(prepan, c(1,7), 8:9)
+t.test(rii.data.pan$Species)
+
+
+postpan <- filter(metadata, blooming =="post")
+postpan <- dplyr::select(postpan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, blooming, abun, Species)
+
+postpan <- arrange(postpan, plant.id)
+#postpan <- filter(post, PlantID != 198)
+#postpan <- distinct(postpan)
+
+rii.data2pan <- rii(postpan, c(1,7), 8:9)
+
+
+mean(rii.data2pan$abun)
+mean(rii.data2pan$Species)
+
+
+
+
+all.match <- rbind(pre, post)
+all.match <- arrange(all.match, PlantID)
+all.match <- filter(all.match, PlantID != 196)
+t.test(all.match$visits.per.hour ~ all.match$flowering)
+?t.test
+
+all.rii <- rbind(rii.data, rii.data2)
+
+
+
+
+
+
+
 
 
 rii <- function(x, j, var)

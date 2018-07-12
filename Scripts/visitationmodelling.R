@@ -8,7 +8,8 @@ library(sjPlot)
 library(jtools)
 source(system.file("utils", "allFit.R", package="lme4"))
 library(glmmTMB)
-
+library(tidyr)
+#source("Scripts/videowrangling.R")
 byobs <- read.csv("byobs_cleaned.csv")
 byrep <- read.csv("byrep_cleaned.csv")
 byrtu <- read.csv("rtu_by_rep.csv")
@@ -21,9 +22,10 @@ byrtu$repID <- paste(byrtu$PlantID, byrep$treatment)
 byrtu$treatment <- relevel(byrtu$treatment, "open")
 byrtu$flowering <- relevel(byrtu$flowering, "pre")
 
-count(byrep, total.flowers)
 
-
+sum(byrep$total.flowers)
+sum(byrep$total.visits)
+#base hypothesis testing model
 fm1 <- glmer.nb(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
 
 #check model problems
@@ -58,7 +60,7 @@ AIC(fm1, fm1.restart)
 #figure
 plot_model(fm1.restart, type = "pred", terms = c("flowering", "treatment"))
 
-ggplot(byrep, aes(total.flowers, treatment)) + geom_errorbar()
+
 cat_plot(fm1.restart, "flowering", "treatment")
 
 lsmeans(fm1.restart, pairwise~treatment|flowering)
@@ -66,7 +68,9 @@ lsmeans(fm1.restart, pairwise~treatment|flowering)
 
 summary(fm1.restart)
 shapiro.test(residuals(fm1.restart))
+#not too unnormal - also NBD for negative binomial
 overdisp_fun(fm1.restart)
+#not overdispersed
 plot(residuals(fm1.restart)~predict(fm1.restart))
 car::Anova(fm1.restart, type = 2)
 m1 <- fm1.restart
@@ -75,39 +79,92 @@ m2 <- glmer.nb(total.flowers ~ treatment * flowering + flowers.pot + offset(log(
 fm1 <- m2
 
 #recomputing
-recompute_fun(fm1)
+diag.vals <- getME(fm1,"theta")[getME(fm1,"lower") == 0]
+any(diag.vals < 1e-6) # FALSE
+
+#recompute Hessian
+devfun <- update(fm1, devFunOnly=TRUE)
+if (isLMM(fm1)) {
+  pars <- getME(fm1,"theta")
+} else {
+  ## GLMM: requires both random and fixed parameters
+  pars <- getME(fm1, c("theta","fixef"))
+}
+if (require("numDeriv")) {
+  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
+  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
+  cat("scaled gradient:\n")
+  print(scgrad <- solve(chol(hess), grad))
+}
+
 
 #restart model from different point
 fm1.restart <- update(fm1, start=pars)
 
-#no errors
+#still issues
 all <- allFit(fm1.restart)
 summary(all)
 #3 models converged
 #bobyqa is the real MVP
 
 m2 <- all
-
-
-
+summary(m2)
+summary(fm1.restart)
+#estimates are the same as the all fit output
 
 m3 <- glmer.nb(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
 
 fm1 <- m3
 
-recompute_fun(fm1)
+devfun <- update(fm1, devFunOnly=TRUE)
+if (isLMM(fm1)) {
+  pars <- getME(fm1,"theta")
+} else {
+  ## GLMM: requires both random and fixed parameters
+  pars <- getME(fm1, c("theta","fixef"))
+}
+if (require("numDeriv")) {
+  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
+  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
+  cat("scaled gradient:\n")
+  print(scgrad <- solve(chol(hess), grad))
+}
+
 
 m3.restart <- update(fm1, start=pars)
-all <- allFit(m3.restart)
-summary(all)
+#all <- allFit(m3.restart)
+#summary(all)
 
 summary(m3.restart)
 car::Anova(m3.restart, type = 2)
-
-
 overdisp_fun(m3.restart)
-
 shapiro.test(residuals(m3.restart))
+
+m5 <- glmer.nb(total.visits ~ treatment * flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
+
+fm1 <- m5
+
+devfun <- update(fm1, devFunOnly=TRUE)
+if (isLMM(fm1)) {
+  pars <- getME(fm1,"theta")
+} else {
+  ## GLMM: requires both random and fixed parameters
+  pars <- getME(fm1, c("theta","fixef"))
+}
+if (require("numDeriv")) {
+  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
+  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
+  cat("scaled gradient:\n")
+  print(scgrad <- solve(chol(hess), grad))
+}
+
+m5.restart <- update(fm1, start=pars)
+#all <- allFit(m3.restart)
+#summary(all)
+
+summary(m5.restart)
+
+
 
 #rtu stats
 byrtu$repID <- paste(byrtu$PlantID, byrtu$treatment)
@@ -134,10 +191,10 @@ ggplot(rtu.data, aes(rtu.ag, dec.total.time)) + geom_boxplot() + facet_grid(flow
 ggplot(rtu.data, aes(microsite, dec.total.time)) + geom_boxplot() + facet_grid(~flowering)
 ggplot(rtu.data, aes(flowering, dec.total.time)) + geom_boxplot() + facet_grid(~microsite)
 
-ggplot(rtu.data, aes(dec.total.time)) + geom_freqpoly()
+ggplot(rtu.data, aes(dec.total.time)) + geom_density()
 
 rtu.data$repID <- paste(rtu.data$plant.id, rtu.data$microsite)
-rtu.data$microscite <-as.factor(rtu.data$microsite)
+rtu.data$microsite <-as.factor(rtu.data$microsite)
 rtu.data$microsite <- relevel(rtu.data$microsite, "open")
 rtu.data$flowering <- relevel(rtu.data$flowering, "pre")
 
@@ -148,28 +205,41 @@ summary(m2)
 m3 <- m1 <- glmer(dec.total.time ~ flowering + microsite + (1|repID), family = Gamma(link = "inverse"), data = rtu.data)
 summary(m3)
 m4 <- glmer(dec.total.time ~ flowering + microsite + (1|repID), family = Gamma(link = "inverse"), data = rtu.data)
+
 summary(m4)
 
 
 rtu.data <- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 
-ggplot(rtu.data, aes(prop.visited)) + geom_freqpoly()
+ggplot(rtu.data, aes(dec.total.time, color = flowering)) + geom_density()
 
-m1 <- glmer(prop.visited ~ flowering*rtu.ag + (1|repID), family = Gamma(link = "inverse"), data = rtu.data)
+m1 <- glmer(dec.total.time ~ flowering + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+summary(m1)
+shapiro.test(resid(m1))
+car::Anova(m1, type = 2)
+
+
+m1 <- glmmTMB(dec.total.time ~ microsite + flowering + (1|repID), ziformula=~0,family="Gamma", data = rtu.data)
 
 
 
 
 
-#time spent per foraging bout
 
-t1 <- glmer(dec.total.time ~ microsite*rtu.ag* flowering + (1|repID), family = Gamma, data = rtu.data)
-summary(t1)
-lsmeans(t1, pairwise~microsite|rtu.ag|flowering)
+
 filter(rtu.data, dec.total.time<1.5) %>% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Duration of visit (decimal time)") + labs(fill="") + theme(legend.text = element_text(size = 16))
 
-                                                                bees <- filter(byrtu, rtu == "bee")      
+ggplot(rtu.data, aes(flowering, dec.total.time, fill = rtu.ag)) + geom_boxplot()
+
                                                                 
+bees <-filter(byrtu, rtu == "bee" | rtu == "honeybee")  
+bees <- select(bees, uniID, everything())
+bees <- select(bees, -total.visits, -visits.per.hour, -flowers.per.hour, -X)
+bees <- spread(bees,rtu, total.flowers)
+bees <- mutate(bees, total.flowers = bee + honeybee) %>% select(-bee, -honeybee)                                                                
+                                                                
+                                                                
+                                                                                                                                
 bees %>% group_by(., treatment, flowering) %>% summarise(n = mean(total.flowers))                                                                
                                                                 
 sum(bees$total.flowers)  
@@ -187,7 +257,7 @@ cat_plot(m2, pred = flowering, modx = treatment)
 ls <- lsmeans(m2, pairwise~flowering|treatment)
 summary(lsm, type = "response")
 lsm <- lsmeans(m2, pairwise~treatment*flowering)
-
+summary(lsm)
 plot(ls, by = "factor2", intervals = TRUE, type = "response")
 lsmip(lsm, treatment ~ flowering, type = "response")
 
@@ -215,3 +285,10 @@ fm1.restart <- update(fm1, start=pars)
 summary(fm1.restart)
 all <- allFit(fm1.restart)
 summary(all)
+
+
+#date tests
+ggplot(byrtu, aes(rtu, total.visits, fill = Date, color= flowering)) + geom_bar(stat = "identity", position = "dodge")
+
+#s1 <- glmmTMB(total.flowers ~ flowering +  flowers.shrub + flowers.pot + treatment + offset(log(dec.Length)) + (1|repID), ziformula=~0,family="nbinom2", data = byrep)      
+#summary(s1)
