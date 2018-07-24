@@ -10,7 +10,7 @@ long$highest.rtu <- gsub(" ","", long$highest.rtu)
 
 
 sp <- count(long, highest.rtu)
-
+write.csv(sp, "sp_key_pans.csv")
 
 sum(long$Quantity)
 #sp.key <- read.csv("Clean Data/species_key.csv")
@@ -22,7 +22,8 @@ long.fil <- dplyr::select(long, uniID, highest.rtu, Quantity)
 long.ag <- long.fil %>% group_by(uniID, highest.rtu) %>% summarise(Quantity = sum(Quantity)) 
 sum(long.ag$Quantity)
 
-
+counts <- long.ag %>% group_by(highest.rtu) %>% summarise(Quantity = sum(Quantity))
+count(long.ag, highest.rtu)
 
 sp_by_rep <- long %>% group_by(Flowering, highest.rtu) %>% summarise(Quantity = sum(Quantity))
 
@@ -32,7 +33,7 @@ write.csv(long.ag, "pantraps_long.csv")
 
 wide <- long.ag %>% spread(highest.rtu, Quantity)
 #wide$unknown <- wide$"?"
-#wide <- dplyr::select(wide, -wide$"?")
+wide <- dplyr::select(wide, -damaged, -destroyed)
 
 #counts <- count(long.fil, sp.clean)
 #write.csv(counts, "species_coding.csv")

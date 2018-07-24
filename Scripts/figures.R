@@ -1,7 +1,9 @@
 #figures
 library(ggplot2)
 library(jtools)
+library(dplyr)
 visits <- read.csv("byrep_cleaned.csv")
+byrtu <- read.csv("rtu_by_rep.csv")
 metadata <- read.csv("Clean Data/metadata_nobeetle.csv")
 nobeetle <- read.csv("Clean Data/metadata_nobeetle.csv")
 incbeetle <- read.csv("Clean Data/metadata_yesbeetle.csv")
@@ -87,11 +89,56 @@ ggplot(incbeetle, aes(treatment, H)) + geom_boxplot() + theme_Publication() + yl
 #visitation
 
 
-ggplot(visits, aes(treatment, flowers.per.hour)) + geom_boxplot() + facet_grid(~flowering, scales = "free") 
+ggplot(visits, aes(treatment, flowers.per.hour)) + geom_boxplot() + facet_grid(~flowering)  + coord_flip()
+
+
+ggplot(byrtu, aes(flowering, flowers.per.hour)) + geom_boxplot() + facet_grid(~rtu, scales= "free")  
+
+byrtu.fil <- filter(byrtu, rtu == "syrphid" | rtu == "lep" | rtu == "other")
+
+ggplot(byrtu.fil, aes(flowering, flowers.per.hour)) + geom_boxplot() + facet_grid(~rtu, scales= "free")  + coord_flip()
+
+library(caret)
+
+ggplot(byrtu, aes(treatment, flowers.per.hour, fill = rtu)) + geom_bar(stat = "identity") + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Flowers visited (weighted by video length") + labs(fill="") + theme(legend.text = element_text(size = 16))
 
 
 
-ggplot(visits, aes(treatment, flowers.per.hour)) + geom_bar(stat = "identity") + facet_grid(~flowering, scales = "free") 
+
++ theme_Publication()
+
+
+
+
+test_down <- downSample(byrtu, byrtu$treatment)
+byrtu %>% group_by(treatment, flowering, rtu) %>% summarise(n())
+
+
+
+
+
+library(ggplot2)
+ggplot(test_down, aes(treatment, flowers.per.hour)) +
+  geom_bar(aes(fill = rtu), 
+           position = position_fill(reverse = F))
+#here
+
+
+
+ggplot(visits, aes(treatment, total.flowers)) + geom_bar(stat = "identity", weight = dec.Length) + facet_grid(~flowering,) + coord_flip()
+
+
+
+
+
+bees <-filter(byrtu, rtu == "bee" | rtu == "honeybee")  
+bees <- select(bees, uniID, everything())
+bees <- select(bees, -total.visits, -visits.per.hour, -flowers.per.hour, -X)
+bees <- spread(bees,rtu, total.flowers)
+bees <- mutate(bees, total.flowers = bee + honeybee) %>% select(-bee, -honeybee)                                                                
+
+
+
 
 boxplot(visits$flowers.per.hour~visits$treatment+visits$flowering, notch = TRUE)
 summary(fm1.restart)

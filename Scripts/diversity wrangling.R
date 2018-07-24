@@ -11,7 +11,7 @@ insects <- read.csv("pantraps_wide.csv", header = TRUE)
 row.names(insects) <- insects$uniID
 insects <- dplyr::select(insects, -X, -uniID)
 #filter out beetles
-insects <- dplyr::select(insects, -Melyridae, -Melyridae.)
+insects <- dplyr::select(insects, -Melyridae)
 metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
 metadata <- filter(metadata, species != "buckhorn")
 metadata$plant.id <- as.character(metadata$plant.id)
@@ -58,13 +58,13 @@ count(metadata, date)
 write.csv(metadata, "Clean Data/metadata_nobeetle.csv")
 write.csv(insects, "Clean Data/wide_nobeetle.csv")
 
-metadata <- read.csv("Data/outputmetadata.csv")
+#metadata <- read.csv("Data/outputmetadata.csv")
 
 
 #with beetles
 insects <- read.csv("pantraps_wide.csv", header = TRUE)
 row.names(insects) <- insects$uniID
-insects <- dplyr::select(insects, -X, -uniID)
+insects <- dplyr::select(insects, -X, -uniID, -Zeroes)
 #filter out beetles
 #insects <- dplyr::select(insects, -Melyridae, -Melyridae.)
 metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
@@ -119,7 +119,7 @@ insects <- read.csv("pantraps_wide.csv", header = TRUE)
 row.names(insects) <- insects$uniID
 insects <- dplyr::select(insects, -X, -uniID)
 #filter out beetles
-insects <- dplyr::select(insects, Melyridae, Melyridae.)
+insects <- dplyr::select(insects, Melyridae)
 metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
 metadata <- filter(metadata, species != "buckhorn")
 metadata$plant.id <- as.character(metadata$plant.id)
@@ -165,3 +165,4 @@ count(metadata, date)
 #no beetle output
 write.csv(metadata, "Clean Data/metadata_onlybeetle.csv")
 write.csv(insects, "Clean Data/wide_onlybeetle.csv")
+
