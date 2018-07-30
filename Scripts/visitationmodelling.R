@@ -431,11 +431,20 @@ tgc <- summarySE(byrep, measurevar="flowers.per.hour", groupvars=c("treatment","
 tgc
 
 ggplot(tgc, aes(x=flowering, y=flowers.per.hour, colour=treatment)) + 
-  geom_errorbar(aes(ymin=flowers.per.hour-se, ymax=flowers.per.hour+se), width=.1) +
+  geom_errorbar(aes(ymin=flowers.per.hour-se, ymax=+se), width=.1) +
   geom_line() +
-  geom_point()  + theme_Publication() + ylab("Total flower visits per hour") + xlab("Bloom Period")+ guides(color=guide_legend("Microsite:"))
+  geom_point() + theme_Publication() + ylab("Total flower visits per hour") + xlab("Bloom Period") +guides(color=guide_legend("Microsite:")) +
+  
+  
+  
+  
+  
+  scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
 
 
+
+
+guides(color=guide_legend("Microsite:".values = c("open" = black, "shrub" = red)))
 
 plot <- plot_model(fm1.restart)
 plot + xlab("Predictor") + ggtitle("Reponse:Total flower visits")
