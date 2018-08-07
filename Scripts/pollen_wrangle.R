@@ -41,12 +41,22 @@ counts.ag$d.S <- counts.ag$d.S %>% replace(is.na(.), 0)
 m1 <- glmer.nb(Con ~ d.flowers + dN1 + d.S + (1|Sample/Flower/Rep), data = counts.ag)
 summary(m1)
 
-m2 <- glmmPQL(Con~dN1 + d.flowers, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
+m2 <- glmmPQL(Con~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
 summary(m2)
 
-cor.test(counts.ag$Con, counts.ag$Het)
-m3 <- glm(Con ~ d.flowers + d.S, family = quasipoisson, data = counts.ag)
-summary(m3)
+car::Anova(m2, type = 2)
 
-ggplot(counts.ag, aes(dN1, Con)) + geom_point() + geom_smooth()
-ggplot(counts.ag, aes(d.S, Het)) + geom_point() + geom_smooth()
+cor.test(counts.ag$Con, counts.ag$Het)
+
+mean(counts.ag$d.S)
+mean(counts.ag$dN1)
+mean(counts.ag$d.flowers)
+
+m3 <- glmmPQL(Het~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
+summary(m3)
+car::Anova(m3, type = 2)
+
+ggplot(counts.ag, aes(dN1, Con)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Conspecific Neighbour") + ylab("Conspecific Pollen Deposition")
+
+
+ggplot(counts.ag, aes(d.S, Het)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Larrea tridentata") + ylab("Heterospecific Pollen Deposition")

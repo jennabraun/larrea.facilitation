@@ -38,6 +38,10 @@ AIC(l1, m1)
 
 m1 <- glmer(dec.total.time ~ flowering + microsite + flower.fov + (1|repID), family = Gamma(link = "log"), data = rtu.data)
 
+#m1 <- glmer(dec.total.time ~ flowering * microsite + flower.fov + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+
+car::Anova(m1, type =2)
+
 summary(m1)
 shapiro.test(resid(m1))
 plot(resid(m1))
@@ -52,7 +56,7 @@ t1 <- glmmTMB(dec.total.time ~ flowering * rtu.ag  + (1|repID), family = Gamma(l
 summary(t1)
 fixef(t1)
 
-ggplot(rtu.data, aes(rtu.ag, dec.total.time)) + geom_boxplot() + facet_grid(~flowering)
+ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)
 
 
 bee <- filter(rtu.data, rtu.ag == "bee")
@@ -65,7 +69,7 @@ l2 <- lmer(log(dec.total.time) ~   (1|repID), data = bee)
 
 anova(l1, l2)
 
-
+car::Anova(l1, type = 2)
 summary(l1)
 
 shapiro.test(bee$dec.total.time)
@@ -80,9 +84,14 @@ plot(resid(l1)~predict(l1))
 qq(resid(l1))
 
 summary(l1)
-
+car::Anova(l1)
 
 anova(l1, l2)
+
+
+
+
+
 
 rtu.data <- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 
@@ -120,7 +129,7 @@ summary(all)
 
 m1 <- all$bobyqa
 
-
+car::Anova(m1, type = 3)
 
 summary(m1)
 
@@ -232,12 +241,16 @@ anova(l1, l2)
 
 
 
-ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Proportion of flowers visited") + labs(fill="") + theme(legend.text = element_text(size = 16))
+ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Proportion of flowers visited") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
 
 
 
 
 
-filter(rtu.data, dec.total.time<1.5) %>% ggplot(aes(microsite, prop., fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Duration of visit (decimal time)") + labs(fill="") + theme(legend.text = element_text(size = 16))
+filter(rtu.data, dec.total.time<1.5) %>% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Duration of visit (decimal time)") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
+
+
+
+
 
 ggplot(rtu.data, aes(flowering, dec.total.time, fill = rtu.ag)) + geom_boxplot()

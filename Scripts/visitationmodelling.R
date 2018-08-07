@@ -456,3 +456,84 @@ plot_model(m2)
 shapiro.test(byrep$flowers.pot)
 ggplot(byrep, aes(flowers.pot)) + geom_density()
 kruskal.test(byrep$flowers.pot ~ byrep$flowering)
+
+
+
+
+#testing importance of covariates
+base <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+summary(base)
+
+c1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + understory.richness+ offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+summary(c1)
+c1.1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + understory.richness+ offset(log(dec.Length)) + (1|repID), family = "nbinom1", data = byrep)
+AIC(c1, c1.1, base)
+
+
+summary(c1.1)
+
+
+c2 <- glmer.nb(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), data = byrep)
+
+fm1 <- c2
+devfun <- update(fm1, devFunOnly=TRUE)
+if (isLMM(fm1)) {
+  pars <- getME(fm1,"theta")
+} else {
+  ## GLMM: requires both random and fixed parameters
+  pars <- getME(fm1, c("theta","fixef"))
+}
+if (require("numDeriv")) {
+  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
+  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
+  cat("scaled gradient:\n")
+  print(scgrad <- solve(chol(hess), grad))
+}
+
+m7.restart <- update(fm1, start=pars)
+all <- allFit(m7.restart)
+
+summary(all)
+
+
+
+
+
+
+
+
+
+
+
+
+
+c2 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+summary(c2)
+car::Anova(c2, Type = 2)
+anova(c2, c2)
+anova(c2)
+
+c2.0 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot  + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+anova(c2, c2.0)
+
+c2.v <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+summary(c2.v)
+
+library(MASS)
+
+
+glmmPQL(total.visits~flowering + treatment + flowers.pot + het.annual.floral.density + offset(log(dec.Length)), random = ~1|repID, family="neg.binomial", data = byrep)
+
+
+
+
+
+c2.1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = "nbinom1", data = byrep)
+AIC(c2, c2.1, base)
+summary(c2)
+
+c3 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+summary(c3)
+
+c2.v <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+summary(c2.v)

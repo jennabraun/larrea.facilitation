@@ -19,7 +19,7 @@ larrea <- left_join(larrea, cov, by = "repID")
 #fl.num <- select(larrea, repID, n.flowers) %>% distinct()
 #N.FLOWER is only applicable to post. it was just easier to join this way!
 
-
+count(larrea, pre.post)
 
 #how does floral visitation relate to #flowers
 fl <- filter(larrea, part.used == "flower")
@@ -51,6 +51,8 @@ count(larrea, pre.post)
 larrea %>% group_by(., pre.post) %>% count(., touch.plant)
 visitors <- fl %>% group_by(., pre.post, part.used) %>% count(., v.species)
 
+sum(visitors$n)
+
 repcounts <-  fl %>% group_by(., repID) %>% count(., species.clean)
 fl.count <- repcounts %>% group_by(., repID) %>% summarise(., sum = sum(n))
 
@@ -69,14 +71,25 @@ ggplot(repcounts.all, aes(width, n)) + geom_point()
 
 shapiro.test(repcounts.all$n)
 
+#modelling
+cov <- left_join(cov, fl.count, by = "repID")
+cov$n[is.na(cov$n)] <- 0
 
 
-m1 <- glm(data = repcounts.all, family = "poisson"(link="log"), n ~ n.flowers + height)
-m1
+
+m1 <- glm(data = cov, family = "quasipoisson"(link="log"), n ~ n.flowers)
+
 summary(m1)
+overdisp_fun(m1)
+car::Anova(m1)
 
-m2 <- glm(data = repcounts.all, family = "poisson"(link="log"), n.flowers ~ height)
+ggplot(cov, aes(n.flowers, n)) + geom_point(shape = 1) + geom_smooth(color = "black", size = 0.5) + theme_Publication() + xlab("Floral abundance") + ylab("Visits per 15 min")
+
+
+m2 <- glm(data = repcounts.all, family = "poisson"(link="log"), n.flowers ~ height) 
 summary(m2)
+
+
 cor.test(repcounts.all$n.flowers, repcounts.all$width)
 cor.test(repcounts.all$n.flowers, repcounts.all$height)
 cor.test(repcounts.all$width, repcounts.all$height)
