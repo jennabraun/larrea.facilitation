@@ -11,7 +11,7 @@ pre <- dplyr::select(pre, Date, mean.Solar, mean.Wind, mean.Temp, PlantID, treat
 pre <- arrange(pre, PlantID)
 pre <- filter(pre, PlantID != 266 & PlantID != 275 & PlantID != 276 & PlantID != 196)
 
-rii.data <- rii(pre, c(1,7), 8:9)
+rii.data <- rii.m(pre, c(1:7), 8:9)
 
 mean(rii.data$visits.per.hour)
 mean(rii.data$flowers.per.hour)
@@ -24,7 +24,7 @@ post <- dplyr::select(post, Date, mean.Solar, mean.Wind, mean.Temp, PlantID, tre
 post <- arrange(post, PlantID)
 post <- filter(post, PlantID != 198)
 post <- distinct(post)
-rii.data2 <- rii(post, c(1,7), 8:9)
+rii.data2 <- rii.m(post, c(1:7), 8:9)
 mean(rii.data2$visits.per.hour)
 mean(rii.data2$flowers.per.hour)
 
@@ -51,6 +51,7 @@ t.test(all.rii$flowers.per.hour)
 t.test(rii.data$visits.per.hour)
 t.test(rii.data2$visits.per.hour)
 t.test(rii.data2$flowers.per.hour)
+
 
 boxplot(all.rii$flowers.per.hour ~ all.rii$flowering)
 
@@ -86,30 +87,33 @@ mean(rii.open$visits.per.hour)
 
 t.test(rii.shrub$visits.per.hour)
 t.test(rii.open$visits.per.hour)
-t.test(rii.shrub$flowers.per.hour, rii.open$flowers.per.hour)
+t.test(shrub.sm$flowers.per.hour, rii.open$flowers.per.hour, paired = TRUE)
 
+shrub.sm <- rii.shrub[sample(1:nrow(rii.shrub), 54,
+                          replace=FALSE),] 
 
 #abundance RII
+metadata <- read.csv("Clean Data/metadata_nobeetle.csv")
 prepan <- filter(metadata, blooming == "pre")
-prepan <- dplyr::select(prepan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, blooming, abun, Species)
+prepan <- dplyr::select(prepan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, blooming, abun, Species, percent.cover)
 #split into 2 dataframes, rename the visitation columns and then rbind
 #there are 2 unmatched reps
-prepan <- arrange(pre, plant.id)
+prepan <- arrange(prepan, plant.id)
 pre <- filter(pre, PlantID != 266 & PlantID != 275 & PlantID != 276 & PlantID != 196)
 
 
-rii.data.pan <- rii(prepan, c(1,7), 8:9)
+rii.data.pan <- rii.m(prepan, c(1,7), 8:9)
+t.test(rii.data.pan$abun)
 t.test(rii.data.pan$Species)
 
-
 postpan <- filter(metadata, blooming =="post")
-postpan <- dplyr::select(postpan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, blooming, abun, Species)
+postpan <- dplyr::select(postpan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, blooming, abun, Species, percent.cover)
 
 postpan <- arrange(postpan, plant.id)
 #postpan <- filter(post, PlantID != 198)
 #postpan <- distinct(postpan)
 
-rii.data2pan <- rii(postpan, c(1,7), 8:9)
+rii.data2pan <- rii.m(postpan, c(1,7), 8:9)
 
 
 mean(rii.data2pan$abun)
@@ -134,7 +138,7 @@ all.rii <- rbind(rii.data, rii.data2)
 
 
 
-rii <- function(x, j, var)
+rii.m <- function(x, j, var)
 {
   #parse out shrub and open
   s1 <- subset(x, treatment == "shrub", select=var)
@@ -150,8 +154,8 @@ rii <- function(x, j, var)
 rii <- function(x, j, var)
 {
   #parse out shrub and open
-  s1 <- subset(x, treatment == "blooming", select=var)
-  o1 <- subset(x, treatment == "pre", select=var)
+  s1 <- subset(x, flowering == "bloom", select=var)
+  o1 <- subset(x, flowering == "pre", select=var)
   return1 <- (s1 - o1) / (s1+o1)  # Rii formula
   # attach factors
   x1 <- x[seq(1, nrow(x), by = 2),]
