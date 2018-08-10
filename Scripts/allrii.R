@@ -79,8 +79,8 @@ scale_colour_Publication <- function(...){
 
 
 byrep <- read.csv("byrep_cleaned.csv")
-metadata <- read.csv("metadata_nobeetle.csv")
-yesbeetle <- read.csv("metadata_yesbeetle.csv")
+metadata <- read.csv("Clean Data/metadata_nobeetle.csv")
+yesbeetle <- read.csv("Clean Data/metadata_yesbeetle.csv")
 pre <- filter(byrep, flowering == "pre")
 pre <- dplyr::select(pre, Date, mean.Solar, mean.Wind, mean.Temp, PlantID, treatment, flowering, understory.richness, visits.per.hour, flowers.per.hour)
 #split into 2 dataframes, rename the visitation columns and then rbind
