@@ -67,8 +67,8 @@ ggplot(incbeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() +
 
 ggplot(incbeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Arthopod Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
 
-
-ggplot(onlybeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Insect Abundance") + xlab("Microsite")
+#Just Melyridae
+ggplot(onlybeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Melyridae Abundance") + xlab("Microsite")
 
 ggplot(onlybeetle, aes(treatment, abun)) + geom_boxplot() + theme_Publication() + ylab("Melyridae Abundance") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
 
@@ -104,59 +104,13 @@ library(caret)
 str(byrtu)
 
 p <- byrtu %>% group_by(treatment, flowering, rtu) %>% dplyr::summarise(visits = sum(flowers.per.hour))
-x <- length(levels(factor(rtu)))
-x.colors <- hcl(h=seq(15,375,length=(x+1)),l=65,c=100)[1:x]
-x.colors[x] <- "white"
+
+
 
 ggplot(p, aes(treatment, visits)) + geom_bar(aes(fill = rtu), stat = "identity", colour = "black") + facet_grid(~flowering, labeller=labeller(flowering = labels))+ theme_Publication() + xlab("Microsite") + ylab("Total Flowers Visited") + labs(fill="") + theme(legend.text = element_text(size = 16))  + scale_fill_brewer(palette= "Spectral") + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
 
 
-library("RColorBrewer")
-
-brewer.pal(6, "Spectral")
 
 
-stat_summary(aes(x = treatment, y =total.flowers/dec.Length),
-             fun.y = sum,
-             geom = "col",
-             colour = "black")
+                                                           
 
-
-+ theme_Publication()
-
-
-
-
-test_down <- downSample(byrtu, byrtu$treatment)
-byrtu %>% group_by(treatment, flowering, rtu) %>% summarise(n())
-
-
-
-
-
-library(ggplot2)
-ggplot(test_down, aes(treatment, flowers.per.hour)) +
-  geom_bar(aes(fill = rtu), 
-           position = position_fill(reverse = F))
-#here
-
-
-
-ggplot(visits, aes(treatment, total.flowers)) + geom_bar(stat = "identity", weight = dec.Length) + facet_grid(~flowering,) + coord_flip()
-
-
-
-
-
-bees <-filter(byrtu, rtu == "bee" | rtu == "honeybee")  
-bees <- select(bees, uniID, everything())
-bees <- select(bees, -total.visits, -visits.per.hour, -flowers.per.hour, -X)
-bees <- spread(bees,rtu, total.flowers)
-bees <- mutate(bees, total.flowers = bee + honeybee) %>% select(-bee, -honeybee)                                                                
-
-
-
-
-boxplot(visits$flowers.per.hour~visits$treatment+visits$flowering, notch = TRUE)
-summary(fm1.restart)
-car::Anova(fm1.restart, type = 2)

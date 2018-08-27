@@ -5,6 +5,7 @@ library(ggplot2)
 library(lsmeans)
 library(vegan)
 source(system.file("utils", "allFit.R", package="lme4"))
+source("Scripts/functions.R")
 
 #Melyrid's excluded
 metadata <- read.csv("Clean Data/metadata_nobeetle.csv")
@@ -220,64 +221,10 @@ row.names(insects) <- insects$X
 insects <- select(insects, -X)
 plot(specaccum(insects), xlab = "# of samples", ylab = "# of species")
 
-metadata$date <- as.ordered(metadata$date)
 
 
 
 
-#Shannon's
-shapiro.test(beetle$box)
-shapiro.test(beetle$Simpson)
-shapiro.test(metadata$logH)
-
-
-ggplot(beetle, aes(Simpson)) + geom_density()
- 
-
-l1 <- lmer((H)^2 ~ blooming + treatment + (1|repID), data = beetle)
-l2 <- lmer((H)^2 ~ blooming * treatment + (1|repID), data = beetle)
-AIC(l1, l2)
-
-
-
-library(nlme)
-m1 <- lme((H)^2~blooming*treatment,random=~1|repID, data=beetle)
-anova(m1)
-m2 <- lme((H)^2~blooming+treatment,random=~1|repID, data=beetle)
-anova(m2)
-AIC(m1, l1)
-shapiro.test(resid(l1)) 
-shapiro.test(resid(l2)) 
-plot(resid(l1) ~ predict(l1))
-
-summary(l1)
-summary(l2)
-
-anova(l2)
-
-
-AIC(l1, l2)
-lsmeans(l2, pairwise~blooming*treatment)
-
-#m4 <- glmer.nb(H ~ blooming + treatment + (1|repID), data = beetle)
-#not sure what distribution to use
-ggplot(beetle, aes(box)) + geom_density()
-
-
-ggplot(beetle, aes(treatment, Species)) + geom_boxplot() + facet_grid(~blooming)
-ggplot(beetle, aes(treatment, Even)) + geom_boxplot()
-ggplot(beetle, aes(treatment, Simpson)) + geom_boxplot()
-summary(m4)
-
-
-simulate(m1)
-
-
-
-#syrphids
-pans <- read.csv("pantraps_long.csv")
-syr <- filter(pans, highest.rtu == "Scaeva/Eupeodes")
-ggplot(syr, aes(Quantity)) + geom_bar(stat = "identity", position = "dodge")
 
 
 

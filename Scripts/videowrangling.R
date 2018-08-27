@@ -129,7 +129,7 @@ write.csv(flr, "byobs_cleaned.csv")
 
 #I also want a dataframe grouped by rtu: Bees, syrphids, bombyliids, leps and others.
 
-rtu.key <- read.csv("rtus.csv")
+rtu.key <- read.csv("Clean Data/video_rtu_key.csv")
 rtu.data <- left_join(rtu.key, flr, by = "highest.rtu")
 rtu.data <- dplyr::select(rtu.data, rtu.ag, plant.id, microsite, flowering, video.date, video.length, flower.fov, total.time, flowers.visits, unique.fl.visited, uniID)                    
 count.rtu.fl <- rtu.data %>% group_by(uniID, rtu.ag) %>% summarise(total.flowers = sum(flowers.visits), total.visits = n()) 
@@ -181,10 +181,5 @@ all.rtu <- mutate(all.rtu, visits.per.hour = total.visits/dec.Length)
 all.rtu <- mutate(all.rtu, flowers.per.hour = total.flowers/dec.Length)
 
 all.rtu <- dplyr::select(all.rtu, -SecondaryID, -Cam)
-
-
-
-
-
 
 write.csv(all.rtu, "rtu_by_rep.csv")

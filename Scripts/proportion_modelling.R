@@ -9,7 +9,7 @@ library(jtools)
 source(system.file("utils", "allFit.R", package="lme4"))
 library(glmmTMB)
 library(tidyr)
-library(MASS)
+
 
 byobs <- read.csv("byobs_cleaned.csv")
 
@@ -63,7 +63,7 @@ bee <- filter(rtu.data, rtu.ag == "bee")
 l1 <- lmer(log(dec.total.time) ~  flowering + (1|repID), data = bee)
 shapiro.test(resid(l1))
 plot(resid(l1)~predict(l1))
-qq(resid(l1))
+
 
 l2 <- lmer(log(dec.total.time) ~   (1|repID), data = bee)
 
@@ -74,14 +74,14 @@ summary(l1)
 
 shapiro.test(bee$dec.total.time)
 ggplot(bee, aes(dec.total.time)) + geom_density()
-summary(m4)
+
 
 other <- filter(rtu.data, rtu.ag == "other")
 l1 <- lmer(log(dec.total.time) ~  flowering + (1|repID), data = other)
 l2 <- lmer(log(dec.total.time) ~  (1|repID), data = other)
 shapiro.test(resid(l1))
 plot(resid(l1)~predict(l1))
-qq(resid(l1))
+
 
 summary(l1)
 car::Anova(l1)

@@ -7,7 +7,7 @@ library(tidyr)
 library(lme4)
 library(sjPlot)
 library(lsmeans)
-library(devfun)
+
 
 se <- function(x) sd(x)/sqrt(length(x)) ## SE
 source(system.file("utils", "allFit.R", package="lme4"))

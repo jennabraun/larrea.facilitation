@@ -46,17 +46,7 @@ wide[is.na(wide)] <- 0
 
 write.csv(wide, "pantraps_wide.csv")
 
-#simplify rtu
-long.simp <- dplyr::select(long, uniID, sp.simp, Quantity)
-simp.ag <- long.simp %>% group_by(uniID, sp.simp) %>% summarise(Quantity = sum(Quantity)) 
-write.csv(long.simp, "pantraps_long_pol.csv")
 
-wide.simp <- simp.ag %>% spread(sp.simp, Quantity)
-#wide.simp$unknown <- wide.simp$"?"
-#wide.simp <- dplyr::select(wide.simp, -wide.simp$"?")
-wide.simp[is.na(wide.simp)] <- 0
-
-write.csv(wide.simp, "pantraps_wide_pol.csv")
 
 
 

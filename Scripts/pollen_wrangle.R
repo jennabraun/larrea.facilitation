@@ -3,7 +3,7 @@
 library(ggplot2)
 library(dplyr)
 library(lme4)
-library(MASS)
+
 
 counts <- read.csv("Clean Data/Pollen_Corrected.csv")
 cov <- read.csv("Clean Data/pollen_cov.csv")
@@ -27,21 +27,18 @@ t.test(counts.ag$Con ~ counts.ag$microsite.x)
 ggplot(data = counts.ag, (aes(Con))) + geom_freqpoly()
 shapiro.test(counts.ag$Con)
 
-m1 <- glmer.nb(Con ~ d.flowers + dN1 + (1|Flower/Rep), data = counts.ag)
-m2 <- glmer(Het ~ d.S + dN1 + (1|Flower/Rep), family = poisson(link = "log"), data = counts.ag)
-
-summary(m1)
-
-
-summary(m2)
+#m1 <- glmer.nb(Con ~ d.flowers + dN1 + (1|Flower/Rep), data = counts.ag)
+#m2 <- glmer(Het ~ d.S + dN1 + (1|Flower/Rep), family = poisson(link = "log"), data = counts.ag)
+#summary(m1)
+#summary(m2)
 
 counts.ag$Flower <- paste(counts.ag$Rep, counts.ag$Flower)
 counts.ag$Sample <- paste(counts.ag$Slide, counts.ag$Rep)
 counts.ag$d.S <- counts.ag$d.S %>% replace(is.na(.), 0)
-m1 <- glmer.nb(Con ~ d.flowers + dN1 + d.S + (1|Sample/Flower/Rep), data = counts.ag)
-summary(m1)
+#m1 <- glmer.nb(Con ~ d.flowers + dN1 + d.S + (1|Sample/Flower/Rep), data = counts.ag)
+#summary(m1)
 
-m2 <- glmmPQL(Con~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
+m2 <- MASS::glmmPQL(Con~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
 summary(m2)
 
 car::Anova(m2, type = 2)
@@ -52,7 +49,7 @@ mean(counts.ag$d.S)
 mean(counts.ag$dN1)
 mean(counts.ag$d.flowers)
 
-m3 <- glmmPQL(Het~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
+m3 <- MASS::glmmPQL(Het~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
 summary(m3)
 car::Anova(m3, type = 2)
 
