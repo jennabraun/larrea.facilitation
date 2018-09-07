@@ -27,6 +27,8 @@ fl.count <- fl %>% count(repID)
 
 lar.all <- left_join(cov, fl.count, by = "repID")
 
+#there are 58 because
+
 #attach neighbour density
 pans <- read.csv("Clean Data/metadata_yesbeetle.csv")
 pans$repID <- paste(pans$plant.id, pans$blooming)
@@ -69,7 +71,7 @@ ggplot(cov, aes(n.flowers, n)) + geom_point(shape = 1) + geom_smooth(color = "bl
 
 
 #cor.test(repcounts.all$n.flowers, repcounts.all$width)
-#cor.test(repcounts.all$n.flowers, repcounts.all$height)
+cor.test(lar.all$n.flowers, repcounts.all$height)
 #cor.test(repcounts.all$width, repcounts.all$height)
 
 

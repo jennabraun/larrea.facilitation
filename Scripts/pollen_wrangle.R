@@ -15,8 +15,8 @@ counts.ag <- counts %>% group_by(Rep, Slide) %>% summarise(Het = sum(Het.Grains)
 counts.ag <- counts.ag %>% mutate(., microsite = ifelse(substr(Rep,start = 1, stop = 1) == "S", "shrub", "open"))
 counts.ag$Flower <- substr(counts.ag$Slide, 1, 1)
 
-
-
+sum(counts.ag$Con)
+sum(counts.ag$Het)
 
 counts.ag <- right_join(counts.ag, cov, by = "Rep")
 
