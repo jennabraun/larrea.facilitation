@@ -103,6 +103,9 @@ rii.beetle <- rbind(pre.beetle, post.beetle)
 bootmean <- function(d, i) mean(d[i])
 
 flowers.rii <- boot(rii.visits$flowers.per.hour, bootmean, R=1000, stype="i", strata = rii.visits$PlantID)
+
+flowers.rii <- boot(rii.visits$flowers.per.hour, bootmean, R=1000, stype="i", strata = rii.visits$flowering)
+
 rich.rii <- boot(rii.visits$understory.richness, bootmean, R=1000, stype="i", strata = rii.visits$PlantID)
 abun.rii <- boot(rii.pan$abun, bootmean, R=1000, stype="i", strata = rii.pan$plant.id)
 percent.rii <- boot(rii.pan$percent.cover, bootmean, R=1000, stype="i", strata = rii.pan$plant.id)
@@ -156,6 +159,7 @@ rii.open.visits <- rii.b(open.visits, c(1:7), 8:10)
 
 rii.bloom.visits <- rbind(rii.shrub.visits, rii.open.visits)
 
+t.test(rii.bloom.visits$flowers.per.hour ~ rii.bloom.visits$treatment)
 #from melyridae excluded pan traps
 
 shrub.pan <- filter(metadata, treatment == "shrub")
@@ -215,6 +219,10 @@ rii.bloom.species <- rbind(rii.open.beet.pan, rii.shrub.beet.pan)
 
 
 flowers.rii <- boot(rii.bloom.visits$flowers.per.hour, bootmean, R=1000, stype="i", strata = rii.bloom.visits$PlantID)
+
+
+
+
 rich.rii <- boot(rii.bloom.visits$understory.richness, bootmean, R=1000, stype="i", strata = rii.bloom.visits$PlantID)
 abun.rii <- boot(rii.bloom.pan$abun, bootmean, R=1000, stype="i", strata = rii.bloom.pan$plant.id)
 percent.rii <- boot(rii.bloom.pan$percent.cover, bootmean, R=1000, stype="i", strata = rii.bloom.pan$plant.id)
@@ -267,5 +275,43 @@ ggplot(all.boot, aes(x=metric, y=means)) +
   geom_line() +
   geom_point() + facet_grid(~treatment, labeller=as_labeller(labels)) + scale_x_discrete(limits=c("visits", "abundance", "arth.rich", "percent.cover", "annual.richness"), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))
 
- 
+## calculate separate visitation pre/post by microsite bootstrapped
 
+post.visits <- filter(post.visits, PlantID != "196" & PlantID != "266" &  PlantID != "276" & PlantID != "275" & PlantID != "new1")
+
+pre.visits <- filter(pre.visits, PlantID != "198" & PlantID != "299" & PlantID != "303")
+
+
+
+
+rii.shrub.visits.mean <- boot(rii.shrub.visits$flowers.per.hour, bootmean, R=10000, stype="i")
+rii.open.visits.mean <- boot(rii.open.visits$flowers.per.hour, bootmean, R=10000, stype="i")
+
+ci.shrub.visits <- boot.ci(rii.shrub.visits.mean)
+bca.shrub.visits <- ci.shrub.visits$bca
+
+ci.open.visits <- boot.ci(rii.open.visits.mean)
+bca.open.visits <- ci.open.visits$bca
+
+ci.both <- rbind(bca.shrub.visits, bca.open.visits)
+
+means.both <- rbind(rii.shrub.visits.mean$t0, rii.open.visits.mean$t0)
+colnames(means.both) <- c("means")
+row.names(means.both) <- c("visits")
+
+t.test(means.both)
+
+all.boot.both <- cbind(means.both, ci.both)
+all.boot.both <- as.data.frame(all.boot.both)
+all.boot.both$treatment <- c("bloom")
+all.boot.both$metric <- c("shrub", "open")
+
+rii.visits.bloom <- rbind(rii.shrub.visits, rii.open.visits)
+
+a1<-aov(rii.visits.bloom$flowers.per.hour ~ rii.visits.bloom$treatment)
+summary(a1)
+
+ggplot(all.boot.both, aes(x=metric, y=means)) + 
+  geom_errorbar(aes(ymin=V5, ymax=V6), width=.1) +
+  geom_line() +
+  geom_point() + facet_grid(~treatment, labeller=as_labeller(labels)) + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))

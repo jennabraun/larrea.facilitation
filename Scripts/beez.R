@@ -73,7 +73,6 @@ row.names(env) <- env$uniID
 all.equal(rownames(insects), rownames(env))
 
 
-
 env$groups <- paste(env$blooming, env$treatment)
 insectkm <- kmeans(insects, centers = 4)
 groupskm = insectkm$cluster
