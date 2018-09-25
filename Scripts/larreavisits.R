@@ -71,7 +71,7 @@ ggplot(cov, aes(n.flowers, n)) + geom_point(shape = 1) + geom_smooth(color = "bl
 
 
 #cor.test(repcounts.all$n.flowers, repcounts.all$width)
-cor.test(lar.all$n.flowers, repcounts.all$height)
+cor.test(lar.all$n.flowers, lar.all$height)
 #cor.test(repcounts.all$width, repcounts.all$height)
 
 
