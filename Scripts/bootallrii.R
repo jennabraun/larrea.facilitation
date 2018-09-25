@@ -277,41 +277,38 @@ ggplot(all.boot, aes(x=metric, y=means)) +
 
 ## calculate separate visitation pre/post by microsite bootstrapped
 
-post.visits <- filter(post.visits, PlantID != "196" & PlantID != "266" &  PlantID != "276" & PlantID != "275" & PlantID != "new1")
+#post.visits <- filter(post.visits, PlantID != "196" & PlantID != "266" &  PlantID != "276" & PlantID != "275" & PlantID != "new1")
 
-pre.visits <- filter(pre.visits, PlantID != "198" & PlantID != "299" & PlantID != "303")
-
-
+#pre.visits <- filter(pre.visits, PlantID != "198" & PlantID != "299" & PlantID != "303")
 
 
-rii.shrub.visits.mean <- boot(rii.shrub.visits$flowers.per.hour, bootmean, R=10000, stype="i")
-rii.open.visits.mean <- boot(rii.open.visits$flowers.per.hour, bootmean, R=10000, stype="i")
 
-ci.shrub.visits <- boot.ci(rii.shrub.visits.mean)
-bca.shrub.visits <- ci.shrub.visits$bca
 
-ci.open.visits <- boot.ci(rii.open.visits.mean)
-bca.open.visits <- ci.open.visits$bca
+#rii.shrub.visits.mean <- boot(rii.shrub.visits$flowers.per.hour, bootmean, R=10000, stype="i")
+#rii.open.visits.mean <- boot(rii.open.visits$flowers.per.hour, bootmean, R=10000, stype="i")
 
-ci.both <- rbind(bca.shrub.visits, bca.open.visits)
+#ci.shrub.visits <- boot.ci(rii.shrub.visits.mean)
+#bca.shrub.visits <- ci.shrub.visits$bca
 
-means.both <- rbind(rii.shrub.visits.mean$t0, rii.open.visits.mean$t0)
-colnames(means.both) <- c("means")
-row.names(means.both) <- c("visits")
+#ci.open.visits <- boot.ci(rii.open.visits.mean)
+#bca.open.visits <- ci.open.visits$bca
 
-t.test(means.both)
+#ci.both <- rbind(bca.shrub.visits, bca.open.visits)
 
-all.boot.both <- cbind(means.both, ci.both)
-all.boot.both <- as.data.frame(all.boot.both)
-all.boot.both$treatment <- c("bloom")
-all.boot.both$metric <- c("shrub", "open")
+#means.both <- rbind(rii.shrub.visits.mean$t0, rii.open.visits.mean$t0)
+#colnames(means.both) <- c("means")
+#row.names(means.both) <- c("visits")
 
-rii.visits.bloom <- rbind(rii.shrub.visits, rii.open.visits)
+#t.test(means.both)
 
-a1<-aov(rii.visits.bloom$flowers.per.hour ~ rii.visits.bloom$treatment)
-summary(a1)
+#all.boot.both <- cbind(means.both, ci.both)
+#all.boot.both <- as.data.frame(all.boot.both)
+#all.boot.both$treatment <- c("bloom")
+#all.boot.both$metric <- c("shrub", "open")
 
-ggplot(all.boot.both, aes(x=metric, y=means)) + 
-  geom_errorbar(aes(ymin=V5, ymax=V6), width=.1) +
-  geom_line() +
-  geom_point() + facet_grid(~treatment, labeller=as_labeller(labels)) + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))
+#rii.visits.bloom <- rbind(rii.shrub.visits, rii.open.visits)
+
+#a1<-aov(rii.visits.bloom$flowers.per.hour ~ rii.visits.bloom$treatment)
+#summary(a1)
+
+#ggplot(all.boot.both, aes(x=metric, y=means)) + geom_errorbar(aes(ymin=V5, ymax=V6), width=.1) + geom_line() + geom_point() + facet_grid(~treatment, labeller=as_labeller(labels)) + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))

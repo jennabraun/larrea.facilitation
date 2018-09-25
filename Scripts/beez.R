@@ -1,37 +1,12 @@
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-
-#by rep
-#need new simplified key to reflect species additions
-long <- read.csv("Clean Data/pantraps_id.csv")
-long$highest.rtu <- gsub(" ","", long$highest.rtu)
-
-sum(long$Quantity)
-long$Microsite <- gsub(" ","", long$Microsite)
-long$uniID <- paste(long$Date, long$PlantID, long$Microsite)
-
-bees <- filter(long, Family == "Halictidae" | Family == "Apidae" | Family == "Megachilidae" | Family == "Melittidae" | Family == "Andrenidae")
+library(vegan)
 
 
+insects <- read.csv("Clean Data/wide_yesbeetle.csv")
+bees <- select(insects, 5:7,12,14,16,36,41,47,58,62,63,65,70,71,73,85,90,94)
 
-#long <- inner_join(long, sp.key, by = "highest.rtu")
-#for pinned specimens need to collapse & add up the Quantity
-long.fil <- dplyr::select(bees, uniID, highest.rtu, Quantity)
-long.ag <- long.fil %>% group_by(uniID, highest.rtu) %>% summarise(Quantity = sum(Quantity)) 
-
-
-wide <- long.ag %>% spread(highest.rtu, Quantity)
-#need to replace all 0 in data frame
-wide[is.na(wide)] <- 0
-
-insects <- wide
-insects <- as.data.frame(insects)
-ungroup(insects)
-
-row.names(insects) <- insects$uniID
-insects <- dplyr::select(insects, -uniID)
-#filter out beetles
 
 metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
 metadata <- filter(metadata, species != "buckhorn")
@@ -41,26 +16,33 @@ metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
 row.names(metadata) <- metadata$uniID
 
 
+beemeta <- metadata
 
-
-
-
-env$abun <- apply(insects, 1, sum)
+beemeta$abun <- apply(bees, 1, sum)
 #check for total
-sum(env$abun)
-H <- diversity(insects)
-simp <- diversity(insects, "simpson")
-S <- specnumber(insects)
+sum(beemeta$abun)
+H <- diversity(bees)
+simp <- diversity(bees, "simpson")
+S <- specnumber(bees)
 J <- H/log(S)
-env$H <- H
-env$Simpson <- simp
-env$Species <- S
-env$Even <- J
+beemeta$H <- H
+beemeta$Simpson <- simp
+beemeta$Species <- S
+beemeta$Even <- J
 
 
-t.test(env$abun ~ env$blooming)
+t.test(beemeta$Species ~ beemeta$blooming)
+
+library(lme4)
+m1 <- glmer.nb(Species ~ treatment + blooming + (1|plant.id), beemeta)
+summary(m1)
 
 
+library(glmmTMB)
+
+z1 <- glmmTMB(Species ~ treatment * blooming + (1|plant.id), data = beemeta, ziformula = ~1, family = nbinom2())
+
+summary(z1)
 
 library(indicspecies)
 env <- read.csv("Clean Data/metadata_yesbeetle.csv")
@@ -84,8 +66,34 @@ summary(indval)
 
 #ordination
 library(vegan)
-r1 <- rda(insects ~ treatment + blooming, env)
+r1 <- rda(bees ~ treatment + blooming, beemeta)
 plot(r1)
+r1
+anova.cca(r1, by = "terms")
+
+
+
+
+
+
+bees$total <- rowSums(bees) 
+bees <- filter(bees, total != 0)
+beemeta <- filter(beemeta, abun != 0)
+bees <- select(bees, -total)
+
+a1 <- adonis(bees ~ treatment + blooming, beemeta, permutations = 999, method = "bray", strata = "plant.id")
+
+summary(a1)
+a1
+
+
+
+
+
+
+
+
+
 with(env, levels(blooming))
 scl <- 3 ## scaling = 3
 colvec <- c("red2", "green4", "mediumblue")
@@ -116,9 +124,10 @@ b1 <- betadiver(insects)
 plot(b1)
 summary(b1)
 
-bdist <- vegdist(insects, method = "bray")
-b2 <- betadisper(bdist, env$blooming)
+bdist <- vegdist(bees, method = "bray")
+b2 <- betadisper(bdist, beemeta$blooming)
 anova(b2)
+summary(b2)
 
 b2 <- betadisper(dist[[insects]], env$blooming)
 
@@ -140,5 +149,8 @@ mod
 plot(mod)
 anova(mod)
 
-count.rtu <- bees %>% group_by(Flowering, highest.rtu) %>% count()
+count.rtu <- bees %>% group_by(blooming, highest.rtu) %>% count()
 ggplot(count.rtu, aes(highest.rtu, n, fill = Flowering)) + geom_bar(stat = "identity", position = "dodge") + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+

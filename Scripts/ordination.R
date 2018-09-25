@@ -46,7 +46,13 @@ summary(rda1)
 #plot(rda1, display = c("sp", "lc", "cn"))
 #coef(rda1)
 
+prda1 <-rda(insects, env$treatment, env$blooming,na = na.exclude)
 
+anova.cca(prda1)
+prda1
+
+summary(prda1)
+prda1
 #ordihull(rda2, env$treatment)
 
 #rda2 <- rda(insects ~ blooming + treatment, env, scale = TRUE, na = na.exclude)
@@ -62,5 +68,18 @@ indval = multipatt(insects, env$groups, control = how(nperm=999))
 summary(indval)
 plot(indval)
 
+all <- cbind(insects, env)
+pre.all <- filter(all, blooming == "pre")
+post.all <- filter(all, blooming == "post")
+pre.insects <- select(pre.all, 1:118)
+pre.env <- select(pre.all, 119:141)
+post.insects <- select(post.all, 1:118)
+post.env <- select(post.all, 119:141)
 
 
+pre.rda <- rda(pre.insects ~ treatment + percent.cover + understory.richness + het.annual.floral.density, pre.env, na = na.exclude)
+pre.rda
+anova.cca(pre.rda, by = "terms")
+post.rda <- rda(post.insects ~ treatment + percent.cover + understory.richness + het.annual.floral.density, post.env, na = na.exclude)
+post.rda
+anova.cca(post.rda, by = "terms")
