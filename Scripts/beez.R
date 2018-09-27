@@ -37,12 +37,19 @@ library(lme4)
 m1 <- glmer.nb(Species ~ treatment + blooming + (1|plant.id), beemeta)
 summary(m1)
 
+car::Anova(m1, type = 2)
+
+m2 <- glmer.nb(Species ~ treatment * blooming + (1|plant.id), beemeta)
+summary(m2)
 
 library(glmmTMB)
 
 z1 <- glmmTMB(Species ~ treatment * blooming + (1|plant.id), data = beemeta, ziformula = ~1, family = nbinom2())
 
 summary(z1)
+
+
+AIC(m1, z1)
 
 library(indicspecies)
 env <- read.csv("Clean Data/metadata_yesbeetle.csv")

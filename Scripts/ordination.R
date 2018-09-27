@@ -80,6 +80,9 @@ post.env <- select(post.all, 119:141)
 pre.rda <- rda(pre.insects ~ treatment + percent.cover + understory.richness + het.annual.floral.density, pre.env, na = na.exclude)
 pre.rda
 anova.cca(pre.rda, by = "terms")
+anova.cca(pre.rda)
+
 post.rda <- rda(post.insects ~ treatment + percent.cover + understory.richness + het.annual.floral.density, post.env, na = na.exclude)
 post.rda
 anova.cca(post.rda, by = "terms")
+anova.cca(post.rda)
