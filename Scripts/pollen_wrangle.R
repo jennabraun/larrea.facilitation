@@ -53,7 +53,9 @@ m3 <- MASS::glmmPQL(Het~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = qu
 summary(m3)
 car::Anova(m3, type = 2)
 
-ggplot(counts.ag, aes(dN1, Con)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Conspecific Neighbour") + ylab("Conspecific Pollen Deposition")
+p3 <- ggplot(counts.ag, aes(dN1, Con)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Conspecific Neighbour") + ylab("Conspecific Pollen Deposition")
 
 
-ggplot(counts.ag, aes(d.S, Het)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Larrea tridentata") + ylab("Heterospecific Pollen Deposition")
+p4 <- ggplot(counts.ag, aes(d.S, Het)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Larrea tridentata") + ylab("Heterospecific Pollen Deposition")
+
+plot_grid(p3, p4, labels = c("A", "B"), align = "h")

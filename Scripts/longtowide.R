@@ -5,7 +5,7 @@ library(tidyr)
 
 #by rep
 #need new simplified key to reflect species additions
-long <- read.csv("Clean Data/pantraps_id.csv")
+long <- read.csv("Raw Data/pantraps_ID.csv")
 long$highest.rtu <- gsub(" ","", long$highest.rtu)
 
 
