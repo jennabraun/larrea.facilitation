@@ -33,9 +33,6 @@ rii.b <- function(x, j, var)
 }
 
 
-
-
-
 byrep <- read.csv("byrep_cleaned.csv")
 metadata <- read.csv("Clean Data/metadata_nobeetle.csv")
 yesbeetle <- read.csv("Clean Data/metadata_yesbeetle.csv")
@@ -104,8 +101,6 @@ bootmean <- function(d, i) mean(d[i])
 
 flowers.rii <- boot(rii.visits$flowers.per.hour, bootmean, R=1000, stype="i", strata = rii.visits$PlantID)
 
-flowers.rii <- boot(rii.visits$flowers.per.hour, bootmean, R=1000, stype="i", strata = rii.visits$flowering)
-
 rich.rii <- boot(rii.visits$understory.richness, bootmean, R=1000, stype="i", strata = rii.visits$PlantID)
 abun.rii <- boot(rii.pan$abun, bootmean, R=1000, stype="i", strata = rii.pan$plant.id)
 percent.rii <- boot(rii.pan$percent.cover, bootmean, R=1000, stype="i", strata = rii.pan$plant.id)
@@ -160,6 +155,8 @@ rii.open.visits <- rii.b(open.visits, c(1:7), 8:10)
 rii.bloom.visits <- rbind(rii.shrub.visits, rii.open.visits)
 
 t.test(rii.bloom.visits$flowers.per.hour ~ rii.bloom.visits$treatment)
+
+
 #from melyridae excluded pan traps
 
 shrub.pan <- filter(metadata, treatment == "shrub")
@@ -184,6 +181,8 @@ open.pan <- arrange(open.pan, plant.id)
 #postpan <- distinct(postpan)
 
 open.pan <- filter(open.pan, plant.id != 104 & plant.id != 114 & plant.id != 182 & plant.id != 261 & plant.id != 263 & plant.id != 284 & plant.id != 285& plant.id != 287& plant.id != 301& plant.id != 302& plant.id != 303& plant.id != 299)
+
+
 
 rii.open.pan <- rii.b(open.pan, c(1:7), 8:9)
 rii.shrub.pan <- rii.b(shrub.pan, c(1:7), 8:9)
@@ -222,10 +221,11 @@ flowers.rii <- boot(rii.bloom.visits$flowers.per.hour, bootmean, R=1000, stype="
 
 
 
-
 rich.rii <- boot(rii.bloom.visits$understory.richness, bootmean, R=1000, stype="i", strata = rii.bloom.visits$PlantID)
 abun.rii <- boot(rii.bloom.pan$abun, bootmean, R=1000, stype="i", strata = rii.bloom.pan$plant.id)
+
 percent.rii <- boot(rii.bloom.pan$percent.cover, bootmean, R=1000, stype="i", strata = rii.bloom.pan$plant.id)
+
 rich.arth.rii <- boot(rii.bloom.species$Species, bootmean, R=1000, stype="i", strata = rii.bloom.species$plant.id)
 
 ci.flowers <- boot.ci(flowers.rii)
@@ -257,7 +257,7 @@ all.boot.bloom$treatment <- c("bloom")
 
 all.boot <- rbind(all.boot, all.boot.bloom)
 
-all.boot$metric <- c("visits", "annual.richness", "abundance", "percent.cover", "arth.rich", "visits", "annual.richness", "abundance", "percent.cover", "arth.rich")
+all.boot$metric <- c("visits", "annual.richness", "abundance", "percent.cover", "arth.rich")# "visits", "annual.richness", "abundance", "percent.cover", "arth.rich")
 
 all.boot$treatment <- as.factor(all.boot$treatment)
 all.boot$treatment <- relevel(all.boot$treatment, "microsite", "bloom")
@@ -273,42 +273,73 @@ labels <- c("microsite" = "Microsite","bloom" ="Blooming")
 ggplot(all.boot, aes(x=metric, y=means)) + 
   geom_errorbar(aes(ymin=V5, ymax=V6), width=.1) +
   geom_line() +
-  geom_point() + facet_grid(~treatment, labeller=as_labeller(labels)) + scale_x_discrete(limits=c("visits", "abundance", "arth.rich", "percent.cover", "annual.richness"), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))
+  geom_point() + scale_x_discrete(limits=c("visits", "abundance", "arth.rich", "percent.cover", "annual.richness"), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))
 
 ## calculate separate visitation pre/post by microsite bootstrapped
 
-#post.visits <- filter(post.visits, PlantID != "196" & PlantID != "266" &  PlantID != "276" & PlantID != "275" & PlantID != "new1")
-
-#pre.visits <- filter(pre.visits, PlantID != "198" & PlantID != "299" & PlantID != "303")
 
 
+shrub.visits.rii <- boot(rii.shrub.visits$flowers.per.hour, bootmean, R=10000, stype="i")
+open.visits.rii <- boot(rii.open.visits$flowers.per.hour, bootmean, R=10000, stype="i")
 
 
-#rii.shrub.visits.mean <- boot(rii.shrub.visits$flowers.per.hour, bootmean, R=10000, stype="i")
-#rii.open.visits.mean <- boot(rii.open.visits$flowers.per.hour, bootmean, R=10000, stype="i")
+shrub.cover.rii <- boot(rii.shrub.pan$percent.cover, bootmean, R=10000, stype="i")
+open.cover.rii <- boot(rii.open.pan$percent.cover, bootmean, R=10000, stype="i")
 
-#ci.shrub.visits <- boot.ci(rii.shrub.visits.mean)
-#bca.shrub.visits <- ci.shrub.visits$bca
+shrub.rich.rii <- boot(rii.shrub.visits$understory.richness, bootmean, R=10000, stype="i")
+open.rich.rii <- boot(rii.open.visits$understory.richness, bootmean, R=10000, stype="i")
 
-#ci.open.visits <- boot.ci(rii.open.visits.mean)
-#bca.open.visits <- ci.open.visits$bca
+shrub.abun.rii <- boot(rii.shrub.pan$abun, bootmean, R=10000, stype="i")
+open.abun.rii <- boot(rii.open.pan$abun, bootmean, R=10000, stype="i")
 
-#ci.both <- rbind(bca.shrub.visits, bca.open.visits)
+shrub.arth.rich.rii <- boot(rii.shrub.beet.pan$Species, bootmean, R=10000, stype="i")
+open.arth.rich.rii <- boot(rii.open.beet.pan$Species, bootmean, R=10000, stype="i")
 
-#means.both <- rbind(rii.shrub.visits.mean$t0, rii.open.visits.mean$t0)
-#colnames(means.both) <- c("means")
-#row.names(means.both) <- c("visits")
 
-#t.test(means.both)
+ci.shrub.visits <- boot.ci(shrub.visits.rii)
+bca.shrub.visits <- ci.shrub.visits$bca
 
-#all.boot.both <- cbind(means.both, ci.both)
-#all.boot.both <- as.data.frame(all.boot.both)
-#all.boot.both$treatment <- c("bloom")
-#all.boot.both$metric <- c("shrub", "open")
+ci.open.visits <- boot.ci(open.visits.rii)
+bca.open.visits <- ci.open.visits$bca
 
-#rii.visits.bloom <- rbind(rii.shrub.visits, rii.open.visits)
+ci.shrub.cover <- boot.ci(shrub.cover.rii)
+bca.shrub.cover <- ci.shrub.cover$bca
+ci.open.cover <- boot.ci(open.cover.rii)
+bca.open.cover <- ci.open.cover$bca
 
-#a1<-aov(rii.visits.bloom$flowers.per.hour ~ rii.visits.bloom$treatment)
+ci.shrub.rich <- boot.ci(shrub.rich.rii)
+bca.shrub.rich <- ci.shrub.rich$bca
+ci.open.rich <- boot.ci(open.rich.rii)
+bca.open.rich <- ci.open.rich$bca
+
+ci.shrub.abun <- boot.ci(shrub.abun.rii)
+bca.shrub.abun <- ci.shrub.abun$bca
+ci.open.abun <- boot.ci(open.abun.rii)
+bca.open.abun <- ci.open.abun$bca
+
+ci.shrub.arth.rich <- boot.ci(shrub.arth.rich.rii)
+bca.shrub.arth.rich <- ci.shrub.arth.rich$bca
+ci.open.arth.rich <- boot.ci(open.arth.rich.rii)
+bca.open.arth.rich <- ci.open.arth.rich$bca
+
+
+means.all <- rbind(shrub.visits.rii$t0, open.visits.rii$t0,shrub.cover.rii$t0, open.cover.rii$t0, shrub.rich.rii$t0, open.rich.rii$t0, shrub.abun.rii$t0, open.abun.rii$t0, shrub.arth.rich.rii$t0, open.arth.rich.rii$t0)
+colnames(means.all) <- c("means")
+ci.all <- rbind(bca.shrub.visits, bca.open.visits, bca.shrub.cover, bca.open.cover, bca.shrub.rich, bca.open.rich, bca.shrub.abun, bca.open.abun, bca.shrub.arth.rich, bca.open.arth.rich)
+
+
+all.new <- cbind(means.all, ci.all)
+all.new <- as.data.frame(all.new)
+
+all.new$Microsite <- c("shrub", "open", "shrub", "open","shrub", "open","shrub", "open","shrub", "open")
+all.new$metric <- c("visits", "visits", "percent.cover", "percent.cover", "annual.richness", "annual.richness", "arth.abundance", "arth.abundance", "arth.richness", "arth.richness")
+
+
+all.new$metric <- as.factor(all.new$metric)
+all.new$metric <- relevel(all.new$metric, "visits", "arth.abundance", "arth.richness", "percent.cover", "annual.richness")
+
+metrics <- c("Floral Visits \n per Hour", "Arthropod \n Abundance", "Arthropod \n Richness", "Annual Cover", "Annual Species \n Richness")
+
 #summary(a1)
 
-#ggplot(all.boot.both, aes(x=metric, y=means)) + geom_errorbar(aes(ymin=V5, ymax=V6), width=.1) + geom_line() + geom_point() + facet_grid(~treatment, labeller=as_labeller(labels)) + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))
+ggplot(all.new, aes(x=metric, y=means, color = Microsite)) + geom_errorbar(aes(ymin=V5, ymax=V6), width=.1, position=position_dodge(width=0.3)) + geom_line(position=position_dodge(width=0.3), linetype = Microsite) + geom_point(position=position_dodge(width=0.3)) + scale_linetype_manual(values=c("twodash", "dotted")) + scale_x_discrete(limits=c("visits", "arth.abundance", "arth.richness", "percent.cover", "annual.richness"), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0)) + scale_color_manual(values = c("black", "darkgreen"))
