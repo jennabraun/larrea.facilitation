@@ -66,7 +66,7 @@ prda1
 env$groups <- paste(env$blooming, env$treatment)
 indval = multipatt(insects, env$groups, control = how(nperm=999))
 summary(indval)
-plot(indval)
+
 
 all <- cbind(insects, env)
 pre.all <- filter(all, blooming == "pre")
@@ -86,3 +86,7 @@ post.rda <- rda(post.insects ~ treatment + percent.cover + understory.richness +
 post.rda
 anova.cca(post.rda, by = "terms")
 anova.cca(post.rda)
+
+
+
+

@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(boot)
-
+library(cowplot)
 rii.m <- function(x, j, var)
 {
   #parse out shrub and open
@@ -349,6 +349,4 @@ plot_grid(p1, p2, labels = c("A", "B"), align = "h")
 
 
 
-png(file="mygraphic.png",width=1222,height=750)
-plot(x=rnorm(10),y=rnorm(10),main="example")
-dev.off()
+

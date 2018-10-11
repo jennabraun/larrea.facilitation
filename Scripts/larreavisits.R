@@ -66,6 +66,12 @@ m1 <- glm(data = cov, family = "quasipoisson"(link="log"), n ~ n.flowers)
 summary(m1)
 #overdisp_fun(m1)
 car::Anova(m1)
+m2 <- glm(data = cov, family = "quasipoisson"(link="log"), n ~ n.flowers + height)
+m3 <- glm(data = cov, family = "quasipoisson"(link="log"), n ~ height)
+
+summary(m2)
+summary(m3)
+car::Anova(m3)
 
 ggplot(cov, aes(n.flowers, n)) + geom_point(shape = 1) + geom_smooth(color = "black", size = 0.5) + theme_Publication() + xlab("Floral abundance") + ylab("Visits per 15 min")
 

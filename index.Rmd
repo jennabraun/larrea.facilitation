@@ -114,3 +114,8 @@ This code bootstraps 95% confidence intervals
 ```{r, code = readLines("Scripts/bootallrii.R")}
 ```
 
+#Ordination
+This codes for the RDA 
+```{r, code = readLines("Scripts/ordination.R")}
+```
+
