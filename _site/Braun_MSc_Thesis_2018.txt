@@ -1,0 +1,1167 @@
+
+
+POLLINATOR-MEDIATED INTERACTIONS OF FOUNDATION PLANTS IN THE MOJAVE DESERT
+
+
+
+
+
+
+JENNA BRAUN
+
+
+
+A THESIS SUBMITTED TO THE FACULTY OF GRADUATE STUDIES IN PARTIAL 
+FULFILLMENT OF THE REQUIREMENTS FOR THE DEGREE OF MASTER OF SCIENCE
+
+
+
+
+
+
+GRADUATE PROGRAM IN BIOLOGY, YORK UNIVERSITY, TORONTO, CANADA
+OCTOBER 2018
+
+
+
+
+© Jenna Braun 2018
+
+Abstract
+Pollination facilitation is an indirect interaction whereby one plant species positively influences the reproductive success of another plant species through pollinators. This thesis contributes to the field of pollination facilitation using two approaches. First, we conducted a systematic review of the experimental pollination facilitation literature. We found that the field of pollination facilitation advanced seven mechanistic hypotheses which we synthesized into a conceptual framework to summarize the extent of mechanisms tested to date. Co-flowering interactions including the magnet species effect are the most frequently studied; however, the capacity for plants to facilitate the pollination of other plants through pathways that do not require co-blooming is an important research gap identified in this literature. We addressed several research gaps identified by the literature review. We tested the capacity for the dominant, foundation shrub Larrea tridentata to facilitate its annual understory. We separated blooming and non-floral interactions while incorporating the temporal dimension by tracking pollinator visitation to the understory as L. tridentata went through spring flowering phenology. L. tridentata interfered with the pollination of Malacothrix glabrata before it bloomed, and visitation was significantly reduced with blooming. L. tridentata supported plant and arthropod communities while creating locally stable microclimates demonstrating that positive and negative effects by foundation plants occur simultaneously. This project contributes to a better understanding of the underlying mechanisms driving interactions whole in a critically understudied arid environment.
+
+
+
+
+
+
+
+
+Acknowledgements
+
+Thank you to my advisor Dr. Christopher Lortie for providing guidance and advice, fielding countless changes to my experimental designs and always being so supportive and encouraging of my many ideas. Thanks also to Dr. Amro Zayed for providing solid, constructive feedback and advice for this project. 
+I would like to thank my partner Brian Tammi for his extensive support over the last two years: for listening to me talk about bees for endless hours, always making sure I eat dinner and bringing snacks all the way to the Mojave National Preserve. Without his help I don’t think I would have got through this all. 
+Thank you to everyone in the ecoblender lab and especially Alex Filazzola for providing input, brainstorming ideas and being willing to jump out of a car into a sandstorm. Thanks to Daisy Goulart for providing field assistance in 2017 and enduring seemingly endless windstorms. Thanks also to everyone that helped me process data: Stephanie Haas, Diana Pik, Charlie West, Shobika Baskaran and Shima Sadat Rafizadeh Amirsalami. Thanks to Ally Ruttan for giving me such helpful advice from her experiences. 
+Finally thank you to Dr. Tasha LaDoux and Dr. Jim Andre of the Sweeney Granites Desert Research Centre (University of California, Riverside) for hosting me over both field seasons, providing expert advice, introducing me to flora of the area and inviting me over to watch Star Wars. It is such a fantastic place.
+
+
+
+
+
+
+
+
+
+Table of Contents
+Abstract	ii
+Acknowledgements	iii
+List of Tables	vi
+List of Figures	viii
+General Introduction	1
+Chapter One. Finding the bees knees: a conceptual framework and systematic review of the mechanisms of pollinator-mediated facilitation.	6
+Abstract	7
+Introduction	8
+Conceptual framework	10
+Methods	12
+Systematic Review	12
+Data Analysis	13
+Results	14
+Discussion	15
+Research gaps in pollination facilitation studies	16
+Scale dependent effects are highly variable	19
+Conclusions	20
+Literature Cited	21
+Figures and Tables	28
+Supplemental Information	34
+Appendix A - List of studies included in systematic review	38
+Chapter 2: Disentangling the drivers and trade-offs of pollinator-mediated interactions between creosote bush (Larrea tridentata) and desert dandelion (Malacothrix glabrata).	44
+Abstract	45
+Introduction	46
+Methods	48
+Study design	50
+Statistical Analysis	53
+Results	55
+Shrub effects on visitation rates and pollen deposition to phytometer species	55
+Community-level shrub effects	56
+Discussion	58
+Conclusions	61
+Literature Cited	62
+Figures	70
+Tables	76
+Appendix A – Model validation and full models	79
+Appendix B – Arthropod RTU list	82
+Appendix C – Sensitivity of arthropod community models	85
+Appendix D: Post-hoc contrasts	86
+Synthesis and General Conclusions	88
+Literature Cited	91
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+List of Tables
+
+Chapter 1
+Table 1: A summary of the mechanistic hypotheses generated by a systematic review of the pollination facilitation literature, a concise definition for each, the proposed umbrella mechanism under which it falls and examples of reference articles.
+Chapter 2
+Table 1: Results from quasi-Poisson GLMM (glmmPQL, MASS) testing for RTU specific responses to blooming stage. The log-transformed length of video was used as an offset as a measure of exposure. The repID (shrub ID + microsite) was used a random effect to account for the repeated measures study design. Post hoc comparisons (lsmeans) contrasting RTU specific responses between pre-blooming and blooming were done on significant interactions. Significance was denoted at ? = 0.05 and shown in bold.   
+Table 2: Results from GLMM (glmmTMB) testing for the influence of heterospecific annual floral density and shrub blooming density on the frequency of pollinator floral visits and foraging bouts. The log-transformed length of video was used as an offset as a measure of exposure. The repID (shrub ID + microsite) was used a random effect in both models to account for the repeated measures study design. Significance was denoted at ? = 0.05 and shown in bold.
+Table 3: Results from Gamma GLMM (lme4, glmer.nb) testing for differences foraging duration and the proportion of flowers visited per visit in response to microsite (shrub and open) and blooming stage (pre-blooming and full bloom). The repID (shrub ID + microsite) was used a random effect in both models to account for the repeated measures study design. Significance was denoted at ? = 0.05 and shown in bold. Non-significant interactions were excluded from all models.
+Table 4: Results from quasi-Poisson GLMM (MASS, glmmPQL) testing for the influence of L. tridentata, and two metrics of conspecific density on conspecific and heterospecific pollen deposition. Sample ID nested in flower ID nested in plant was used as a random effect to account for multiples samples coming from individual plants. Significance was denoted at ? = 0.05 and shown in bold.
+Table 5: Results from GLMM testing for differences in arthopod, bee and plant communities in response to response to microsite (shrub and open) and blooming stage (full bloom and pre-blooming). Melyridae beetles comprised 1217/3384 individuals, models were fit with them excluded, included and individually. The repID (shrub ID + microsite) was used a random effect in all models to account for the repeated measures study design. Significance was denoted at ? = 0.05 and shown in bold.
+
+
+Table 6: Permutation test ANOVA on RDA testing for changes in influence of shrub microsite and understory annual vegetation on arthropod community composition with phenological shift into flowering of Larrea tridentata. The constraining variables of the pre-blooming RDA explained 12.5% of the total variation and the blooming RDA explained 4%.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+List of Figures
+
+Chapter 1
+Figure 1: A conceptual framework to model the mechanisms and hypotheses associated with pollinator-mediated facilitation. The concepts were extracted from a systematic review of 100 studies on this topic. The seven mechanistic hypotheses tested within the literature can be categorized into four umbrella hypotheses. Refer to Table 1 for a description of the seven mechanistic hypotheses. Each mechanism (A) can lead to a behavioral or demographic responses (B) that increases pollinator visitation or conspecific pollen deposition (C) that leads to an increase in fitness for another plant species (D).
+Figure 2: A map showing geographic distribution of studies testing for pollination facilitation. The islands Seychelles and Mauritius each have one publication but are not visible on this map.
+Figure 3: The frequency of pollination facilitation studies tested in each ecosystem type and their corresponding scale of study.
+Figure 4: The number of studies testing each mechanism and their corresponding scale of study.
+Figure 5: The number of associated studies based on spatial grain size and each testable mechanism.
+Chapter 2
+Figure 1: The contribution of each recognizable taxonomic group (RTU) to the total number of flowers visited (weighted by video length) for each treatment.
+Figure 2: RTU specific responses in foraging duration before and during blooming at each microsite. The foraging duration did not vary with microsite but showed a significant decrease with blooming. This was driven by pollinators in the ‘other’ category, which was comprised of primarily beetles and muscoid flies.
+Figure 3: Heterospecific pollen deposition on the stigmas of Malacothrix glabrata increased with distance (in cm). There was a marginally significant effect of distance to nearest M. glabrata on conspecific pollen deposition. Mean distance to shrub was 1.83 m, mean distance to nearest conspecific neighbour was 0.79 m and mean number of flowers of M. glabrata was 7.
+Figure 4: Pollinator visitation rates increased with the number of Larrea tridentata flowers.
+Figure 5: Relative Interaction Index (RII) values for five community interaction metrics among two treatments: A) Microsite (Shrub – Open) B) Blooming (Pre-Blooming – Blooming). Values shown are means ± 95% bootstrapped confidence intervals. Values greater than zero indicate positive effects, while values that are significantly lower than zero indicate negative effects. Values that are not significantly different from zero are neutral.
+Figure 6: Hobo Pendant Data Loggers recorded microenvironmental conditions for the extent of the study period. Values shown are mean hourly temperatures for all microsites (eight open and eight shrub) between March 17th and May 14th.  
+
+
+
+
+
+
+
+
+
+General Introduction
+
+Interactions for pollination between plants directly involves reproductive success forming an interface between ecology and evolutionary biology that has captured the attention of biologists for more than 100 years. From an evolutionary perspective, mutualisms between plants and pollinators are adaptations evolved to meet the pollen dispersal needs of plants and the energy requirements of pollinators. These co-adaptations are at their most extreme within obligate mutualisms, e.g. between figs (Ficus) and wasps in the family Agaonidae, who are both pollinators and obligate seed parasites (Cook and Rasplus, 2003; Kjellberg et al., 2001). However, these strong examples of co-speciation are relatively rare. Plants frequently share pollinators (Mitchell et al., 2009; Waser et al., 1996) and pollination syndromes are dynamic (Waser et al., 1996). Plants can also impact the pollination of other plant species without sharing pollinators by providing habitat to another species’ pollinator (Hansen et al., 2007) or by shading a neighbour (McKinney and Goodell, 2010). Plant-pollinator mutualisms physically take place within natural communities and are embedded within complex webs of interactions (Montoya et al., 2006). Therefore, plant-pollinator interactions are not only the outcome of co-evolution between the direct participants; they also reflect interactions within the surrounding community. 
+Competition has conceptually dominated the field of ecology for most of the last century. More recently this dominance has been challenged and facilitation is now recognized as a fundamental process that contributes to function of plant communities (Bruno et al., 2003; Callaway, 1995). Pollinator-mediated facilitation is any interaction where one plant species positively influences the reproductive success of another plant species via pollinators. It is now recognized that these interactions form a continuum from competition to facilitation (Rathcke, 1983). This shift began with early theoretical work that suggested morphologically similar plants can maintain pollinator interest by increasing the functional size of the floral display (Macior, 1971). This was followed up by theoretical models showing facilitation can occur if pollinators do not distinguish between the plants (Bobisud and Neuhaus, 1975). The first empirical support for pollinator-mediated facilitation was provided when hawkweeds (Hieracium) were shown to receive more visits in mixed stands than alone (Thomson, 1978). Laverty (1992) documented the facilitation of non-rewarding orchids by rewarding species via the magnet species effect, where a particularly attractive species facilitates its less attractive neighbours by increasing local pollinator abundances. More recently, increases in floral diversity were shown to result in facilitation, demonstrating that morphological similarity is not a requirement for facilitation (Ghazoul, 2006). The majority of empirical evidence comes from pairwise interactions, however positive interactions can be diffuse and in some communities, positive pollinator-mediated interactions may even dominate (Hegland et al., 2008). 
+Understanding the ecological and individual contexts that mediate the outcome of pollinator-mediated interactions is necessary research to address currently rising challenges in conservation and applied ecology. Pollination services are foundational to the self-sufficiency of ecosystems, but pollinators are undergoing a decline globally (NRC, 2007; Potts et al., 2010). Recent estimates report that 87.5% of global angiosperms are animal pollinated (Ollerton et al., 2011). Under declining pollinator availability competition between plants may intensify, potentially leading to competitive displacement or loss of species. Therefore, understanding how plants interact via pollinators is necessary to understand the potential impacts of these declines. Climate change is driving geographic shifts in species distributions leading to novel interactions between species (Hegland et al., 2009). The increasingly early onset of seasonal shifts may cause phenological mismatches between plants and their pollinators (Kudo and Ida, 2013). Experimental evidence suggests that early flowering species have an increased risk of decreased visitation but that many species experienced no mismatch (Rafferty and Ives, 2011). Mismatches are not an issue if another pollinator or interactor can fill its place (CaraDonna et al., 2017). Thus, studying the outcomes of pollinator sharing and how interactions shift with phenology will better help us understand the implications of shifting climates on pollination services. Another important source of novel interactions is introduced and invasive species. Interactions for pollination provide a framework to explain the impact of invasive plant species on the fitness of native species. One meta-analysis concluded that negative impacts of invasive species on the pollination of natives are more frequent (Morales and Traveset, 2009). However, another recent meta-analysis found concluded that there are no negative overarching effects of invasives (Charlebois and Sargent, 2017). This ‘evening out’ of interaction signs again highlights that interactions are a continuum from negative to positive, indicating the need to better understand underlying mechanisms.
+The overarching objective of this thesis is to examine the mechanisms of pollinator-mediated interactions and contrast their relative importance to the plant and arthropod communities associated with foundation plants. The first chapter of this thesis is a systematic review of the experimental pollination facilitation literature. I extracted and catalogued the extent of mechanisms tested by previous researchers to synthesize a literature-driven conceptual framework. I also summarized the scales of study, ecosystem and ecological themes to determine major research gaps and biases within the literature. The second chapter is an experimental approach to measuring interactions between the ecologically dominant shrub species L. tridentata and the commonly co-blooming annual Malacothrix glabrata. I hypothesized that foundational, desert shrubs that act as benefactors impact the net outcome of pollination for associated annual plants depending on the phenological stage of the shrub. By disentangling blooming and non-blooming pathways as L. tridentata shifts through natural phenology, I was able to quantify their contributions to the net observed interactions. I also confirmed the role of L. tridentata as a foundation species in this system by sampling its associated plant and arthropod communities, and testing the shrubs ability to stabilize local microclimates. These projects contribute to a better understanding of the underlying mechanisms controlling these interactions, from across a wide spread of literature but also in a critically understudied desert ecosystem. The maintenance of pollination mutualisms is an important aspect of conservation and therefore of management, and these findings can be used to inform best management practices within arid regions. 
+
+Literature Cited
+Bobisud, L.E., Neuhaus, R.J., 1975. Pollinator constancy and survival of rare species. Oecologia 21, 263-272.
+Bruno, J.F., Stachowicz, J.J., Bertness, M.D., 2003. Inclusion of facilitation into ecological theory. Trends in Ecology & Evolution 18, 119-125.
+Callaway, R.M., 1995. Positive interactions among plants. Botanical Review 61, 306-349.
+CaraDonna, P.J., Petry, W.K., Brennan, R.M., Cunningham, J.L., Bronstein, J.L., Waser, N.M., Sanders, N.J., 2017. Interaction rewiring and the rapid turnover of plant–pollinator networks. Ecology letters 20, 385-394.
+Charlebois, J.A., Sargent, R.D., 2017. No consistent pollinator-mediated impacts of alien plants on natives. Ecology letters 20, 1479-1490.
+Cook, J.M., Rasplus, J.-Y., 2003. Mutualists with attitude: coevolving fig wasps and figs. Trends in Ecology & Evolution 18, 241-248.
+Ghazoul, J., 2006. Floral diversity and the facilitation of pollination. Journal of Ecology 94, 295-304.
+Hansen, D.M., Kiesbüy, H.C., Jones, C.G., Müller, C.B., 2007. Positive indirect interactions between neighboring plant species via a lizard pollinator. The American Naturalist 169, 534-542.
+Hegland, S.J., Grytnes, J.-A., Totland, Ø., 2008. The relative importance of positive and negative interactions for pollinator attraction in a plant community. Ecological Research 24, 929-936.
+Hegland, S.J., Nielsen, A., Lázaro, A., Bjerknes, A.-L., Totland, Ø., 2009. How does climate warming affect plant-pollinator interactions? Ecology Letters 12, 184-195.
+Kjellberg, F., Jousselin, E., Bronstein, J.L., Patel, A., Yokoyama, J., Rasplus, J.-Y., 2001. Pollination mode in fig wasps: the predictive power of correlated traits. Proceedings of the Royal Society of London B: Biological Sciences 268, 1113-1121.
+Kudo, G., Ida, T.Y., 2013. Early onset of spring increases the phenological mismatch between plants and pollinators. Ecology 94, 2311-2320.
+Laverty, T.M., 1992. Plant interactions for pollinator visits: a test of the magnet species effect. Oecologia 89, 502-508.
+Macior, L.W., 1971. Co-evolution of plants and animals. Systematic insights from plant-insect interactions. Taxon, 17-28.
+McKinney, A.M., Goodell, K., 2010. Shading by invasive shrub reduces seed production and pollinator services in a native herb. Biological Invasions 12, 2751-2763.
+Mitchell, R.J., Flanagan, R.J., Brown, B.J., Waser, N.M., Karron, J.D., 2009. New frontiers in competition for pollination. Annals of Botany 103, 1403-1413.
+Montoya, J.M., Pimm, S.L., Solé, R.V., 2006. Ecological networks and their fragility. Nature 442, 259.
+Morales, C.L., Traveset, A., 2009. A meta-analysis of impacts of alien vs. native plants on pollinator visitation and reproductive success of co-flowering native plants. Ecology letters 12, 716-728.
+NRC, 2007. Status of pollinators in North America. National Academies Press.
+Ollerton, J., Winfree, R., Tarrant, S., 2011. How many flowering plants are pollinated by animals? Oikos 120, 321-326.
+Potts, S.G., Biesmeijer, J.C., Kremen, C., Neumann, P., Schweiger, O., Kunin, W.E., 2010. Global pollinator declines: trends, impacts and drivers. Trends in ecology & evolution 25, 345-353.
+Rafferty, N.E., Ives, A.R., 2011. Effects of experimental shifts in flowering phenology on plant–pollinator interactions. Ecology Letters 14, 69-74.
+Thomson, J.D., 1978. Effects of Stand Composition on Insect Visitation in Two-Species Mixtures of Hieracium. American Midland Naturalist 100, 431-440.
+Waser, N.M., Chittka, L., Price, M.V., Williams, N.M., Ollerton, J., 1996. Generalization in pollination systems, and why it matters. Ecology 77, 1043-1060
+Chapter One. Finding the bees knees: a conceptual framework and systematic review of the mechanisms of pollinator-mediated facilitation.
+
+Under review at Perspectives in Plant Ecology, Evolution and Systematics. Submitted March 2018, revisions submitted August 2018. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Abstract
+Pollination facilitation is an indirect interaction whereby one plant species positively influences the reproductive success of another plant species through pollinators. A formal systematic review including 100 directly relevant papers was used to categorize the literature into a conceptual framework summarizing all mechanisms underlying pollination facilitation tested to date. We also summarized the spatial scale and grain size of each study, classified the theme, and recorded the ecosystem. Pollination facilitation research advanced seven major mechanistic hypotheses that can be synthesized into the following four umbrella mechanisms: trait-based effects, floral display size, floral diversity, and apparent pollination support. Co-flowering interactions including the magnet species effect are the most frequently studied; however, the capacity for plants to facilitate the pollination of other plants through pathways that do not require co-blooming is an important research gap identified in this literature. We propose that the term ‘apparent pollination support’ be used to describe pollination facilitation between plants through non co-blooming mechanisms.  Most studies have been conducted using a relatively small spatial grain (< 1 m2) but there was evidence from all scales in most ecosystems of facilitation suggesting it may be more prevalent than previously assumed globally. Most studies (87.5%) that tested for facilitation at multiple scales reported scale dependence highlighting the need to explicitly consider spatial dimensions in future experiments on these topics. Invasion biology, agricultural science, mimicry systems, and conservation of rare plant species all examined pollination facilitation. Research gaps included the need to decouple mechanisms, explore the temporal dimensions and examine the relative importance of scale on the underlying processes that influence plant and pollinator community dynamics. 
+Keywords
+Pollinator, facilitation, plant-plant, systematic review, scale dependence
+
+
+
+Introduction
+Positive interactions between plant species, i.e. facilitation, are increasingly incorporated into ecological theory (Bertness and Callaway, 1994; Bruno et al., 2003; Callaway, 1995). Facilitation has been documented in most ecosystems as a fundamental process driving plant community structure and dynamics (Callaway, 1995). Pollinators provide critical ecosystem services, and there is increasing concern over their potentially global decline (Kearns et al., 1998; NRC, 2007).  Recent estimates report that 87.5% of global angiosperms are animal pollinated (Ollerton et al., 2011). Therefore, understanding how plants interact via pollinators is necessary to understand the potential impacts of these declines. Co-flowering species of plants are common, and while there are a few salient examples of obligate plant-pollinator specialization, many species of plants share pollinators (Mitchell et al., 2009). Pollinator sharing leads to interactions between plants that can influence the reproductive success of one or both species forming a continuum of competitive to facilitative interactions (Rathcke, 1983). Competition between species for pollination profoundly influences the reproductive success of plants driving the evolution of floral morphology, phenology and reproductive strategies thereby integrating ecological and evolutionary perspectives (Mitchell et al., 2009). Mounting evidence shows that selection on reproductive plant traits and the development of ecological relationships are not driven exclusively by competition and that facilitation plays an important role. 
+Pollination facilitation influences many ecological and evolutionary processes. Facilitation has been demonstrated in plant mimicry systems (Benitez-Vieyra et al., 2007; Jersáková et al., 2009; Johnson et al., 2003; Peter and Johnson, 2008) and can promote the convergence of floral morphologies (Schemske, 1981). Facilitative interactions can also contribute to the evolution of complex mutualisms such as pollinator pollen placement mechanisms (Sun et al., 2011; Yang et al., 2013) and mitigate selection on mating traits that promote selfing (Moeller and Geber, 2005). Integrating pollinator mediated facilitation with current ecological theory will help to explain the coexistence of species with apparent niche overlaps (Moeller, 2004; Moeller and Geber, 2005) i.e. the joint use of resources by different species (Colwell and Futuyma, 1971) as well as the persistence of rare plants (Ghazoul, 2006; Moeller, 2004). Additionally, pollinator-mediated plant-plant interactions provide a framework for predicting the impact of invasive plant introduction on native plant communities (Bartomeus et al., 2008; Charlebois and Sargent, 2017; Molina-Montenegro et al., 2008; Morales and Traveset, 2009). Therefore, pollination facilitation has a wide-reaching and general capacity to serve as a model integrating ecological and evolutionary perspectives.
+Pollinator mediated interactions are scale-dependent (Hegland and Kudo, 2014) meaning that the sign or strength of the interaction differs depending on the scale of observation. The recognition of spatial scale as a central concept to ecology has become well established (Levin, 1992; Sandel, 2015; Wiens, 1989), and increasingly, ecologists are explicitly incorporating spatial dimensions into their experimental design (Hegland and Kudo, 2014; Schmid et al., 2016; Spellman et al., 2016). Nonetheless, the current inconsistency in reporting in part stems from the terminology used by researchers (Sandel, 2015). Spatial scale as a descriptive measurement is distinct from the hierarchal, organizational levels frequently used by ecologists. Spatial scale is comprised of two components: grain, the size of the smallest unit of observation, and extent, the total sampling area (Scheiner et al., 2000; Turner, 1989). In field studies, grain and extent are often defined relative to the organism. Grain is often an individual or cluster of plants, and extent as a forest. Alternatively, they can be defined in absolute terms i.e. experimental plots. In both cases, these two scale components are finite measures that limit experimental resolution and therefore define the degree of generalization possible. It is not possible to infer patterns below measured grain size or above extent size (Wien, 1989). Scale of study has critical implications for applied ecology of plant-pollinator interactions and to experimental design because the mobility of animal pollinators increases the scale over which plants interact (Moeller, 2004). For example, some attractive plants facilitate their immediate neighbors while competing with others over a larger spatial scale (Hegland and Kudo, 2014; Schmid et al., 2016). Thus, a given scale can lead to erroneous conclusions when generalizing.
+Although previously predicted to be a rare phenomenon (Feldman et al., 2004), there has been an increase in the publication of papers reporting facilitative interactions over the last three decades. Given this apparent prevalence a better understanding of the underlying mechanisms and potential outcomes of this interaction is needed. To this end, we conducted a formalized systematic review of the pollination facilitation literature published. Using the literature, we developed a typology for the research and classified all studies into this conceptual framework. The synthetic framework visualizes all the pathways tested in the literature where plants induce a response in pollinators leading to an increase in fitness for another plant species (Figure 1) describing a total of seven mechanistic hypotheses (Table 1). We focused on facilitation only because competition is comparatively well researched and mechanisms of facilitation are likely to be distinct from those underlying competition. 
+The primary goal of this review and conceptual framework was to link current research with ecological theory. Previous reviews of plant-plant facilitation have identified the need to understand indirect pathways (Filazzola and Lortie, 2014) and the individual mechanisms leading to facilitation (Brooker et al., 2008). The following specific objectives were addressed using this systematic review: to determine the frequency that each mechanism has been tested, to describe research gaps, to highlight the most common applications of pollination facilitation, and to assess the geographic and ecological scope of pollination facilitation studies. Pollination is an important ecosystem service therefore we examine the frequencies of publications within each to determine publication biases and ecosystem-specific gaps. In this systematic review, grain size and scale dependence in the primary literature were also synthesized to provide an estimate of the relative context and importance of pollinator facilitation at different scales and in effect to describe the potential scope that this set of mechanisms could be important to be pollinator communities.
+Conceptual framework
+The seven hypotheses tested in the literature were classified into four umbrella mechanisms (Table 1). Pollination facilitation is an indirect interaction between plants mediated by the pollinator and the concepts were organized to reflect this plant-pollinator-plant interaction. The conceptual framework is comprised of trait-based effects, increasing floral display size, increasing floral diversity, and pollinator support as ‘umbrella’ mechanisms (Figure 1, A). We use the umbrella term “trait-based effects” to include both the magnet species effect and mimicry and to reflect that these interactions are trait-mediated. In the magnet species effect, a particularly attractive plant species increases local pollinator abundances, thereby facilitating their co-blooming but often less attractive neighbors (Laverty, 1992; Thomson, 1978). The traits that magnet species exhibit are those that make a plant attractive to pollinators such as showy displays (Molina-Montenegro et al., 2008) or offering substantial resources (Johnson et al., 2003). The magnet species effect is not exclusively related to resources. For example, the sexually deceptive orchid Ophrys fusca acts as a magnet for a rewarding iris (Pellegrino et al., 2016) and tall-scaped Primula farinosa facilitate their short-scaped morphs (Toräng et al., 2006). In mimicry systems, less attractive plant species improve their fitness by mimicking a more preferred species (reviewed by Jersáková et al., 2009). In these cases, the trait is the resemblance to the model species. It can include mimicry of overall floral morphology (Carmona-Díaz and García-Franco, 2008), UV reflectance (Peter and Johnson, 2008), UV spectra and nectar content (Benitez-Vieyra et al., 2007). Facilitation due to the magnet species effect and mimicry is not commonly separated, and the degree of resemblance between the species is the major difference between these mechanisms (Carmona-Díaz and García-Franco, 2008). In both cases, the addition of another plant increases pollinator attraction disproportionate to the size of a display increase.
+Facilitation can occur when plants growing together increase their combined floral display size by co-blooming (Feldman, 2006; Thomson, 1981). Many pollinators forage optimally (Pyke et al., 1977), and the nectar and pollen content of flowers influences their foraging decisions (Heinrich and Raven, 1972; Real, 1981). This leads to pollinators preferentially visiting larger displays (Chittka and Thomson, 2001; Thomson, 1981). There are two major ways to describe the size of a floral display: density i.e. the interplant distance and abundance, the total number of individuals (Kunin, 1997). Patch area and floral density interact to determine attractiveness for pollinators (Thomson, 1981). However, in many studies abundance and density are unavoidably confounded. Pollinator responses to floral display size are density-dependent (reviewed by Feldman, 2006). Per flower visitation rates are expected to increase with floral density until pollinators become ‘saturated’ by the overabundance of floral resources leading to a shift from facilitation to competition between plants (Rathcke, 1983). Pollinator densities mediate the shifting point (Ye et al., 2013). 
+When plants co-bloom, the increase in floral diversity can lead to improved pollination services by offering complementary resources to foragers (i.e. both pollen and nectar) or via sampling effort: more diverse displays may attract more diverse pollinators (Ghazoul, 2006), leading to the attraction of more effective pollinators. The umbrella term apparent pollination support includes all mechanisms for which co-blooming is not required. Sequential mutualisms arise when earlier blooming plants facilitate later blooming plants by increasing local pollinator abundance, or improving population longevity or stability (Waser and Real, 1979). We expand on this by including the mechanism of providing habitat for another plant’s pollinator (Hansen, 2007). This final mechanism is a novel extension to the literature because it does not require shared pollinators. 
+Each mechanism leads to either of two functional responses by pollinators (Figure 1, B): the change in behavior of individual pollinators or demography of pollinator populations. The conceptual framework by Moeller (2004) recognized two major responses by pollinators including aggregative (joint attraction) and numerical (joint maintenance) responses. We expand upon this; the most frequently documented behavioral response leading to facilitation is the joint attraction of pollinators (sensu Schemske 1981; Thomson 1978). There are other foraging-related behaviors that arise from context-dependent species preferences beyond attracting additional pollinators (Hersch and Roy, 2007). Pollinators can exert positive frequency dependent selection by preferentially visiting the most abundant plant. Thus plants can increase their fitness by co-blooming (Ghazoul, 2006; Toräng et al., 2008). Similarly, pollinators that show floral constancy, i.e. the tendency to facultatively specialize, can lead to facilitation between multiple species (Bobisud and Neuhaus, 1975) or among mimicry partners (Schiestl and Johnson, 2013). Some pollinators exhibit site-fidelity greater than floral constancy that leads to sequential facilitation of plants growing in that site (Ogilvie and Thomson, 2016). Demographic pollinator responses, sensitive to the local habitat or landscape (Grab et al., 2017; Jakobsson and Padron, 2014), can change the pollinator abundance, composition, or longevity thereby benefiting spatially or temporally associated plants. Both behavioral and demographic responses can improve the quality and quantity components of pollination (Figure 1, C). Visitation rates form the quantity component and conspecific pollen deposition is the quality component (Herrera, 1989). Increased visitation will not lead to increased fitness if excessive heterospecific pollen is deposited (Morales and Traveset, 2008). Furthermore, increased visitation is not necessary to increase conspecific deposition if more effective pollinators visit. This increase in conspecific deposition leads to increased seed set or viability (Figure 1, D). 
+Methods
+Systematic Review
+To review the field of pollination facilitation, we used the search terms “pollinat* facilitat*” in ISI Web of Science (WoS) and SCOPUS in November 2017. Results from these searches were exported as bibtex files and are available within the associated repository. We also consulted book chapter bibliographies and did supplemental searches using Google Scholar to ensure that the literature was well represented within the WoS. Only primary, English language experimental research papers published since 1970 in peer-reviewed journals were included. The following inclusion criteria were used: 1) explicitly tested for pollination facilitation; 2) tested interspecific plant-plant interactions including a plant-mimic or object (e.g. hummingbird feeder, (Brockmeyer and Schaefer, 2012); 3) net facilitation was tested using at least one indicator of reproductive success (see Supporting Information, S1). We screened a total of 1501 papers by abstract and 268 full-text articles leading to the inclusion of a total of 100 papers in this review (Appendix A). 
+We classified the literature using our synthetic framework by the mechanistic hypotheses testable given the variables and experimental design utilized by the authors (Table S2). Articles were further reviewed for spatial scale, country and ecosystem of study, main methods, theme of study and spatial grain size was categorized. Small grain was defined as one individual plant or a plot 1m2 or less, medium between 1 m2 and 20 m2, large between 20 m2 and 500 m2, and very large greater than 500 m2. Scale dependence was defined as a significant change in the value of a variable or the importance of a model predictor variable when either the grain or extent was changed within the experiment. Studies were classified as broad if they were very large grained, had extents greater than 10000 m2, or self-reported as landscape scale; otherwise they were classified as narrow. Ecosystems were simplified to agricultural, alpine, wetland, beaches, experimental, forest, grassland, semi-arid, tropical forest and urban/disturbed.
+Data Analysis
+When multiple ecosystems were tested within the same publication, they were treated as independent observations. Publications testing for interactions using multiple grain sizes were considered independent for grain size graphs and subsequent frequency testing. Multiple mechanisms could also be tested with the same publication, and they were classified independently for graphs and frequency testing. However, the mechanism by grain size analysis was restricted to single scale studies because it was necessary for them to be paired within a study. We tested the relative frequencies of each tested mechanism, grain size, and ecosystem using Pearson’s chi-squared tests (chisq.test function) in R version 3.4.2 (R Development Core Team, 2016). As a post hoc test we used the standardized residuals to compare the proportion of each grouping. We fit a linear model using the log-transformed publication count as the response and year as the predictor (lm function) in R version 3.4.2 (R Development Core Team, 2016) to test for a publication frequency increase over time.
+Results
+A total of 100 papers reported testing for pollination facilitation (Figure S3). The number of papers published per year has increased exponentially since 1978 (Adjusted R2 = 0.6426, p < 0.0001). Studies from 27 countries have been published with the majority in the USA (Figure 2). 
+There were significant differences in the frequency of tested mechanisms (Figure 3, ?2 = 119.21, df = 6, n = 162, p < 0.0001). The majority of papers addressed the magnet species effect (64%). Pollinator support is an unstudied mechanistic pathway. Habitat provisioning and sequential mutualisms were examined in only five papers each. A single mechanism was tested within 47% of papers, two mechanisms in 42% of papers, and only one paper examined four potential mechanisms. The framework did not apply to one paper that tested for facilitation at a community level using a novel network approach (Tur et al, 2016).
+The largest proportion (28.3%) of studies was conducted in grasslands or meadows (?2 = 66.057, n = 106, df = 10, p < 0.0001). In most ecosystems, narrow scales were more frequently used, but in agricultural lands broader scales were more frequently tested (Figure 3). Alpine ecosystems, wetlands and tropical forests lacked studies that consider both scales within the same paper. 
+All but three studies reported spatial grain size, and these ranged from 0.009 m2 to 35900 m2. However, most reported grain qualitatively (55%) as either an individual plant, clump, or a number of stems. Pollination facilitation is tested most frequently (61% of studies) with a small spatial grain (< 1 m2). Very large grain sizes greater than 500 m2 were tested the least comprising only 3.8% of studies (?2 = 151.74, n = 105, df = 5, p < 0.0001). Extent was not consistently reported preventing full quantitative scale reporting. Instead, we classified studies into the categories of narrow and broad. These two scales of study were well distributed between tested mechanisms (Figure 4). Sequential mutualisms were the exception and have not been studied at both broad and narrow scales within a given study. The mechanisms of pollination facilitation have been studied using a range of spatial grain sizes (Figure 5). A total of 25 studies tested for interactions at multiple scales or explicitly included spatial dimensions into the experimental design with 21 of them reporting scale-dependence.
+Invasion biology was the most frequently theme addressed (29% of studies) followed by agriculture (12%), deceptive pollination (9%), conservation (6%), and rare species (5%). Most papers studied unidirectional or bidirectional interactions; only nine used a network approach to either directly study interactions or supplement more traditional testing. 
+The most frequent method of assessing reproductive success was tracking pollinator visitation rates (86% of studies). Of the 63 papers that used seed/fruit set as a response variable, 54 controlled for potential confounding effects of plant-plant interactions (Table S5). The methods include using potted plants (19), testing for pollen limitation by hand-pollination (18), and pollinator exclusion (6). Of the nine that did not, two were very large-scale agricultural experiments that tracked pollinator visitation. Of the remaining six, two measured both pollen deposition and visitation, one measured pollen deposition, one study measured visitation, and one tracked pollen dispersal with dyes. There was only one study with no supplemental measurements or controls.
+Discussion
+This systematic review is the first formal synthesis of pollination facilitation providing an overview of the underlying mechanisms that have been tested to date. The conceptual framework proposed effectively classified the state of research of pollination facilitation based on the mechanistic pathways examined in the individual studies reviewed. This framework is nonetheless sufficiently flexible to included future novel hypotheses because of the use of umbrella terms that provide for the inclusion of additional mechanisms as they arise from future studies. Co-flowering interactions are the most frequently studied. The capacity for plants to facilitate the pollination of other plants through pathways that do not require co-blooming is an important research gap. Many studies do not explicitly differentiate between the mechanistic hypotheses. Another significant research gap is the study of joint multiple mechanisms. To better test the underlying drivers of pollinator mediated interactions and to integrate these findings into applied ecology, we need to study more than one mechanism in a given system preferably in the same experiment. Facilitative interactions between plants can increase under declining pollinator availability (Lazaro et al., 2014) highlighting the increasing importance to study these interactions as a means to better model resilience of pollinator and plant communities. 
+Research gaps in pollination facilitation studies
+In natural systems, multiple mechanisms of facilitation operate concurrently. There is always the potential for interactions between display size and other mechanisms of facilitation. These mechanisms can collectively inform applied ecology. For example, when the magnet species effect interacts with floral density, both the presence and density of the attractive species contribute to its effect on other species. In a simulated invasion, facilitation by Taraxacum officinale shifted to competition with high densities of the invader (Muñoz and Cavieres, 2008). This is applicable to applied invasion biology because it suggests for some species there is a density threshold at which an attractive plant can become a competitor. Seifan (2014) manipulated both the density and aggregation of attractive plants finding again a shift from facilitation to competition with increasing density, but also that at low densities, they were better facilitators when regularly spaced then aggregated. Magnet plants have the capacity to improve the self-sufficiency of restored ecosystems (Dixon, 2009). Thus better understanding interactions between attractiveness, density, and aggregation will improve restoration.
+Biodiversity continues to decline with human expansion (Butchart et al., 2010). Therefore, understanding the influence of floral diversity and display size jointly is important to for predicting the impacts of this decline. Experiments along gradients of fragmentation could provide a convenient and applicable system, particularly if pollinator populations are sampled. For example, along an urban diversity gradient, flower rich urban areas supported richer bee communities, leading to improved seed set for focal plant species (Theodorou et al., 2017). Incorporating pollinator identity is important to a better understanding of the mechanisms, as well as for predicting the impact of pollinator declines. For example, network analysis of island plant-pollinator visitation networks has shown that invasion intensity influenced the behavior of Apis mellifera, leading to community wide simplification of interactions despite having no negative influence on native seed set (Kaiser-Bunbury et al., 2011). Network approaches are labor and resource intensive but when combined with manipulative experiments will provide community-level and highly explanatory results.
+Apparent pollination support is the least studied mechanism of pollination facilitation. It is the most likely to generate novel hypotheses because co-flowering is not a requirement. The study of pollination support in the literature takes two distinct streams including sequential mutualism (temporal facilitation) and habitat provisioning. Competition can shift to facilitation as floral phenologies diverge if shared pollinator populations are supported leading to a ‘sequential mutualism’, i.e. facilitation follows competitive interactions (Moeller, 2004; Waser and Real, 1979). Sequential mutualisms are likely an outcome rather than a cause of phenological divergence (Waser and Real, 1979) particularly because sequential flowering is not exclusively maintained by competition. This form of mutualism can also be maintained by herbivory (Brody, 1997). Alternatively, earlier blooming plants such as mass flowering crops can create resource pulses for pollinators that support later blooming plants (Grab et al., 2017). This effect had been termed ‘temporal spillover’ in agricultural studies (Riedinger et al., 2014). Evidence for temporal facilitation has also been found in invasive/native pairs (Ferrero et al., 2013), agricultural systems (Grab et al., 2017), and experimental arrays (Ogilvie and Thomson, 2016). Temporally separated mutualisms are generally predicted to be widespread (Waser and Real, 1979). Inclusion of the temporal dimension increases the complexity of interactions and presents considerable difficulty to experimental design. However, integrating the temporal dimension is likely critical in applied contexts because of the capacity for support. For example, the rare plant Symphyotrichum sericeum shares pollinators with earlier blooming plants (Robson, 2012) suggesting that conservation efforts to support the pollination of some rare plants need to consider both the immediate neighbors but also earlier blooming interacting plants. There is widespread potential for pollination facilitation to inform applied conservation practices.
+Habitat loss is one of the most important drivers of wild bee abundance and diversity declines (Brown and Paxton, 2009; Potts et al., 2010). The mechanisms of habitat provisioning are thus critical to the conservation of both pollinator and plant populations. Cavity-nesting bees including Megachile leafcutter bees, Hylaeus, Ceratina (Michener, 2000) and agriculturally important Osmia bees (Cane et al., 2007) use pithy stems and dead wood as nesting sites, but this pathway for facilitation is likely trait-mediated (i.e. pithiness) rather than species-specific. Accordingly, habitat provisioning is addressed at a community level by agricultural studies showing that proximity to hedgerows (Dainese et al., 2017) and semi-natural lands (Norfolk et al., 2016) benefits crop pollination. In natural ecosystems, the only published example of facilitation by habitat provisioning is species-specific. The Pandanus shrub provides habitat for the gecko Phelsuma cepediana which is the main pollinator of Trochetia blackburniana (Hansen et al., 2007), and this shrub is a  species of conservation concern in Mauritius. Shrubs of T. blackburnia experienced better pollination growing near Pandanus. The frequency that this mechanism functions is needed to better inform targets for conservation. Potential relationships can include facilitation by plants that act as hosts to pollinating Lepidoptera or within any system where the larva of a generalist pollinator requires a specific host plant. Plants growing in harsh environments benefit from close association to nurse plants due to abiotic stress amelioration (Filazzola and Lortie, 2014). Pollination facilitation has not been tested in arctic or desert ecosystems. Overall, pollination facilitation in harsh environments is a research gap.  Pollination facilitation is very understudied in these harsh environments and can be a very important pathway to both conservation and agriculture.
+Mensurative experiments that use seed-set or fruit-set as a response variable may be confounded by pollinator independent plant-plant interactions (Lachmuth et al., 2018). This review found the majority of experimental designs controlled for these sources of micro-environmental variation. Several authors have used methods to measure the presence of these interactions in tandem with tracking pollinator visits or pollen transfer. For example, Kaiser-Bunbury (2011) used the ratio of native to invasive flowers as a proxy for plant-plant competition. Molina-Montenegro (2008) corrected for potential bottom-up facilitation by measuring nitrogen and water availability, as well as visitation rates and seed output. The majority of papers overall use pollinator visitation as a response variable, which directly addresses pollinator behavioral or demographic responses. However, increased visitation does not always lead to increased seed set. For example, pollen deposition can be facilitated but not visitation rates (Muir and Vamosi, 2015) if more effective pollinators visit. Plants can simultaneously compete and facilitate different portions of the pollination process. In orchids, different interaction signs for pollinator attraction, pollen removal and pollen deposition have been reported concurrently (Duffy and Stout, 2011). It is not known how the mechanisms underlying the interaction influences the quality and quantity aspects of pollination. However, it is unlikely there is a consistent, overarching mechanistic influence because pollinator behavioral and demographic response to each mechanism depend on the identity of the interactors, as well as the context. The continued publications of papers that measure multiple metrics of reproduction will allow for future quantitative analyses as to the strength of interaction operating on each part of the pollination framework and enable this to be tested rigorously. 
+Scale dependent effects are highly variable
+The outcome of scale-dependency was highly variable across the pollination facilitation literature reviewed here. Facilitation typically decreased with distance likely because the influence of a plant cannot extend beyond the foraging range of its pollinators. For example, facilitation occurs at only very short distances from the invasives Lupinus (Jakobsson et al., 2015) and Brassica nigra (Bruckman and Campbell, 2016) suggesting that these invasives have little overall effect on pollinations in these systems. In almond orchards, floral abundance under trees is positively associated with their seed set while floral abundance within the landscape is not (Norfolk et al., 2016). Conversely, the invasive Ranunculus ficaria has a stronger magnet effect when present at the landscape scale suggesting presence in landscape is more important than local floral abundances some systems (Masters and Emery, 2015). Facilitation shifting to competition with increasing scale was reported in several systems including insect-pollinated red clover (Hegland and Kudo, 2014) and nectar-feeding birds within a fynbos ecosystem (Schmid et al., 2016). Scale dependence can arise at least in part from underlying mechanisms. Spatial scale dependence can manifest as magnet plants first influence the probability of a pollinator entering a patch, and then within the patch influence the pollinator’s choices between individual flowers (Seifan et al., 2014). These effects can lead to relatively small-scale facilitation between neighbors but competition between patches. Floral abundance is likely important at larger scales because it relates to the total pollen and nectar resource content of a community, and therefore to the carrying capacity of pollinator populations, and density may be more important at smaller scales because it is related to individuals’ foraging habits and preferences; these hypotheses are yet to be tested. The perception of floral display size by pollinators differs at multiple scales because at small scales increases in density are attractive to pollinators but at larger scales, as density increases, the displays become more diluted relative to pollinator abundances (Rathcke, 1983), and increases in display size become less visible. These perceptual biases by pollinators can lead to changes in interaction sign with increasing scale. Understanding the underlying mechanisms of scale-dependency is important to the effective experimental design of studies looking at pollination interactions. For instance, a recent meta-analysis found that the distance between control and neighboring plants influences the sign of an interaction more than the identity of the interactors (Charlebois and Sargent, 2017). A quantitative estimate of grain and extent is needed for pollinator mediated interaction studies because changes in strength and sign of interactions have been reported to change with scale and without measures in spatial dimensions we cannot effectively model its importance. Pollinator mediated facilitation has been nonetheless reported across a wide range of spatial grain sizes and in a variety of ecosystems. This suggests that these interactions are prevalent and are not restricted to small scales.
+Conclusions
+Positive interspecific and intraspecific interactions between plants for pollinators can dominate in some plants communities (Hegland et al., 2008; Tur et al., 2016) and were relatively ubiquitous here. The scope of pollinator mediated facilitation is thus relatively broad encompassing most major ecosystems. Most pollinator mediated facilitation experiments to date use only a small spatial grain. This suggests that scale dependence can be a serious issue in these studies. It has been suggested that pollination as an ecosystem service operates on a local scale and at the ecological levels of the individual and population (Andersson et al., 2015). This review further suggests that pollination also operates on a community level for plants and their animal pollinators. The mechanisms categorized here likely do not function in isolation, and experiments that examine more than one pathway concurrently are needed. Furthermore, distributional asynchrony can result from shifts in the spatial distribution of species under climate change scenarios (Hegland et al., 2009) and this can lead to novel interactions between plants and pollinators highlighting the increasing need to understand the underlying drivers. Studies of pollinator-mediated facilitation must now begin to explore the relative importance of scale, temporal interactions, and the relative changes in one mechanism over another with these changes.
+
+
+
+Literature Cited
+Andersson, E., McPhearson, T., Kremer, P., Gomez-Baggethun, E., Haase, D., Tuvendal, M., Wurster, D., 2015. Scale and context dependence of ecosystem service providing units. Ecosystem Services 12, 157-164.
+Bartomeus, I., Vila, M., Santamaria, L., 2008. Contrasting effects of invasive plants in plant-pollinator networks. Oecologia 155, 761-770.
+Benitez-Vieyra, S., Hempel de Ibarra, N., Wertlen, A.M., Cocucci, A.A., 2007. How to look like a mallow: evidence of floral mimicry between Turneraceae and Malvaceae. Proc Biol Sci 274, 2239-2248.
+Bertness, M.D., Callaway, R., 1994. Positive interactions in communities. Trends in Ecology & Evolution 9, 191-193.
+Bobisud, L.E., Neuhaus, R.J., 1975. Pollinator constancy and survival of rare species. Oecologia 21, 263-272.
+Brockmeyer, T., Schaefer, H.M., 2012. Do nectar feeders in Andean nature reserves affect flower visitation by hummingbirds? Basic and Applied Ecology 13, 294-300.
+Brody, A.K., 1997. Effects of pollinators, herbivores, and seed predators on flowering phenology. Ecology 78, 1624-1631.
+Brooker, R.W., Maestre, F.T., Callaway, R.M., Lortie, C.L., Cavieres, L.A., Kunstler, G., Liancourt, P., Tielbörger, K., Travis, J.M., Anthelme, F., 2008. Facilitation in plant communities: the past, the present, and the future. Journal of Ecology 96, 18-34.
+Brown, M.J., Paxton, R.J., 2009. The conservation of bees: a global perspective. Apidologie 40, 410-416.
+Bruckman, D., Campbell, D.R., 2016. Pollination of a native plant changes with distance and density of invasive plants in a simulated biological invasion. Am J Bot 103, 1458-1465.
+Bruno, J.F., Stachowicz, J.J., Bertness, M.D., 2003. Inclusion of facilitation into ecological theory. Trends in Ecology & Evolution 18, 119-125.
+Butchart, S.H.M., Walpole, M., Collen, B., van Strien, A., Scharlemann, J.P.W., Almond, R.E.A., Baillie, J.E.M., Bomhard, B., Brown, C., Bruno, J., Carpenter, K.E., Carr, G.M., Chanson, J., Chenery, A.M., Csirke, J., Davidson, N.C., Dentener, F., Foster, M., Galli, A., Galloway, J.N., Genovesi, P., Gregory, R.D., Hockings, M., Kapos, V., Lamarque, J.-F., Leverington, F., Loh, J., McGeoch, M.A., McRae, L., Minasyan, A., Morcillo, M.H., Oldfield, T.E.E., Pauly, D., Quader, S., Revenga, C., Sauer, J.R., Skolnik, B., Spear, D., Stanwell-Smith, D., Stuart, S.N., Symes, A., Tierney, M., Tyrrell, T.D., Vié, J.-C., Watson, R., 2010. Global Biodiversity: Indicators of Recent Declines. Science.
+Callaway, R.M., 1995. Positive interactions among plants. Botanical Review 61, 306-349.
+Cane, J.H., Griswold, T., Parker, F.D., 2007. Substrates and materials used for nesting by North American Osmia bees (Hymenoptera: Apiformes: Megachilidae). Annals of the Entomological Society of America 100, 350-358.
+Carmona-Díaz, G., García-Franco, J.G., 2008. Reproductive success in the Mexican rewardless Oncidium cosymbephorum (Orchidaceae) facilitated by the oil-rewarding Malpighia glabra (Malpighiaceae). Plant Ecology 203, 253-261.
+Charlebois, J.A., Sargent, R.D., 2017. No consistent pollinator?mediated impacts of alien plants on natives. Ecology letters 20, 1479-1490.
+Chittka, L., Thomson, J., 2001. Behavioral responses of pollinators to variation in floral display size an. d their influences on the evolution of floral traits. Cognitive ecology of pollination, 274-296.
+Colwell, R.K., Futuyma, D.J., 1971. On the measurement of niche breadth and overlap. Ecology 52, 567-576.
+Dainese, M., Montecchiari, S., Sitzia, T., Sigura, M., Marini, L., 2017. High cover of hedgerows in the landscape supports multiple ecosystem services in Mediterranean cereal fields. Journal of Applied Ecology 54, 380-388.
+Dixon, K.W., 2009. Pollination and restoration. Science 325, 571-573.
+Duffy, K.J., Stout, J.C., 2011. Effects of conspecific and heterospecific floral density on the pollination of two related rewarding orchids. Plant Ecology 212, 1397-1406.
+Feldman, T., 2006. Pollinator aggregative and functional responses to flower density: does pollinator response to patches of plants accelerate at low?densities? Oikos 115, 128-140.
+Feldman, T., Morris, W., Wilson, W., 2004. When can two plant species facilitate each other's pollination? Oikos 105, 197-207.
+Ferrero, V., Castro, S., Costa, J., Acuña, P., Navarro, L., Loureiro, J., 2013. Effect of invader removal: pollinators stay but some native plants miss their new friend. Biological Invasions 15, 2347-2358.
+Filazzola, A., Lortie, C.J., 2014. A systematic review and conceptual framework for the mechanistic pathways of nurse plants. Global Ecology and Biogeography 23, 1335-1345.
+Ghazoul, J., 2006. Floral diversity and the facilitation of pollination. Journal of Ecology 94, 295-304.
+Grab, H., Blitzer, E.J., Danforth, B., Loeb, G., Poveda, K., 2017. Temporally dependent pollinator competition and facilitation with mass flowering crops affects yield in co-blooming crops. Scientific Reports 7, 45296.
+Hansen, D.M., Kiesbüy, H.C., Jones, C.G., Müller, C.B., 2007. Positive indirect interactions between neighboring plant species via a lizard pollinator. The American Naturalist 169, 534-542.
+Hegland, S.J., Grytnes, J.-A., Totland, Ø., 2008. The relative importance of positive and negative interactions for pollinator attraction in a plant community. Ecological Research 24, 929-936.
+Hegland, S.J., Kudo, G., 2014. Floral neighbourhood effects on pollination success in red clover are scale-dependent. Functional Ecology 28, 561-568.
+Hegland, S.J., Nielsen, A., Lázaro, A., Bjerknes, A.-L., Totland, Ø., 2009. How does climate warming affect plant-pollinator interactions? Ecology Letters 12, 184-195.
+Heinrich, B., Raven, P.H., 1972. Energetics and pollination ecology. Science 176, 597-602.
+Herrera, C.M., 1989. Pollinator abundance, morphology, and flower visitation rate: analysis of the “quantity” component in a plant-pollinator system. Oecologia 80, 241-248.
+Hersch, E.I., Roy, B.A., 2007. Context?dependent pollinator behavior: An explanation for patterns of hybridization among three species of Indian paintbrush. Evolution 61, 111-124.
+Jakobsson, A., Padron, B., 2014. Does the invasive Lupinus polyphyllus increase pollinator visitation to a native herb through effects on pollinator population sizes? Oecologia 174, 217-226.
+Jakobsson, A., Padrón, B., Ågren, J., 2015. Distance-dependent effects of invasive Lupinus polyphyllus on pollination and reproductive success of two native herbs. Basic and Applied Ecology 16, 120-127.
+Jersáková, J., Johnson, S.D., Jürgens, A., 2009. Deceptive behavior in plants. II. Food deception by plants: from generalized systems to specialized floral mimicry, Plant-Environment Interactions. Springer, pp. 223-246.
+Johnson, S.D., Peter, C.I., Nilsson, L.A., Agren, J., 2003. Pollination success in a deceptive orchid is enhance by co-occuring magnet plants. Ecology 84, 2919-2927.
+Kaiser-Bunbury, C.N., Valentin, T., Mougal, J., Matatiken, D., Ghazoul, J., 2011. The tolerance of island plant-pollinator networks to alien plants. Journal of Ecology 99, 202-213.
+Kearns, C.A., Inouye, D.W., Waser, N.M., 1998. Endangered mutualisms the conservation of plant-pollinator interactions. Annual Review of Ecology and Systematics 29, 83-112.
+Kunin, W.E., 1997. Population size and density effects in pollination: pollinator foraging and plant reproductive success in experimental arrays of Brassica kaber. Journal of Ecology, 225-234.
+Lachmuth, S., Henrichmann, C., Horn, J., Pagel, J., Schurr, F.M., 2018. Neighbourhood effects on plant reproduction: An experimental–analytical framework and its application to the invasive Senecio inaequidens. Journal of Ecology 106, 761-773.
+Laverty, T.M., 1992. Plant interactions for pollinator visits: a test of the magnet species effect. Oecologia 89, 502-508.
+Lazaro, A., Lundgren, R., Totland, O., 2014. Experimental reduction of pollinator visitation modifi es plant–plant interactions for pollination. Oikos, 1037-1048.
+Levin, S.A., 1992. The problem of pattern and scale in ecology: the Robert H. MacArthur award lecture. Ecology 73, 1943-1967.
+Masters, J.A., Emery, S.M., 2015. The showy invasive plant Ranunculus ficaria facilitates pollinator activity, pollen deposition, but not always seed production for two native spring ephemeral plants. Biological Invasions 17, 2329-2337.
+Michener, C.D., 2000. The bees of the world. JHU press.
+Mitchell, R.J., Flanagan, R.J., Brown, B.J., Waser, N.M., Karron, J.D., 2009. New frontiers in competition for pollination. Annals of Botany 103, 1403-1413.
+Moeller, D.A., 2004. Facilitative interactions among plants via shared pollinators. 85 12.
+Moeller, D.A., Geber, M.A., 2005. Ecological context of the evolution of self-pollination in Clarkia xantiana: Population size, plant communities and reproductive assurance. Evolution 59, 786-799.
+Molina-Montenegro, M.A., Badano, E.I., Cavieres, L.A., 2008. Positive interactions among plant species for pollinator service: assessing the ‘magnet species’ concept with invasive species. Oikos 117, 1833-1839.
+Morales, C.L., Traveset, A., 2008. Interspecific pollen transfer: magnitude, prevalence and consequences for plant fitness. Critical Reviews in Plant Sciences 27, 221-238.
+Morales, C.L., Traveset, A., 2009. A meta?analysis of impacts of alien vs. native plants on pollinator visitation and reproductive success of co?flowering native plants. Ecology letters 12, 716-728.
+Muir, J.L., Vamosi, J.C., 2015. Invasive Scotch broom (Cytisus scoparius, Fabaceae) and the pollination success of three Garry oak-associated plant species. Biological Invasions 17, 2429-2446.
+Muñoz, A.A., Cavieres, L.A., 2008. The presence of a showy invasive plant disrupts pollinator service and reproductive output in native alpine species only at high densities. Journal of Ecology 96, 459-467.
+Norfolk, O., Eichhorn, M.P., Gilbert, F., Stewart, A., Brady, S., 2016. Flowering ground vegetation benefits wild pollinators and fruit set of almond within arid smallholder orchards. Insect Conservation and Diversity 9, 236-243.
+NRC, 2007. Status of pollinators in North America. National Academies Press.
+Ogilvie, J., Thomson, J.D., 2016. Site fidelity by bees drives pollination facilitation in sequentially blooming plant species. Ecology 97, 1442–1451.
+Ollerton, J., Winfree, R., Tarrant, S., 2011. How many flowering plants are pollinated by animals? Oikos 120, 321-326.
+Pellegrino, G., Bellusci, F., Palermo, A.M., 2016. Who helps whom? Pollination strategy of Iris tuberosa and its relationship with a sexually deceptive orchid. J Plant Res 129, 1051-1059.
+Peter, C.I., Johnson, S.D., 2008. Mimics and magnets: The importance of color and ecological facilitation in floral deception. Ecology 89, 1583–1595.
+Potts, S.G., Biesmeijer, J.C., Kremen, C., Neumann, P., Schweiger, O., Kunin, W.E., 2010. Global pollinator declines: trends, impacts and drivers. Trends in ecology & evolution 25, 345-353.
+Pyke, G.H., Pulliam, H.R., Charnov, E.L., 1977. Optimal foraging: a selective review of theory and tests. The quarterly review of biology 52, 137-154.
+Rathcke, B., 1983. Competition and facilitation among plants for pollination. Pollination biology, 305-329.
+Real, L.A., 1981. Uncertainty and pollinator?plant interactions: The foraging behavior of bees and wasps on artificial flowers. Ecology 62, 20-26.
+Riedinger, V., Renner, M., Rundlöf, M., Steffan-Dewenter, I., Holzschuh, A., 2014. Early mass-flowering crops mitigate pollinator dilution in late-flowering crops. Landscape Ecology 29, 425-435.
+Robson, D.B., 2012. An assessment of the potential for pollination facilitation of a rare plant by common plants: Symphyotrichum sericeum (Asteracae) as a case study. Botany 91, 34-42.
+Sandel, B., 2015. Towards a taxonomy of spatial scale-dependence. Ecography 38, 358-369.
+Scheiner, S., Cox, S.B., Mittelbach, G.G., Osenberg, C., Kaspari, M., 2000. Species richness, species–area curves and Simpson’s paradox. Evolutionary Ecology Research 2, 791-802.
+Schemske, D.W., 1981. Floral convergence and pollinator sharing in two bee-pollinated tropical herbs. Ecology 62, 946-954.
+Schiestl, F.P., Johnson, S.D., 2013. Pollinator-mediated evolution of floral signals. Trends in Ecology & Evolution 28, 307-315.
+Schmid, B., Nottebrock, H., Esler, K.J., Pagel, J., Pauw, A., Böhning-Gaese, K., Schurr, F.M., Schleuning, M., 2016. Responses of nectar-feeding birds to floral resources at multiple spatial scales. Ecography 39, 619-629.
+Seifan, M., Hoch, E.-M., Hanoteaux, S., Tielbörger, K., Bartomeus, I., 2014. The outcome of shared pollination services is affected by the density and spatial pattern of an attractive neighbour. Journal of Ecology 102, 953-962.
+Spellman, K.V., Mulder, C.P.H., Carlson, M.L., 2016. Effects of invasive plant patch size and distance on the pollination and reproduction of native boreal plants. Botany 94, 1151-1160.
+Sun, H.Q., Huang, B.Q., Yu, X.H., Kou, Y., An, D.J., Luo, Y.B., Ge, S., 2011. Reproductive isolation and pollination success of rewarding Galearis diantha and non-rewarding Ponerorchis chusua (Orchidaceae). Ann Bot 107, 39-47.
+Theodorou, P., Albig, K., Radzeviute, R., Settele, J., Schweiger, O., Murray, T., Paxton, R., 2017. The structure of flower visitor networks in relation to pollination across an agricultural to urban gradient. Functional ecology 31.
+Thomson, J.D., 1978. Effects of stand composition on insect visitation in two-species mixtures of Hieracium. American Midland Naturalist 100, 431-440.
+Thomson, J.D., 1981. Spatial and temporal components of resource assessment by flower-feeding insects. The Journal of Animal Ecology 50, 49-59.
+Toräng, P., Ehrlén, J., Ågren, J., 2006. Facilitation in an insect-pollinated herb with a floral display dimorphism. Ecology 87, 2113-2117.
+Toräng, P., Ehrlén, J., Ågren, J., 2008. Mutualists and antagonists mediate frequency-dependent selection on floral display. Ecology 89, 1564-1572.
+Tur, C., Saez, A., Traveset, A., Aizen, M.A., 2016. Evaluating the effects of pollinator-mediated interactions using pollen transfer networks: evidence of widespread facilitation in south Andean plant communities. Ecol Lett 19, 576-586.
+Turner, M.G., 1989. Landscape ecology: the effect of pattern on process. Annual review of ecology and systematics 20, 171-197.
+Waser, N.M., Real, L.A., 1979. Effective mutualism between sequentially flowering plant species. Nature 281, 670.
+Wiens, J.A., 1989. Spatial Scaling in Ecology. Functional Ecology 3, 385-397.
+Yang, C.F., Wang, Q.F., Guo, Y.H., 2013. Pollination in a patchily distributed lousewort is facilitated by presence of a co-flowering plant due to enhancement of quantity and quality of pollinator visits. Ann Bot 112, 1751-1758.
+Ye, Z.-M., Dai, W.-K., Jin, X.-F., Gituru, R.W., Wang, Q.-F., Yang, C.-F., 2013. Competition and facilitation among plants for pollination: can pollinator abundance shift the plant–plant interactions? Plant Ecology 215, 3-13.
+
+
+
+
+Figures and Tables
+
+Figure 1: A conceptual framework to model the mechanisms and hypotheses associated with pollinator-mediated facilitation. The concepts were extracted from a systematic review of 100 studies on this topic. The seven mechanistic hypotheses tested within the literature can be categorized into four umbrella hypotheses. Refer to Table 1 for a description of the seven mechanistic hypotheses. Each mechanism (A) can lead to a behavioral or demographic responses (B) that increases pollinator visitation or conspecific pollen deposition (C) that leads to an increase in fitness for another plant species (D).
+
+
+
+
+
+
+
+
+
+
+Table 1: A summary of the mechanistic hypotheses generated by a systematic review of the pollination facilitation literature, a concise definition for each, the proposed umbrella mechanism under which it falls and examples of reference articles.
+MechanismDescriptionUmbrella mechanism applicableKey Paper(s)Magnet Species EffectAttractive plant increases pollination success of less attractive neighbors disproportionate to the size of the shared floral displayTrait Based EffectThomson 1978, Laverty 1992MimicryMutualistic (Mullerian) or
+unilateral (Batesian) facilitation between two or more species that share similar display patterns or colorsTrait Based EffectPeter and Johnson, 2008
+Jeraskova, 2009Floral Neighborhood AbundanceIncreased pollination services due combining floral display and therefore increasing number of flowersFloral Display SizeThomson 1981Floral Neighborhood DensityIncreased pollination success by combining floral display and therefore decreasing overall interplant distanceFloral Display SizeRathcke, 1983
+Feldman 2006DiversityImproved pollination services due to growing in more diverse floral stands or areaDiversityGhazoul 2006Sequential MutualismEarlier blooming plants attract, maintain or increase pollinator population that then pollinates later blooming plant  Pollinator SupportWaser and Real 1979
+Ogilvie and Thomson 2016Habitat ProvisioningOne or more plants provide habitat for the pollinators of another plantPollinator SupportHansen, 2007
+
+Figure 2: A map showing geographic distribution of studies testing for pollination facilitation. The islands Seychelles and Mauritius each have one publication but are not visible on this map.
+
+Figure 3: The frequency of pollination facilitation studies tested in each ecosystem type and their corresponding scale of study. 
+
+
+Figure 4: The number of studies testing each mechanism and their corresponding scale of study. 
+
+
+Figure 5: The number of associated studies based on spatial grain size and each testable mechanism.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Supplemental Information
+
+S1: Criteria for measuring reproductive success
+ Measured rates of pollinator visitation to flowers 
+ Observed in-situ
+ Observed by technology
+ Collected from flowers
+ Quantified pollen deposition to stigmas of beneficiary
+ Conspecific pollen deposition
+ Release from pollen limitation
+ Hand pollination experiments
+ Measured seed production
+ Per fruit
+ Per plant
+ Measured fruit production
+S2: Criteria for defining mechanistic hypotheses based upon predictor variables. 
+Magnet species effect – Presence/absence of a certain species, species specific effect controlled for beyond abundance/diversity.
+Abundance – used heterospecific or combined floral abundance as predictor
+Density – used heterospecific or combined floral density as predictor. Includes aggregation. 
+Mimicry – tested for facilitation between similar appearing species by author’s definition or in some cases authors tested for degree of similarity using floral traits 
+Sequential Mutualism – earlier blooming plants facilitate later blooming plants or other temporal effect
+Habitat Provisioning – Provided habitat to known pollinator (Hansen 2007), alternatively author’s referred to semi-natural areas as wild bee habitats, such as hedgerows, grasslands and meadows as these areas provide nesting sites to pollinator populations. 
+Diversity: Use floral diversity as a predictor variable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+S3: PRISMA diagram (Moher et al, 2009) of workflow for pollination facilitation systematic review describes the identification of relevant studies.
+
+S4: Tables showing frequency of ecosystems tested, theme of study and mechanism of study.  Standardized residuals signify how much a value contributes to the overall chi-squared value. Significance at the 95% level is assessed at values > 1.96 and < 1.96. Some authors report experiments with multiple ecosystems or address multiple mechanism within a single paper so papers may be counted more than once.
+ Ecosystems tested. 
+
+EcosystemFrequencyStandardized ResidualsAgricultural151.81Alpine120.79Aquatic/wetland7-0.89Beaches2-2.5Experimental4-1.90Forest110.46Grassland306.88Semi-arid100.12Tropical forest3-2.24Unstated3-2.24Urban/disturbed9-0.21
+ Ecological themes of studies. 
+ThemeFrequencyStandardized residualsAgriculture123.02Community ecology theory4-0.56Conservation60.33Deceptive pollination91.67Diversity1-1.91Floral traits selection1-1.91Foundation plants2-1.46Invasive species2910.63Mating systems1-1.91Mechanical pollen isolation1-1.91Mimicry4-0.56Niche theory1-1.91Pollination theory1-1.91Rare plants5-0.12Relatedness2-1.46Stress gradient1-1.91Species coexistence5-1.12Urban ecology2-1.46No theme133.46
+MechanismFrequencyStandardized residualsFloral density362.89Diversity16-1.60Floral abundance270.86Habitat Provisioning5-4.07Magnet species effect649.17Mimicry9-3.18Sequential Mutualism5-4.07 Mechanism tested
+
+Table S5: Methods that authors used to control for confounding effects of plant-plant interactions and environmental variation. Methods are exclusive here but in a few cases multiple methods were used, papers were assigned to the most frequent method.
+Method UsedNPotted plants19Pollen supplementation to measure pollen limitation18Pollinator exclusion to determine degree of self and subsequent seed set6Focal plant removal2Floral removal to maintain equal densities1Measured micro-environmental variables (e.g. nitrogen availability)3Measured genetic quality of offspring to determine distance of outcrossing1Focal plant translocations1Spatial separation of plants & measured distance2Individuals within a consistent monoculture (agricultural study distance to hedgerows measured)1Total54
+
+
+
+
+
+
+Appendix A - List of studies included in systematic review
+
+A list of all studies included in this systematic review from the Web of Science and SCOPUS using the term pollinat* facilitat* and supplemental searches using Google Scholar.
+
+Albrecht, M., Ramis, M.R., Traveset, A., 2016. Pollinator-mediated impacts of alien invasive plants on the pollination of native plants: the role of spatial scale and distinct behaviour among pollinator guilds. Biological Invasions 18, 1801-1812.
+Alexandersson, R., Agren, J., 1996. Population size, pollinator visitation and fruit production in the deceptive orchid Calypso bulbosa Oecologia 107, :533-540.
+Bartomeus, I., Vila, M., Santamaria, L., 2008. Contrasting effects of invasive plants in plant-pollinator networks. Oecologia 155, 761-770.
+Benitez-Vieyra, S., Hempel de Ibarra, N., Wertlen, A.M., Cocucci, A.A., 2007. How to look like a mallow: evidence of floral mimicry between Turneraceae and Malvaceae. Proc Biol Sci 274, 2239-2248.
+Brockmeyer, T., Schaefer, H.M., 2012. Do nectar feeders in Andean nature reserves affect flower visitation by hummingbirds? Basic and Applied Ecology 13, 294-300.
+Brookes, B., Small, E., Lefkovitch, L.P., Damman, H., Fairey, D.T., 1994. Attractiveness of alfalfa (Medicago satiua L.) to wild pollinators in relation to wildflower. Canadian Journal of Plant Science, 779-783.
+Brown, J., York, A., 2017. Fire, food and sexual deception in the neighbourhood of some Australian orchids. Austral Ecology 42, 468-478.
+Bruckman, D., Campbell, D.R., 2016. Pollination of a native plant changes with distance and density of invasive plants in a simulated biological invasion. Am J Bot 103, 1458-1465.
+Bruninga-Socolar, Crone, E.E., Winfree, R., 2016. The role of floral density in determining bee foraging behavior a natural experiment. Natural Areas Journal 36.
+Caraballo-Ortiz, M.A., Santiago-Valentín, E., Carlo, T.A., 2011. Flower number and distance to neighbours affect the fecundity of Goetzea elegans (Solanaceae). Journal of Tropical Ecology 27, 521-528.
+Carmona-Díaz, G., García-Franco, J.G., 2008. Reproductive success in the Mexican rewardless Oncidium cosymbephorum (Orchidaceae) facilitated by the oil-rewarding Malpighia glabra (Malpighiaceae). Plant Ecology 203, 253-261.
+Caruso, C., 2001. Differential selection on floral traits of Ipomopsis aggregata growing in contrasting environments. Oikos, 295-302.
+Carvalheiro, L.G., Seymour, C.L., Nicolson, S.W., Veldtman, R., Clough, Y., 2012. Creating patches of native flowers facilitates crop pollination in large agricultural fields: mango as a case study. Journal of Applied Ecology 49, 1373-1383.
+Carvallo, G.O., Medel, R., Navarro, L., 2013. Assessing the effects of native plants on the pollination of an exotic herb, the blueweed Echium vulgare (Boraginaceae). Arthropod-Plant Interactions 7, 475-484.
+Chung, Y.A., Burkle, L.A., Knight, T.M., 2014. Minimal effects of an invasive flowering shrub on the pollinator community of native forbs. PLoS One 9, e109088.
+Cussans, J., Goulson, D., Sanderson, R., Goffe, L., Darvill, B., Osborne, J.L., 2010. Two bee-pollinated plant species show higher seed production when grown in gardens compared to arable farmland. PLoS One 5, e11753.
+Da Silva, E.M., King, V.M., Russell-Mercier, J.L., Sargent, R.D., 2013. Evidence for pollen limitation of a native plant in invaded communities. Oecologia 172, 469-476.
+Dainese, M., Montecchiari, S., Sitzia, T., Sigura, M., Marini, L., 2017. High cover of hedgerows in the landscape supports multiple ecosystem services in Mediterranean cereal fields. Journal of Applied Ecology 54, 380-388.
+de Waal, C., Anderson, B., Ellis, A.G., Bartomeus, I., 2015. Relative density and dispersion pattern of two southern African Asteraceae affect fecundity through heterospecific interference and mate availability, not pollinator visitation rate. Journal of Ecology 103, 513-525.
+Dietzsch, A.C., Stanley, D.A., Stout, J.C., 2011. Relative abundance of an invasive alien plant affects native pollination processes. Oecologia 167, 469-479.
+Duffy, K.J., Johnson, S.D., 2017. Effects of distance from models on the fitness of floral mimics. Plant Biology, 438-443.
+Duffy, K.J., Stout, J.C., 2008. The effects of plant density and nectar reward on bee visitation to the endangered orchid Spiranthes romanzoffiana. Acta Oecologica 34, 131-138.
+Duffy, K.J., Stout, J.C., 2011. Effects of conspecific and heterospecific floral density on the pollination of two related rewarding orchids. Plant Ecology 212, 1397-1406.
+Feldman, T.S., 2008. The plot thickens: does low density affect visitation and reproductive success in a perennial herb, and are these effects altered in the presence of a co-flowering species? Oecologia 156, 807-817.
+Ferrero, V., Castro, S., Costa, J., Acuña, P., Navarro, L., Loureiro, J., 2013. Effect of invader removal: pollinators stay but some native plants miss their new friend. Biological Invasions 15, 2347-2358.
+Fitch, G.M., 2017. Urbanization-mediated context dependence in the effect of floral neighborhood on pollinator visitation. Oecologia 185, 713-723.
+Flanagan, R.J., Mitchell, R.J., Karron, J.D., 2010. Increased relative abundance of an invasive competitor for pollination, Lythrum salicaria, reduces seed number in Mimulus ringens. Oecologia 164, 445-454.
+Ghazoul, J., 2006. Floral diversity and the facilitation of pollination. Journal of Ecology 94, 295-304.
+Goodell, K., Parker, I.M., 2017. Invasion of a dominant floral resource: effects on the floral community and pollination of native plants. Ecology 98, 57-69.
+Grab, H., Blitzer, E.J., Danforth, B., Loeb, G., Poveda, K., 2017. Temporally dependent pollinator competition and facilitation with mass flowering crops affects yield in co-blooming crops. Scientific Reports 7, 45296.
+Ha, M.K., Ivey, C.T., 2017. Pollinator-mediated interactions in experimental arrays vary with neighbor identity. Am J Bot 104, 252-260.
+Hansen, D.M., Kiesbüy, H.C., Jones, C.G., Müller, C.B., 2007. Positive indirect interactions between neighboring plant species via a lizard pollinator. The American Naturalist 169, 534-542.
+Hegland, S.J., Grytnes, J.-A., Totland, Ø., 2008. The relative importance of positive and negative interactions for pollinator attraction in a plant community. Ecological Research 24, 929-936.
+Hegland, S.J., Kudo, G., 2014. Floral neighbourhood effects on pollination success in red clover are scale-dependent. Functional Ecology 28, 561-568.
+Hegland, S.J., Totland, O., 2012. Interactions for pollinator visitation and their consequences for reproduction in a plant community. Acta Oecologica, 95-103.
+Herron-Sweet, C., Lehnhoff, E.A., Burkle, L.A., Littlefield, J., Mangold, J.M., 2016. Temporal- and density-dependent impacts of an invasive plant on pollinators and pollination services to a native plant. Ecosphere 7.
+Holzschuh, A., Dormann, C.F., Tscharntke, T., Steffan-Dewenter, I., 2011. Expansion of mass-flowering crops leads to transient pollinator dilution and reduced wild plant pollination. Proc Biol Sci 278, 3444-3451.
+Holzschuh, A., Dudenhöffer, J.-H., Tscharntke, T., 2012. Landscapes with wild bee habitats enhance pollination, fruit set and yield of sweet cherry. Biological Conservation 153, 101-107.
+Internicola, A., Juillet, N., Smithson, A., Gigord, L.D.B., 2006. Experimental investigation of the effect of spatial aggregation on reproductive success in a rewardless orchid. Oecologia.
+Jakobsson, A., Lazaro, A., Totland, O., 2009. Relationships between the floral neighborhood and individual pollen limitation in two self-incompatible herbs. Oecologia 160, 707-719.
+Jakobsson, A., Padron, B., 2014. Does the invasive Lupinus polyphyllus increase pollinator visitation to a native herb through effects on pollinator population sizes? Oecologia 174, 217-226.
+Jakobsson, A., Padrón, B., Ågren, J., 2015. Distance-dependent effects of invasive Lupinus polyphyllus on pollination and reproductive success of two native herbs. Basic and Applied Ecology 16, 120-127.
+Johnson, S.D., Peter, C.I., Nilsson, L.A., Agren, J., 2003. Pollination success in a deceptive orchid is enhance by co-occuring magnet plants. Ecology 84, 2919-2927.
+Juillet, N., Gonzalez, M.A., Page, P.A., Gigord, L.D.B., 2007. Pollination of the European food-deceptive Traunsteinera globosa (Orchidaceae): the importance of nectar-producing neighbouring plants. Plant Systematics and Evolution 265, 123-129.
+Kaiser-Bunbury, C.N., Valentin, T., Mougal, J., Matatiken, D., Ghazoul, J., 2011. The tolerance of island plant-pollinator networks to alien plants. Journal of Ecology 99, 202-213.
+Kipling, R.P., Warren, J., 2013. How generalists coexist: the role of floral phenotype and spatial factors in the pollination systems of two Ranunculus species. Journal of Plant Ecology 7, 480-489.
+Kovács-Hostyánszki, A., Haenke, S., Batary, P., Jauker, B., Baldi, A., Tscharntke, T., Holzschuh, A., 2013. Contrasting effects of mass-flowering crops on bee pollination of hedge plants at different spatial Ecological Applications 23, 1938–1946.
+Lammi, A., Kuitunen, M., 1995. Deceptive pollination of Dactylorhiza incarnata: an experimental test of the magnet species hypothesis. Oecologia 101, 500-503.
+Landry, C.L., 2013. Pollinator-mediated competition between two co-flowering Neotropical mangrove species, Avicennia germinans (Avicenniaceae) and Laguncularia racemosa (Combretaceae). Ann Bot 111, 207-214.
+Laverty, T.M., 1992. Plant interactions for pollinator visits: a test of the magnet species effect. Oecologia 89, 502-508.
+Laverty, T.M., Plowright, R., 1988. Fruit and seed set in mayapple (Podophyllum peltatum): influence of intraspecific factors and local enhancement near Pedicularis canadensis. Canadian Journal of Botany 66, 173-178.
+Lazaro, A., Lundgren, R., Totland, O., 2014. Experimental reduction of pollinator visitation modifies plant–plant interactions for pollination. Oikos, 1037-1048.
+Lázaro, A., Lundgren, R., Totland, Ø., 2009. Co-flowering neighbors influence the diversity and identity of pollinator groups visiting plant species. Oikos 118, 691-702.
+Lazaro, A., Totland, O., 2010. Population dependence in the interactions with neighbors for pollination: A field experiment with Taraxacum officinale. Am J Bot 97, 760-769.
+Liao, K., Gituru, R.W., Guo, Y.H., Wang, Q.F., 2011. The presence of co-flowering species facilitates reproductive success of Pedicularis monbeigiana (Orobanchaceae) through variation in bumble-bee foraging behaviour. Ann Bot 108, 877-884.
+Lopezaraiza-Mikel, M.E., Hayes, R.B., Whalley, M.R., Memmott, J., 2007. The impact of an alien plant on a native plant-pollinator network: an experimental approach. Ecol Lett 10, 539-550.
+Masters, J.A., Emery, S.M., 2015. The showy invasive plant Ranunculus ficaria facilitates pollinator activity, pollen deposition, but not always seed production for two native spring ephemeral plants. Biological Invasions 17, 2329-2337.
+McKinney, A.M., Goodell, K., 2010. Plant–pollinator interactions between an invasive and native plant vary between sites with different flowering phenology. Plant Ecology 212, 1025-1035.
+Moeller, D.A., 2004. Facilitative interactions among plants via shared pollinators. 85 12.
+Moeller, D.A., Geber, M.A., 2005. Ecological Context of the Evolution of Self-Pollination in Clarkia Xantiana: Population Size, Plant Communities and Reproductive Assurance. Evolution 59, 786-799.
+Molina-Montenegro, M.A., Badano, E.I., Cavieres, L.A., 2008. Positive interactions among plant species for pollinator service: assessing the ‘magnet species’ concept with invasive species. Oikos 117, 1833-1839.
+Moragues, E., Traveset, A., 2005. Effect of Carpobrotus spp. on the pollination success of native plant species of the Balearic Islands. Biological Conservation 122, 611-619.
+Muir, J.L., Vamosi, J.C., 2015. Invasive Scotch broom (Cytisus scoparius, Fabaceae) and the pollination success of three Garry oak-associated plant species. Biological Invasions 17, 2429-2446.
+Muñoz, A.A., Cavieres, L.A., 2008. The presence of a showy invasive plant disrupts pollinator service and reproductive output in native alpine species only at high densities. Journal of Ecology 96, 459-467.
+Nel, L., Pryke, J.S., Carvalheiro, L.G., Thebault, E., Frank van Ween, F., Seymour, C.L., 2017. Exotic plants growing in crop field margins provide little support to mango crop flower visitors. Agriculture, Ecosystems and Environment, 72-80.
+Nielsen, C., Heimes, C., Kollmann, J., 2008. Little evidence for negative effects of an invasive alien plant on pollinator services. Biological Invasions 10, 1353-1363.
+Norfolk, O., Eichhorn, M.P., Gilbert, F., Stewart, A., Brady, S., 2016. Flowering ground vegetation benefits wild pollinators and fruit set of almond within arid smallholder orchards. Insect Conservation and Diversity 9, 236-243.
+Ogilvie, J., Thomson, J.D., 2016. Site fidelity by bees drives pollination facilitation in sequentially blooming plant species. Ecology 97, 1442–1451.
+Ollerton, J., Stott, A., Allnutt, E., Shove, S., Taylor, C., Lamborn, E., 2007. Pollination niche overlap between a parasitic plant and its host. Oecologia 151, 473-485.
+Pauw, A., Johnson, C.M., 2017. Mutualism between co?occurring plant species in South Africa's Mediterranean climate heathland is mediated by birds. Plant Biology 20, 224-230.
+Pellegrino, G., Bellusci, F., Musacchio, A., 2008. Double floral mimicry and the magnet species effect in dimorphic co-flowering species, the deceptive orchid Dactylorhiza sambucina and rewarding Viola aethnensis. Preslia, 411-422.
+Pellegrino, G., Bellusci, F., Palermo, A.M., 2016. Who helps whom? Pollination strategy of Iris tuberosa and its relationship with a sexually deceptive orchid. J Plant Res 129, 1051-1059.
+Peter, C.I., Johnson, S.D., 2008. Mimics and magnets: The importance of color and ecological facilitation in floral deception. Ecology 89, 1583–1595.
+Reid, A.M., Lortie, C.J., 2012. Cushion plants are foundation species with positive effects extending to higher trophic levels. Ecosphere 3.
+Riedinger, V., Renner, M., Rundlöf, M., Steffan-Dewenter, I., Holzschuh, A., 2014. Early mass-flowering crops mitigate pollinator dilution in late-flowering crops. Landscape Ecology 29, 425-435.
+Robson, D.B., 2012. An assessment of the potential for pollination facilitation of a rare plant by common plants: Symphyotrichum sericeum (Asteracae) as a case study. Botany 91, 34-42.
+Roy, B., 1996. A plant pathogen influences pollinator behavior and may influence reproduction of nonhosts. Ecology 77.8, 2445.
+Sargent, R.D., Kembel, S.W., Emery, N.C., Forrestel, E.J., Ackerly, D.D., 2011. Effect of local community phylogenetic structure on pollen limitation in an obligately insect-pollinated plant. Am J Bot 98, 283-289.
+Schmid, B., Nottebrock, H., Esler, K.J., Pagel, J., Pauw, A., Böhning-Gaese, K., Schurr, F.M., Schleuning, M., 2016. Responses of nectar-feeding birds to floral resources at multiple spatial scales. Ecography 39, 619-629.
+Schuepp, C., Herzog, F., Entling, M.H., 2014. Disentangling multiple drivers of pollination in a landscape-scale experiment. Proc Biol Sci 281, 20132667.
+Seifan, M., Hoch, E.-M., Hanoteaux, S., Tielbörger, K., Bartomeus, I., 2014. The outcome of shared pollination services is affected by the density and spatial pattern of an attractive neighbour. Journal of Ecology 102, 953-962.
+Sieber, Y., Holderegger, R., Waser, N.M., Thomas, V.F.D., Braun, S., Erhardt, A., Reyer, H.-U., Wirth, L.R., 2011. Do alpine plants facilitate each other’s pollination? Experiments at a small spatial scale. Acta Oecologica 37, 369-374.
+Spellman, K.V., Mulder, C.P.H., Carlson, M.L., 2016. Effects of invasive plant patch size and distance on the pollination and reproduction of native boreal plants. Botany 94, 1151-1160.
+Spellman, K.V., Schneller, L.C., Mulder, C.P., Carlson, M.L., 2015. Effects of non-native Melilotus albus on pollination and reproduction in two boreal shrubs. Oecologia 179, 495-507.
+Stiers, I., Coussement, K., Triest, L., 2014. The invasive aquatic plant Ludwigia grandiflora affects pollinator visitants to a native plant at high abundances. Aquatic Invasions 9, 357-367.
+Sun, H.Q., Huang, B.Q., Yu, X.H., Kou, Y., An, D.J., Luo, Y.B., Ge, S., 2011. Reproductive isolation and pollination success of rewarding Galearis diantha and non-rewarding Ponerorchis chusua (Orchidaceae). Ann Bot 107, 39-47.
+Sun, S.-G., Montgomery, B.R., Li, B., 2013. Contrasting effects of plant invasion on pollination of two native species with similar morphologies. Biological Invasions 15, 2165-2177.
+Theodorou, P., Albig, K., Radzeviute, R., Settele, J., Schweiger, O., Murray, T., Paxton, R., 2017. The structure of flower visitor networks in relation to pollination across an agricultural to urban gradient.  31.
+Thomson, J.D., 1978. Effects of Stand Composition on Insect Visitation in Two-Species Mixtures of Hieracium. American Midland Naturalist 100, 431-440.
+Thomson, J.D., 1981. Spatial and temporal components of resource assessment by flower-feeding insects. The Journal of Animal Ecology 50, 49-59.
+Tscheulin, T., Petanidou, T., Potts, S.G., Settele, J., 2009. The impact of Solanum elaeagnifolium, an invasive plant in the Mediterranean, on the flower visitation and seed set of the native co-flowering species Glaucium flavum. Plant Ecology, 77-85.
+Tubbesing, C., Strohm, C., DeBano, S.J., Gonzalez, N., Kimoto, C., Taylor, R.V., 2014. Insect visitors and pollination ecology of spalding's catchfly (Silene spaldingii) in the Zumwalt prairie of Northeastern Oregon. Natural Areas Journal 34, 200-211.
+Tur, C., Saez, A., Traveset, A., Aizen, M.A., 2016. Evaluating the effects of pollinator-mediated interactions using pollen transfer networks: evidence of widespread facilitation in south Andean plant communities. Ecol Lett 19, 576-586.
+Van Rossum, F., Vereecken, N.J., Bredat, E., Michez, D., 2013. Pollen dispersal and fruit production in Vaccinium oxycoccos and comparison with its sympatric congener V. uliginosum. Plant Biol (Stuttg) 15, 344-352.
+Vrdoljak, S.M., Samways, M.J., Simaika, J.P., 2016. Pollinator conservation at the local scale: flower density, diversity and community structure increase flower visiting insect activity to mixed floral stands. Journal of Insect Conservation 20, 711-721.
+Waters, S., Fisher, S., Hille Ris Lambers, J., 2014. Neighborhood-contingent indirect interactions between native and exotic plants: multiple shared pollinators mediate reproductive success during invasions. Oikos 123, 443-440.
+Wirth, L.R., Waser, N.M., Graf, R., Gugerli, F., Landergott, U., Erhardt, A., Linder, H.P., Holderegger, R., 2011. Effects of floral neighborhood on seed set and degree of outbreeding in a high-alpine cushion plant. Oecologia 167, 427-434.
+Woods, T.M., Jonas, J.L., Ferguson, C.J., 2011. The invasive Lespedeza cuneata attracts more insect pollinators than native congeners in tallgrass prairie with variable impacts. Biological Invasions 14, 1045-1059.
+Yang, C.F., Wang, Q.F., Guo, Y.H., 2013. Pollination in a patchily distributed lousewort is facilitated by presence of a co-flowering plant due to enhancement of quantity and quality of pollinator visits. Ann Bot 112, 1751-1758.
+Ye, Z.-M., Dai, W.-K., Jin, X.-F., Gituru, R.W., Wang, Q.-F., Yang, C.-F., 2013. Competition and facilitation among plants for pollination: can pollinator abundance shift the plant–plant interactions? Plant Ecology 215, 3-13.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chapter 2: Disentangling the drivers and trade-offs of pollinator-mediated interactions between creosote bush (Larrea tridentata) and desert dandelion (Malacothrix glabrata). 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Abstract
+
+In arid ecosystems, the facilitative effects of shrubs can lead to concentrations of annual plants beneath the canopy. The indirect interactions that arise from the close spatial proximity of nurse-protégé relationships can have important implications for community structure and assembly. Creosote bush, Larrea tridentata is a dominant shrub of the Mojave Desert. Here, we test the capacity of creosote bush to influence the pollination of the annual understory during its phenological shift into flowering. Pollinator visitation rates to the phytometer desert dandelion, Malacothrix glabrata, were significantly lower as the understory of creosote bush, and when creosote bush entered into a full bloom, visitation rates declined significantly at both understory and nearby open microsites. Decreases in visitation were driven by syrphid flies and the responses of solitary bees. In this system, we found that L. tridentata had a positive ecological effect on annual plant cover, as well as the abundance and diversity of the arthropod community but that it also had indirect negative effects on pollinator visitation to a representative flowering annual plant. These finding suggest that the net outcome of association with foundation plant species can be positive or negative depending on both the life-history stage of the protégé species tested and on the phenology of the foundation species. There is the capacity for these trade-offs to be widespread and an increasing focus on further documenting these trade-offs will advance both facilitation theory and assessment of selection processes that can drive co-evolutionary relationships between shrubs, annual plants, and pollinators.  
+
+
+Keywords: Facilitation, Larrea tridentata, plant-pollinator, trade-off, nurse plant
+
+
+
+Introduction
+
+Foundation species positively influence the structure of the surrounding plant communities by creating locally stable conditions for other species (Ellison et al., 2005). In arid environments, foundation shrubs can act as keystone facilitators, directly benefiting associated understory annual plants via multiple mechanistic pathways across all life stages (Filazzola and Lortie, 2014). These include stress amelioration (McIntire and Fajardo, 2014), improved water and nutrient availability (Franco et al., 1994), and seed trapping (Flores and Jurado, 2003). Direct interactions between shrubs and annuals can be simultaneously facilitative and competitive (Bertness and Callaway, 1994; Callaway and Walker, 1997; Holzapfel and Mahall, 1999), and it has been proposed that the relative importance of negative versus positive effects covaries with abiotic stress (Bertness and Callaway, 1994; Schafer et al., 2012; Tielbörger and Kadmon, 2000). These complex sets of interactions lead to patterns in species coexistence and structure plant communities (Brooker et al., 2008; Valiente?Banuet and Verdú, 2007). The facilitative effects of desert shrubs can lead to concentrations of annual plants beneath the shrub canopy (Facelli and Temby, 2002). This close spatial proximity of shrubs and annuals undoubtedly gives rise to indirect interactions (Sotomayor and Lortie, 2015). Indirect interactions occur whenever a third species alters the interaction between two other species (Callaway and Pennings, 2000; Callaway and Walker, 1997; Wootton, 1994). If the associated annual is a flowering plant, then there is the capacity for the plants to interact indirectly via pollinators.
+Mechanisms that require co-blooming dominate the study of pollinator-mediated interactions. The underlying hypotheses are primarily extensions to optimal foraging theory (Pyke, 1984; Pyke et al., 1977) with flowers as the central resources for which pollinators forage. Thus plants can become more attractive by combining their floral displays to increase net floral patch size (Schemske, 1981) or to make the patch offering more diverse (Ghazoul, 2006). Flowering desert shrubs offer concentrations of floral resources for foraging pollinators, and this can facilitate co-blooming annuals. Magnet species are particularly attractive to pollinators increasing local pollinator abundances that benefit their less attractive neighbours (Laverty, 1992; Thomson, 1978). If shrubs concentrate pollinators that do not in turn visit their neighbours, competition or interference rather than facilitation will arise. Shrubs are salient features of desert scrub ecosystems due their large size and structural complexity relative to ephemeral plants and can also influence the pollination of associated plants via non-floral mechanistic pathways. Shrubs can facilitate their annual understory by improving conditions for pollinators by offering shelter or habitat. Alternatively, annuals growing under shrubs can be physically obscured from foraging pollinators or shaded thereby reducing visitation. For example, shading by the shrub Lonicera decreases pollinator visitation and pollen deposition to its understory annuals (McKinney and Goodell, 2010). Consequently, direct and indirect shrub effects on other species function simultaneously to determine net outcomes. The balance of facilitative and competitive interactions can be further altered by life stage (Bruno et al., 2003; Callaway and Walker, 1997; Pugnaire et al., 1996; Rousset and Lepart, 2000; Valiente-Banuet et al., 1991). For example within some nurse-plant systems, young plants are facilitated during establishment but later compete with their nurses for resources (Yeaton, 1978). For plants, the life stage shift from vegetative growth to reproductive growth is a major event in resource allocation (Bazzaz et al., 1987). Phenological shifts are likely a critical mediator of the sign of net outcomes of interactions with flowering, foundation plant species such as shrubs. 
+The Mojave Desert is a biodiversity hotspot supporting 659 species of bees (Saul-Gershenz et al., 2012) and 1680 species of vascular plants (Rundel and Gibson, 2005). Despite the celebrated biodiversity of Southwestern Deserts, pollinator-mediated interactions in this region are infrequently studied. Increases in intraspecific density can benefit the pollination of desert mustard Lesquerella fendleri (Roll et al., 1997); however, interspecific studies have primarily focused on competition within cacti systems in the Sonoran Desert (Fleming et al., 2001). Plant-pollinator systems in southwest deserts are home to rare obligate mutualisms such as the Joshua tree Yucca brevifolia and Yucca moths (Pellmyr, 2003), and the senita cactus Pachycereus schottii and senita moths (Fleming and Holland, 1998) and are often considered highly specialized. The degree of specialization of species in desert ecosystems is a subject of ongoing debate (Chesson et al, 2004). Desert organisms are hypothesized to adapt to high environmental variability by generalizing resource use (Chesson et al., 2004) and this hypothesis has been supported to an extent through pollination network studies (Chacoff et al., 2012). Overall, few one-to-one relationships (i.e. matching between a single species of pollinator with a single species of plant) have been found with solitary bees (Simpson and Neff, 1987), and bees still visit even the senita cactus (Holland and Fleming, 2002). Despite the high number of specialist pollinators present in the Mojave, most plant species nonetheless interact through pollinators and therefore there is the potential for competition and facilitation between neighbouring plants to occur. 
+The purpose here was to examine both the direct and indirect effects of Larrea tridentata on the general success of its annual understory. Single species of plants that are sensitive to environmental variation are called phytometers in plant science (Clements and Goldsmith, 1924) and have been recommended as a tool to study the relative importance versus intensity of plant-plant interactions as well (Brooker et al., 2005). We used the commonly co-occurring annual Malacothrix glabrata as a phytometer to measure variation in pollination services by environmental context. These species co-flower at beginning and ends of their bloom period (Jennings, 2001), and are thus a relevant system to model changes in net interactions within a growing season. We hypothesize that desert shrubs can positively and negatively influence the net outcome of pollination for associated annual plants through effects of large floral offering and extent of co-blooming with the community in addition to directly facilitating vegetative performance measures at earlier life stages. The following three predictions were tested: 1) visitation rates to an annual phytometer species differ under a shrub canopy relative to paired open microsites; 2) phenological stage of the shrub influences the pollination rates to the phytometer species; 3) annual community performance metrics including cover and richness will be higher under the shrub canopy. Understanding interactions for pollination at a community level is critical for understanding potential impacts of any decline in pollinator populations. If shrubs facilitate their understory annuals, they can buffer pollinator declines, but if shrubs typically interfere with pollination for annuals, the sensitivity to change for the community increases.  
+Methods
+
+Study site
+The study area has an extent of 0.07 km2, and is located in the mouth of Sunset Cove on the property of the Sweeney Granite Mountains Desert Research Station within the Mojave National Preserve in California (34°46'26.5"N 115°39'31.3"W). The cove is created by tall rock formations on three sides, gently sloping and widening to the south. The diverse shrub and cactus community includes Larrea tridentata, Acamptopappus sphaerocephalus, Ambrosia salsola, Eriogonum fasciculatum, Cylindropuntia acanthacarpa, Cylindropuntia echinocarpa and Thamnosa montana. The most common flowering annuals present during the study period were Cryptantha sp, Phacelia fremontii, Eriophyllum wallacei, Gilia sp., Phacelia tanacetifolia, Malacothrix glabrata and Chaenactis fremontii. 
+Phytometer species
+We used the desert dandelion Malacothrix glabrata (Asteraceae) as a phytometer to measure pollination services. M. glabrata is an abundant, native annual wildflower that commonly co-occurs with L. tridentata. The flowerheads are dense with yellow corollas and grow up to 40 cm tall (Morhardt and Morhardt, 2004). M. glabrata is insect-pollinated, including bees in the genera Nomadopsis (Rutowski and Alcock, 1980) and Anthidium (Wainwright, 1978) as well as short-winged flower beetles of the family Kateretidae (Cline and Audisio, 2010). Several of the 24 species of Malacothrix are self-compatible (Davis and Philbrick, 1986), however the reproductive biology of M. glabrata has not been studied in detail. 
+Study species
+Creosote bush, Larrea tridentata (Zygophyllaceae), has been a dominant flowering shrub of the southwestern United States for 25 000 years (Betancourt et al., 1990). It is able to maintain photosynthesis even under high temperatures and low water potentials (Barbour et al., 2007). This shrub species also primarily reproduces clonally leading to individuals that are exceptionally long lived. Clones that are over 1000 years old have been documented (Vasek, 1980). The full pollinator guild contains 22 specialist pollinators and more than 80 generalists (Minckley et al., 1999). The associated pollinator guilds are highly variable over space, and most shrubs will only interact with 20% of their full guild (Cane et al., 2005). L. tridentata is one of the most reliable flowering plants in the Mojave because it has one of the lowest rainfall thresholds (12 mm) for blooming (Bowers and Dimmitt, 1994). It produces copious nectar and pollen rich flowers (Simpson et al., 1977) and provides critical resources to pollinators in drought years. L. tridentata functions as a benefactor species for other desert perennials such as Opuntia leptocaulis, (Yeaton, 1978), Peniocereus striatus (Suzán et al., 1994), and facilitates native annuals (Schafer et al., 2012). 
+
+
+Study design
+
+A total of 60 L. tridentata shrubs with developed floral buds and minimal perennial understory were chosen across the study site haphazardly (mean width: 336 cm, mean height: 209 cm). Paired shrub-open microsites were selected inside the dripline of the focal shrub and a minimum of 1.5 m away in an open area respectively. Both microsites were sampled on the south side of the shrub to minimize shading and were paired to minimize variation due to environmental heterogeneity. To separate floral and non-floral interaction pathways, interactions were tested prior to focal shrubs blooming and repeated using the same shrubs after they had entered into full bloom. Shrubs with fewer than five open blooms were considered non-blooming (“pre-blooming”) because 5 is less than 1% of mean blooming observed throughout the season. The mean number of blooms of the ‘blooming’ treatment was 300.2 (min: 102, max: 1080). The repeated measures study design was chosen to measure relative changes in interactions with natural shrub phenology and to reduce between shrub variability. In two cases, a focal shrub did not bloom within the study period and was replaced by a different blooming shrub. These two cases were excluded from later RII calculations. 
+Visitation and Pollen Deposition
+M. glabrata were gathered freshly each morning from nearby (< 3 km) populations where they seasonally coexist with L. tridentata. These plants were transplanted into 15 cm diameter black pots and one pot was placed at each microsite for a total of six shrub/open pairs per day. Conspecific floral density influences pollinator visitation (Bosch and Waser, 2001). Therefore, transplants of similar size and habit were paired, and the flowerheads of M. glabrata were trimmed to equal numbers between paired microsites, but left to vary between replicates. The mean number of flowers per pot was 10 (min 6, max 20). Polaroid Cube+ HD video cameras (1080p) were used to record pollinator activity to each potted M. glabrata. Recording took place between 11:30 am and 3:30 pm (mean length: 1:19 hr:min). The use of video technology allows for higher temporal resolution and replication beyond what is possible using traditional in situ observations (Lortie et al., 2012). Ten days of pre-blooming trials (60 shrub/open pairs) were conducted between April 10 and April 20 and ten days of blooming trials (60 shrub/open pairs) between April 21 and May 2. To test for any influence of naturally co-occurring annuals and blooming shrubs, heterospecific annual floral density was measured within a 0.25 m2 quadrat in each microsite and the number of heterospecific shrubs in bloom were counted within a 2 m radius of each microsite. The number of open blooms of each L. tridentata was counted at the same time.
+Plant-pollinator interactions were estimated using the timestamps of the videos. A flower visit was defined as when an insect visitor flew on and touched the open side of a flower. A foraging instance was defined as one plant visit, measured between initial floral contact and when the visitor departed from physical contact of the final flower and left the field of view. Foraging duration included flower-to-flower travel time and multiple flowers could be visited during one foraging instance. Total flowers is the sum of all flowers visited per replicate. Proportion of flowers visited is the number of unique flowers visited per foraging instance divided by the number of flowers in the field of vision. Floral visitors were identified to recognizable taxonomic units (RTU) including the following categories: honeybees, solitary bees, Lepidoptera, syrphid flies, bombyliid flies and other, which was comprised primarily of small beetles and muscoid flies. A total of five videos were omitted due to disturbance or battery failure.
+To quantify how pollen deposition is influenced by proximity to L. tridentata, stigma were excised from M. glabrata at a nearby site (3 km) with a naturally occurring, co-blooming population of M. glabrata and L. tridentata between April 31st and May 2nd, 2017. Three stigma from each of three flowers per M. glabrata (nine stigma per plant) growing under the dripline and in nearby open areas were collected generating a total of 298 stigma from 13 shrub/open pairs. Distance to the nearest L. tridentata and three nearest M. glabrata neighbours were also recorded, and the number of M. glabrata flowers per plant were counted. The stigmas were stored individually in micro-centrifuge tubes filled with denatured alcohol. The tubes were spun down in a centrifuge at 4200 rpm for 4.5 minutes and the pellet pipetted onto the slide. This along with the stigma were mounted in fuchsin jelly (Kearns and Inouye, 1993). At 100 x magnification, 10 longitudinal transects (18 mm long) of pollen in addition to the stigma were counted per slide. Heterospecific pollen grains were imaged using a Canon 60D SLR with 60mm macro lens into microscope afocally. 
+
+Community-level effects of shrub species
+The arthropod communities were sampled to provide an estimate of pollinator availability for each microsite and to assess if L. tridentata acts as a foundation species for other taxa. Yellow, white, and blue coloured six-inch diameter plastic bowls filled with water with a few drops of dish detergent added to sample via pan trapping. Each study day, pan traps were set out by 10 am and collected by 5:30 pm. Arrays of three pan traps were deployed in a triangular shape at each microsite, marginally embedded in the ground to prevent disturbance. Total percent vegetation cover (a proxy for annual biomass) and annual species richness were recorded within a 0.25 m2 quadrat when the traps were laid out. Arthropod sampling was conducted within two days of the video test but never on the same day to avoid influencing visitation. Nine days (54 shrub/open pairs) of sampling were completed before blooming, and 10 days (60 shrub/open pairs) during full bloom.
+Bees and syrphid flies were identified to species or genus (Ascher and Pickering, 2015; Michener, 2000; Michener et al., 1994; Miranda et al., 2013). The majority of remaining individuals was identified to at least the taxonomic resolution of family (Grissell and Schauff, 1990; Marshall, 2012; Teskey et al., 1981; Triplehorn and Johnson, 2005) Thysanoptera, Orthoptera and Arachnida which were left to order. Recognizable taxonomic unit (RTU) is a suitable approximation of traditional species richness (Oliver and Beattie, 1993). Using RTU limits resolution compared with species-level identification, however many desert insect species have not been described and furthermore useful keys are often lacking. This method of categorizing diversity was a trade-off between maximizing resolution and speed given the high diversity of desert species. Related groups may be identified to different levels. E.g. wasps in the genus Miscophus and subfamily Pemphredoninae are both within the family Crabronidae. No individuals were double counted, and these groups were considered distinct, exclusive RTUs for diversity analyses. Nymphs were included in abundance analyses provided they could be identified at least to taxonomic order. Hemipteran nymphs that could not be identified to family were aggregated for diversity analyses. Mites (Acari) and springtails (Collembola) were excluded from all analyses due to biases in collection methods. The full dataset of 118 RTU is available online (KNB, Braun and Lortie, 2018). All physical specimens are archived at York University.
+To determine which pollinators visited L. tridentata flowers during the study period, 15-minute observation periods were completed at 4 shrubs for 10 days pre-blooming (10 hours) and up to 6 shrubs per day for 10 days when blooming (14.5 hours). The same focal shrubs were observed but on different days than pan trap sampling and video trials. Due to the large size of the shrubs, it was not possible to accurately track flower visits per foraging instance, therefore only the frequency of foraging instances was recorded. The identity and behaviour of the visitors were recorded and voucher insects were collected when possible to facilitate identification. 
+To determine if L. tridentata influences local microclimate, a total of 16 HOBO pendant data loggers were used to record micro-environmental conditions. Ground level temperature and light availability were recorded every 30 minutes between March 19th and May 14th, 2017 at eight microsite pairs. Daytime (9am to 9pm) and nighttime (9pm to 9am) averages and daily temperature variance were calculated.
+Statistical Analysis
+
+All statistical analyses were performed using R (R Core Team, 2017) and all code is available in this project’s repository (https://github.com/jennabraun/larrea.facilitation).
+Visitation and Pollen Deposition
+To test for evidence that L. tridentata mediates pollinator visitation to M. glabrata, generalized linear mixed-models using negative binomial error distributions with a loglink function to account for overdispersion were fit (GLMM, lme4). The number of foraging instances and total number of flowers visited were treated as response variables. Video length was log-transformed for the loglink function and used as an offset to maintain the count structure of the data. To test for the influence of conspecific floral density, the number of M. glabrata blooms was included as a factor in models. We did not standardize visitation to visits/hour/flower because this assumes that pollinators respond linearly to conspecific floral density and that the slope of the relationship does not change with treatment (Reitan and Nielson, 2006). The focal ‘replicate shrub + microsite’ (Rep ID) was used as a random effect to account for the repeated measures study design in all models. Interactive, additive, and intercept only models were compared by AIC and likelihood ratio tests with ?2 approximations (Table A1, A2). To test for the influence of heterospecific blooming annuals and shrubs, negative binomial GLMMs (glmmTMB) with each covariate included to the additive model were used. A quasipoisson GLMM (glmmPQL, MASS) was used to explore which visitors were driving observed visitation patterns. 
+Gamma GLMM models (glmer, lme4) with foraging duration and proportion of flowers visited per foraging instance as response variables tested for behavioural differences. Solitary bees and ‘other’ RTUs were subsetted to fit linear mixed models for both RTU using log-transformed foraging duration as the response variable; in all cases least-squares post hoc tests (lsmeans) were used on any significant interactions and the Rep ID was included as a random effect.
+Quasipoisson models (glmmPQL, MASS) were fit with conspecific and heterospecific pollen deposition as response variables. Distance to L. tridentata, distance to the nearest conspecific neighbour and the number of M. glabrata flowers were modeled as predictors. The sample ID nested in the flower ID nested in the plant was used as a random effect.
+Community-level shrub effects
+Negative binomial GLMMs with arthropod abundance, percent annual cover, annual species richness and annual bloom density as response variables were used to test for relative shrub effects on the local community (glmer.nb, lme4). Beetles from the family Melyridae comprised 1217 of the 3384 total arthropods captured, therefore abundance models were fit with Melyridae excluded, included and individually to explore model sensitivities. Poisson GLMMs (lme4) were used to determine differences in arthropod species richness and bee abundance between the treatments, and negative binomial GLMMs (glmer.nb, lme4) were used to test for differences in bee richness. To test if L. tridentata individuals with more flowers were more attractive to pollinators, a quasipoisson GLM (glm) with visitation rates as the response and flower number and height as predictors. In all cases, least-squares post hoc tests (lsmeans) were used on any significant interactions, and the Rep ID was included as a random effect to control for repeated measures.
+GLMMs (glmer, lme4) with Gamma error distributions with mean daytime temperature, mean nighttime temperatures and daily temperature variance as response variables and microsite as a predictor were used to test for the capacity of L. tridentata to create stable microclimates. The shrub ID + microsite was used as a random effect to control for the repeated measures.
+Redundancy analysis was used to test for the influence of microsite and associated annual communities on insect community composition (RDA, vegan). Arthropod abundances were Hellinger transformed to lower the weight of rare RTU (Legendre and Gallagher, 2001). Microsite, percent annual cover, annual richness and heterospecific annual bloom density were used as constraining variables in the ordination. 
+In order to examine the change in interaction between the vegetation factors and arthropod communities with the phenological shift, rather than the effect of blooming itself, the dataset was split into pre-blooming and blooming, and analyses were run separately on each subset. In order to test for the significance of the constraining variables in explaining the variation, a permutation-like ANOVA was used on each RDA (anova.cca, vegan).
+Ecological effect sizes
+To compare the ecological effect of shrubs and blooming on five community response metrics (floral visitation of M. glabrata, arthropod abundance, arthropod species richness, percent annual cover and annual species richness), and to estimate the biological importance of statistically significant differences the effect size estimate RII was calculated (Armas et al., 2004). The equation: RII=  (treatment-control)/(treatment+control) was used. Treatments were shrub microsite or blooming, while the controls were open microsite or pre-blooming. Only paired microsites in the data were used to calculate effect sizes. This measure ranges from -1 to +1, is symmetric around 0, and negative values indicated relative competition whilst positives indicate facilitation (Armas et al., 2004). To determine if the effect was significantly different from 0, 95% confidence intervals around mean values were bootstrapped (boot), stratified by the focal shrub ID to account for the repeated measures study design.
+Results
+
+Shrub effects on visitation rates and pollen deposition to phytometer species
+
+A total of 697 flying insects visited 925 flowers (hereafter “pollinators”) to M. glabrata in 303 hours of video recording. No pollinators were observed in 61 of the 235 video observation periods. Foraging instance frequency and total floral visitation by pollinators to M. glabrata were significantly lower at the shrub microsite relative to open areas and were reduced at both microsites when L. tridentata entered full bloom (Table 1). There was a positive effect of M. glabrata conspecific density on both the frequency of foraging instances and floral visitation (Table 1). The frequency of flower visits by syrphids and solitary bees declined significantly with blooming (Table 1). There was no significant difference between RTU visiting the microsites (Figure 1) nor were there significant interactions between RTU, microsite, and blooming on the total flowers visited or frequency of foraging instances (Table A4).
+There was no significant influence of heterospecific shrub blooming density on foraging instance frequency or total flowers visited (Table 2). There was a significant, positive effect of heterospecific annual floral density on foraging instances but not flowers visited (Table 2). Floral visitation rates (flowers/hr) were significantly correlated between paired shrub/open microsites (Pearson’s = 0.262, t = 2.8708, df = 112, p-value = 0.004898).
+There was a negative effect of L. tridentata blooming on M. glabrata foraging duration but no microsite effect (Table 3). This was driven by visitors in the ‘other’ category (Figure 2, Est: -1.0703, ?2: 12.274, t: -3.503, p = 0.000605). There was no difference in solitary bee foraging duration between blooming treatments (Est: -0.9341, ?2: 1.9017, t: -1.379, p = 0.208). The proportion of flowers visited per visit decreased significantly with blooming at the shrub microsite only (Table 3), but there were no RTU specific response to blooming or microsite (Table A5, A6).
+A total of 16209 grains of conspecific pollen and 1719 of heterospecific grains were recorded on M. glabrata stigma. At the nearby site, there was no significant influence of proximity to L. tridentata or the number of conspecific flowers on conspecific pollen deposition, however there was a marginally significant effect of distance to nearest conspecific neighbour (Figure 3a, Table 4). Heterospecific pollen deposition increased significantly with distance from L. tridentata (Figure 3b). Conspecific and heterospecific pollen deposition were significantly correlated (Pearson’s = 0.15, t = 2.397, df = 229, p = 0.01). 
+Community-level shrub effects
+
+A total of 3987 arthropods spanning 118 taxonomic groups (Appendix B) were caught in 19 days of pan trapping. There was a positive effect of shrub microsite on both arthropod abundance (Melyridae excluded) and arthropod species richness and a negative effect of blooming (Table 5). Insect abundance (Melyridae excluded) was significantly correlated between paired shrub/open microsites (Pearson’s = 0.46, p < 0.001). Melyridae abundance was significantly lower at the shrub microsites, and decreased with blooming at the open microsite only (Appendix C). There was no significant difference in bee abundance or richness caught in pan traps between any of the treatments (Table 5). 
+Percent cover of ground vegetation was significantly greater in shrub microsites, and it decreased with blooming in the open microsite only (Table 5). There was a significant decrease in heterospecific annual floral density with blooming, but there were no significant differences between the microsites (Table 5). There was also no significant difference in annual species richness between any of the treatments (Table 5). 
+Shrubs had a competitive effect on floral visitation of M. glabrata, a facilitative effect on arthropod abundance, arthropod species richness, and on annual percent cover but no significant effect on annual plant richness (Figure 5A). Blooming had a negative effect on floral visitation, arthropod abundance, and arthropod species richness and a neutral effect on annual richness at both microsites. Blooming had no significant effect on annual cover at the shrub microsite, however there was a significant, negative effect at the open microsite (Figure 5B). 
+Pollinator visitation to L. tridentata increased with floral abundance (Figure 5, GLM: Est: 0.0013408, ?2: 4.6383, p = 0.02283). Floral abundance and shrub height (Pearson’s = 0.335, t = 2.6659, df = 56, p = 0.01002) were correlated, however height was not a significant predictor of pollinator visitation (GLM: Est: 0.0054, ?2: 3.6066, p = 0.061). L. tridentata received 197 floral visit over 15 hours of observations. Of 169 visits made by bees, Apis mellifera was the most frequent visitor (32%), followed by Centris sp. (21%), Hesperapis larrae (18%) and Megandrena enceliae (7%) and other solitary bees (23%) including Hoplitis and Megachile.
+Mean daytime temperatures were significantly lower (Figure 6, GLMM: Est: -0.064678, ?2:85.51, p <0.0001), and mean nighttime temperatures were significantly higher under the shrub canopy (GLMM: Est: 0.059203, ?2: 50.121, p <0.0001). Overall temperature variation was significantly lower in the shrub microsites (GLMM: Est: -0.27977, ?2: 523.38, p <0.0001).
+Arthropod community composition was significantly influenced by microsite for both blooming treatments (Table 6). There was no significant effect of the annual understory. The constraining variables of the pre-blooming RDA explained more variation (12.5%) than blooming (4%). Only the pre-blooming RDA was significant (pre: F = 3.3448, df = 4, p =  0.001, blooming: F = 1.1862, df = 4, p = 0.118). 
+Discussion 
+
+Net interaction theory proposes that both positive and negative interactions are common in most interactions between different species in a system (Callaway and Walker, 1997). This study confirmed the role of the desert shrub L. tridentata as a foundation species in this system through its positive effects on annual plants and arthropod communities and through its ability to stabilize microclimates. However, the net outcome of these interactions was both positive and negative depending on the specific mechanistic pathway and phenological stage of the shrub. L. tridentata interfered with the pollination of the representative phytometer species M. glabrata and this relative negative outcome of association was not alleviated when L. tridentata entered full bloom. The phenological shift into blooming by L. tridentata intensified with the development of exploitation competition with M. glabrata at both microsites rather than triggering facilitation via the magnet species effect. 
+Plants that employ a cornucopian flowering strategy produce abundant floral resources over an extended period of time, and this strategy can attract a wide range of pollinators to the localized area (Gentry, 1974; Mosquin, 1971). This positive response by pollinators to the floral density of L. tridentata i.e. concentrations of floral resources was at a cost to the phytometer species tested M. glabrata. Pollinator visitation frequency and the foraging behaviour of pollinators changed in response to the large increase of floral resources by L. tridentata. The foraging strategies of many pollinator groups are centered around energetic considerations (Heinrich and Raven, 1972; Pyke, 1984). When choosing between resources, bees commonly stay for a few visits before leaving to the superior resource (Sowig, 1989), where the larger floral display (Bosch and Waser, 2001) or richer rewards (Robertson et al., 1999) will improve their foraging efficiency. We found that pollinator preferences of L. tridentata over M. glabrata were species-specific. Feral honeybees, Apis mellifera, were the most frequent floral visitors to L. tridentata but only visited M. glabrata prior to L. tridentata blooming. Honeybees prefer larger floral patches (Sih and Baltus, 1987) and exhibit floral constancy; the facultative specialization on different flower species at different times by individuals (Waser, 1986). Solitary bees also showed a behavioural response by shifting their preference to L. tridentata. Facilitation via honeybees and solitary bees has been documented in previous studies (Albrecht et al., 2016; Bruckman and Campbell, 2016), however in most cases the magnet plant does not offer such disproportionately abundant resources as L. tridentata relative to the potted annuals. The cornucopia flowering strategy by benefactors is likely to introduce significant decoy effects in shrub-annual facilitation systems. 
+Eupeodes volucris (Diptera: Syrphidae) was the most frequent floral visitor to M. glabrata. However, E. volucris did not switch despite being known to visit L. tridentata (Hurd Jr and Linsley, 1975). Therefore, the decrease in visitation cannot be attributed to direct shrub effects. The additional bees attracted by L. tridentata may have competitively excluded Syrphids from the immediate area. Competition between Syrphids and other pollinators is understudied (Inouye et al., 2015), but competition between bee species is better known. Centris sp. bees were frequent visitors to L. tridentata flowers during this study. They are territorial and are known to chase away other bees from shrubs (Alcock et al., 1977). Similarly, honeybees can reduce visitation by solitary bees (Shavit et al., 2009) through competitive displacement (Cane and Tepedino, 2017). Alternatively, syrphid visitation may have declined due to changes in local abundances, particularly if their phenology is linked with annuals. E. volucris is multivoltine (Vockeroth, 1992) but the phenology of E. volucris in desert systems has not been studied. Larval E. volucris are aphid predators and their phenology appears to be tied to prey availability rather than floral resource availability (Iler et al., 2013; Noma and Brewer, 2008). This suggests the influence of indirect shrub effects i.e. mediated through pollinator-pollinator interactions. This is a novel mechanism of pollinator-mediated competition in arid ecosystems that has the potential to be widespread.
+There was evidence of facilitation by conspecific and heterospecific annual floral density for visitation concurrent with interference by shrubs suggesting that phenological matching with other flowering species within the community mediates net pollination success in this system. Additional foundation species including Acamptopappus sphaerocephalus, Opuntia sp. and Ericameria cooperi entered into bloom alongside L. tridentata while annual floral density decreased, signifying a seasonal shift from annual floral dominance to shrub floral dominance. Phenological separation between annuals and shrubs is frequently observed in South Western desert ecosystems (Cable, 1969; Halvorson and Patten, 1975; Jennings, 2001). Exploitation competition of early-blooming spring annuals by later-blooming cornucopia plants offering copious resources contributes to phenological divergence in the alpine (Mosquin, 1971). Thus the timing of blooming is important for competition avoidance, but also to benefit from co-blooming with conspecifics and facilitating heterospecifics. Generally, the relative effect of blooming i.e. the temporal shift was greater in annual and arthropod communities than the effect of spatial association with L. tridentata. However, the intensity of the interaction depended on the specific metric measured. In the Mojave Desert, substantial within season changes to the intensity of facilitation and competition between shrubs and annuals can occur (Holzapfel and Mahall, 1999). Similarly, near the Negev desert the intensity of interactions between annuals varies with both life stage and temporal changes (Schiffers and Tielbörger, 2006). The shifts in both arthropod composition and annual performance measures show that phenology is a critical mediator of net outcomes between multiple trophic levels.
+In this study, facilitation in germination and early growth came at a potential net fitness cost via competition for pollination during reproductive life stages. Life-stage dependent tradeoffs within nurse-protégé associations between perennials are well documented with facilitation in early life shifting to resource competition later in life (Valiente-Banuet et al., 1991; Yeaton, 1978). Trade-offs between animal-mediated indirect interactions can also occur between different life stages. For example, thorny plants can facilitate for germination, but later these benefactors compete through decoy effects by deflecting herbivores towards the beneficiary (Van Der Putten, 2009). Grass-tree (Xanthorrhoea semiplana) facilitates the pink-lipped spider orchid (Caladenia syn. Arachnorchis behrii) by protecting it from herbivores but reduces its pollination services through non-floral interference (Petit and Dickson, 2005). To our knowledge, this study is the first demonstration of a beneficial flowering nurse plant engaging in exploitation competition with its beneficiaries for pollinators. In arid environments, annuals invest more into reproduction than growth (Petr? et al., 2006) and are often found concentrated under shrubs (Facelli and Temby, 2002). Therefore, germination-pollination tradeoffs should be common within plant communities in desert ecosystems. To quantify the net effects of facilitation, it is necessary to consider fitness alongside density effects (Tielbörger and Kadmon, 2000). Here we show the mechanisms by which a shrub can facilitate for density while decreasing fitness indirectly through effects on pollination.
+Conclusions
+
+The majority of research on plant-plant interactions focuses on a single life stage or a single measurement (Goldberg et al., 2001; Tielbörger and Kadmon, 2000). These singular foci are inadequate for estimating fitness levels within plant populations (McPeek and Peckarsky, 1998). The extent of these tradeoffs is likely underestimated in arid environments and important for structuring desert communities. Shrubs had a net positive effect on annuals but interactions mediated through flowering at different life-stages and also shrub phenology were critical mediators of the sign of the net outcome of association by annual plants with a foundation plant species.  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Literature Cited
+
+Albrecht, M., Ramis, M.R., Traveset, A., 2016. Pollinator-mediated impacts of alien invasive plants on the pollination of native plants: the role of spatial scale and distinct behaviour among pollinator guilds. Biological Invasions 18, 1801-1812.
+Alcock, J., Jones, C.E., Buchmann, S.L., 1977. Male mating strategies in the bee Centris pallida Fox (Anthophoridae: Hymenoptera). The American Naturalist 111, 145-155.
+Armas, C., Ordiales, R., Pugnaire, F.I., 2004. Measuring plant interactions: a new comparative index. Ecology 85, 2682-2686.
+Ascher, J., Pickering, J., 2015. Discover Life bee species guide and world checklist (Hymenoptera: Apoidea: Anthophila).
+Bates, Douglas, Maechler, Martin, Bolker, Ben, Walker, Steve (2015). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1-48. doi:10.18637/jss.v067.i01
+Barbour, M., Keeler-Wolf, T., Schoenherr, A.A., 2007. Terrestrial vegetation of California. Univ of California Press.
+Bazzaz, F.A., Chiariello, N.R., Coley, P.D., Pitelka, L.F., 1987. Allocating resources to reproduction and defense. BioScience 37, 58-67.
+Bertness, M.D., Callaway, R., 1994. Positive interactions in communities. Trends in Ecology & Evolution 9, 191-193.
+Betancourt, J.L., Van Devender, T.R., Martin, P.S., 1990. Packrat middens: the last 40,000 years of biotic change. University of Arizona Press.
+Bosch, M., Waser, N.M., 2001. Experimental manipulation of plant density and its effect on pollination and reproduction of two confamilial montane herbs. Oecologia 126, 76-83.
+Bowers, J.E., Dimmitt, M.A., 1994. Flowering phenology of six woody plants in the northern Sonoran Desert. Bulletin of the Torrey Botanical Club, 215-229.
+Braun,  J and Lortie, C. J. 2018. Arthropod associations with Larrea tridentata, Mojave Desert, California, USA. April 10 – May 5, 2017. Knowledge Network for Biocomplexity. doi:10.5069/FMMS3R06
+Brooker, R., Kikvidze, Z., Pugnaire, F.I., Callaway, R.M., Choler, P., Lortie, C.J., Michalet, R., 2005. The importance of importance. Oikos 109, 63-70.
+Brooker, R.W., Maestre, F.T., Callaway, R.M., Lortie, C.L., Cavieres, L.A., Kunstler, G., Liancourt, P., Tielbörger, K., Travis, J.M., Anthelme, F., 2008. Facilitation in plant communities: the past, the present, and the future. Journal of Ecology 96, 18-34.
+
+
+Brooks, Mollie, Kasper Kristensen, Koen J. van Benthem, Arni   Magnusson, Casper W. Berg, Anders Nielsen, Hans J. Skaug, Martin   Maechler and Benjamin M. Bolker (2017). glmmTMB Balances Speed   and Flexibility Among Packages for Zero-inflated Generalized   Linear Mixed Modeling. The R Journal, 9(2), 378-400.
+Bruckman, D., Campbell, D.R., 2016. Pollination of a native plant changes with distance and density of invasive plants in a simulated biological invasion. Am J Bot 103, 1458-1465.
+Bruno, J.F., Stachowicz, J.J., Bertness, M.D., 2003. Inclusion of facilitation into ecological theory. Trends in Ecology & Evolution 18, 119-125.
+Cable, D.R., 1969. Competition in the semidesert grass?shrub type as influneced by root systems, growth habits, and soil moisture extraction. Ecology 50, 27-38.
+Callaway, R.M., Pennings, S.C., 2000. Facilitation may buffer competitive effects indirect and diffuse interactions among salt marsh plants. American Naturalist 156, 416-424.
+Callaway, R.M., Walker, L.R., 1997. Competition and facilitation: a synthetic approach to interactions in plant communities. Ecology 78, 1958-1965.
+Cane, J.H., Minckley, R., Kervin, L., Roulston, T.A., 2005. Temporally persistent patterns of incidence and abundance in a pollinator guild at annual and decadal scales: the bees of Larrea tridentata. Biological Journal of the Linnean Society 85, 319-329.
+Cane, J.H., Tepedino, V.J., 2017. Gauging the effect of honey bee pollen collection on native bee communities. Conservation Letters 10, 205-210.
+Chacoff, N.P., Vázquez, D.P., Lomáscolo, S.B., Stevani, E.L., Dorado, J., Padrón, B., 2012. Evaluating sampling completeness in a desert plant–pollinator network. Journal of Animal Ecology 81, 190-200.
+Chesson, P., Gebauer, R.L., Schwinning, S., Huntly, N., Wiegand, K., Ernest, M.S., Sher, A., Novoplansky, A., Weltzin, J.F., 2004. Resource pulses, species interactions, and diversity maintenance in arid and semi-arid environments. Oecologia 141, 236-253.
+Clements, F.E., Goldsmith, G.W., 1924. phytometer method in ecology.
+Cline, A.R., Audisio, P., 2010. Revision of the new world short-winged flower beetles (Coleoptera: Kateretidae). Part I. Generic review and revision of Anthonaeus Horn, 1879. The Coleopterists Bulletin, 173-186.
+Davis, W., Philbrick, R., 1986. Natural hybridization between Malacothrix incana and M. saxatilis var. implicata (Asteraceae: Lactuceae) on San Miguel Island, California. Madroño, 253-263.
+Ellison, A.M., Bank, M.S., Clinton, B.D., Colburn, E.A., Elliott, K., Ford, C.R., Foster, D.R., Kloeppel, B.D., Knoepp, J.D., Lovett, G.M., 2005. Loss of foundation species: consequences for the structure and dynamics of forested ecosystems. Frontiers in Ecology and the Environment 3, 479-486.
+Facelli, J.M., Temby, A.M., 2002. Multiple effects of shrubs on annual plant communities in arid lands of South Australia. Austral ecology 27, 422-432.
+Filazzola, A., Lortie, C.J., 2014. A systematic review and conceptual framework for the mechanistic pathways of nurse plants. Global Ecology and Biogeography 23, 1335-1345.
+Fleming, T.H., Holland, J.N., 1998. The evolution of obligate pollination mutualisms: senita cactus and senita moth. Oecologia 114, 368-375.
+Fleming, T.H., Sahley, C.T., Holland, J.N., Nason, J.D., Hamrick, J., 2001. Sonoran Desert columnar cacti and the evolution of generalized pollination systems. Ecological Monographs 71, 511-530.
+Flores, J., Jurado, E., 2003. Are nurse?protégé interactions more common among plants from arid environments? Journal of Vegetation Science 14, 911-916.
+Franco, A., De Soyza, A., Virginia, R., Reynolds, J., Whitford, W., 1994. Effects of plant size and water relations on gas exchange and growth of the desert shrub Larrea tridentata. Oecologia 97, 171-178.
+Gentry, A.H., 1974. Flowering phenology and diversity in tropical Bignoniaceae. Biotropica, 64-68.
+Ghazoul, J., 2006. Floral diversity and the facilitation of pollination. Journal of Ecology 94, 295-304.
+Goldberg, D.E., Turkington, R., Olsvig-Whittaker, L., Dyer, A.R., 2001. Density dependence in an annual plant community: variation among life history stages. Ecological Monographs 71, 423-446.
+Grissell, E.E., Schauff, M.E., 1990. A handbook of the families of Nearctic Chalcidoidea (Hymenoptera). A handbook of the families of Nearctic Chalcidoidea (Hymenoptera).
+Halvorson, W.L., Patten, D.T., 1975. Productivity and flowering of winter ephemerals in relation to Sonoran Desert shrubs. American Midland Naturalist, 311-319.
+Heinrich, B., Raven, P.H., 1972. Energetics and pollination ecology. Science 176, 597-602.
+Holland, N.J., Fleming, T.H., 2002. Co-pollinators and specialization in the pollinating seed-consumer mutualism between senita cacti and senita moths. Oecologia 133, 534-540.
+Holzapfel, C., Mahall, B.E., 1999. Bidirectional facilitation and interference between shrubs and annuals in the Mojave Desert. Ecology 80, 1747-1761.
+Hurd Jr, P.D., Linsley, E.G., 1975. Some insects other than bees associated with Larrea tridentata in the southwestern United States. Proceedings of the Entomological Society of Washington.
+Iler, A.M., Inouye, D.W., Høye, T.T., Miller?Rushing, A.J., Burkle, L.A., Johnston, E.B., 2013. Maintenance of temporal synchrony between syrphid flies and floral resources despite differential phenological responses to climate. Global Change Biology 19, 2348-2359.
+Inouye, D.W., Larson, B.M., Ssymank, A., Kevan, P.G., 2015. Flies and flowers III: ecology of foraging and pollination. Journal of Pollination Ecology 16, 115-133.
+Jennings, W.B., 2001. Comparative flowering phenology of plants in the western Mojave Desert. Madroño, 162-171.
+Kearns, C.A., Inouye, D.W., 1993. Techniques for pollination biologists. University press of Colorado.
+Laverty, T.M., 1992. Plant interactions for pollinator visits: a test of the magnet species effect. Oecologia 89, 502-508.
+Legendre, P., Gallagher, E.D., 2001. Ecologically meaningful transformations for ordination of species data. Oecologia 129, 271-280.
+Lortie, C.J., Budden, A.E., Reid, A.M., 2012. From birds to bees: applying video observation techniques to invertebrate pollinators. Journal of Pollination Ecology 6, 125-128.
+Marshall, S., 2012. Flies. The natural history and diversity of Diptera.
+McIntire, E.J., Fajardo, A., 2014. Facilitation as a ubiquitous driver of biodiversity. New Phytologist 201, 403-416.
+McKinney, A.M., Goodell, K., 2010. Shading by invasive shrub reduces seed production and pollinator services in a native herb. Biological Invasions 12, 2751-2763.
+McPeek, M.A., Peckarsky, B.L., 1998. Life histories and the strengths of species interactions: combining mortality, growth, and fecundity effects. Ecology 79, 867-879.
+Michener, C.D., 2000. The bees of the world. JHU press.
+Michener, C.D., McGinley, R.J., Danforth, B.N., 1994. The bee genera of North and Central America (Hymenoptera: Apoidea). Smithsonian Institution Press.
+Minckley, R.L., Cane, J.H., Kervin, L., Roulston, T., 1999. Spatial predictability and resource specialization of bees (Hymenoptera: Apoidea) at a superabundant, widespread resource. Biological Journal of the Linnean Society 67, 119-147.
+Miranda, G., Young, A., Locke, M., Marshall, S., Skevington, J., Thompson, F., 2013. Key to the genera of Nearctic Syrphidae. Canadian Journal of Arthropod Identification 23, 351.
+Morhardt, S., Morhardt, E., 2004. California desert flowers: an introduction to families, genera, and species. Univ of California Press.
+Mosquin, T., 1971. Competition for pollinators as a stimulus for the evolution of flowering time. Oikos, 398-402.
+Noma, T., Brewer, M.J., 2008. Seasonal abundance of resident parasitoids and predatory flies and corresponding soybean aphid densities, with comments on classical biological control of soybean aphid in the Midwest. Journal of Economic Entomology 101, 278-287.
+Oksansen, J, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt, Pierre Legendre, Dan McGlinn, Peter R. Minchin, R. B. O'Hara, Gavin L. Simpson, Peter Solymos, M. Henry H. Stevens, Eduard Szoecs and Helene Wagner (2018). vegan: Community Ecology  Package. R package version 2.5-1. https://CRAN.R-project.org/package=vegan
+Oliver, I., Beattie, A.J., 1993. A possible method for the rapid assessment of biodiversity. Conservation biology 7, 562-568.
+Pellmyr, O., 2003. Yuccas, yucca moths, and coevolution: a review. Annals of the Missouri Botanical Garden, 35-55.
+Petit, S., Dickson, C.R., 2005. Grass-tree (Xanthorrhoea semiplana, Liliaceae) facilitation of the endangered pink-lipped spider orchid (Caladenia syn. Arachnorchis behrii, Orchidaceae) varies in South Australia. Australian Journal of Botany 53, 455-464.
+Petr?, M., Tielbörger, K., Belkin, R., Sternberg, M., Jeltsch, F., 2006. Life history variation in an annual plant under two opposing environmental constraints along an aridity gradient. Ecography 29, 66-74.
+Pugnaire, F.I., Haase, P., Puigdefabregas, J., 1996. Facilitation between higher plant species in a semiarid environment. Ecology 77, 1420-1426.
+Pyke, G.H., 1984. Optimal foraging theory: a critical review. Annual review of ecology and systematics 15, 523-575.
+Pyke, G.H., Pulliam, H.R., Charnov, E.L., 1977. Optimal foraging: a selective review of theory and tests. The quarterly review of biology 52, 137-154.
+R Core Team (2017). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+Robertson, A.W., Mountjoy, C., Faulkner, B.E., Roberts, M.V., Macnair, M.R., 1999. Bumble bee selection of Mimulus guttatus flowers: the effects of pollen quality and reward depletion. Ecology 80, 2594-2606.
+Roll, J., Mitchell, R.J., Cabin, R.J., Marshall, D.L., 1997. Reproductive Success Increases with Local Density of Conspecifics in a Desert Mustard (Lesquerella fendleri).Conservation biology 11, 738-746.
+Rousset, O., Lepart, J., 2000. Positive and negative interactions at different life stages of a colonizing species (Quercus humilis). Journal of Ecology 88, 401-412.
+Rundel, P.W., Gibson, A.C., 2005. Ecological communities and processes in a Mojave Desert ecosystem. Cambridge University Press.
+Rutowski, R.L., Alcock, J., 1980. Temporal variation in male copulatory behaviour in the solitary bee Nomadopsis puellae (Hymenoptera: Andrenidae). Behaviour 73, 175-187.
+Saul-Gershenz, L., Millar, J., McElfresh, J., 2012. Mojave National Preserve. National Park Service U.S. Department of the Interior, https://www.nps.gov/moja/learn/nature/upload/201204MOJAscience.pdf.
+Schafer, J., Mudrak, E., Haines, C., Parag, H., Moloney, K., Holzapfel, C., 2012. The association of native and non-native annual plants with Larrea tridentata (creosote bush) in the Mojave and Sonoran Deserts. Journal of arid environments 87, 129-135.
+Schemske, D.W., 1981. Floral convergence and pollinator sharing in two bee?pollinated tropical herbs. Ecology 62, 946-954.
+Schiffers, K., Tielbörger, K., 2006. Ontogenetic shifts in interactions among annual plants. Journal of Ecology 94, 336-341.
+Shavit, O., Dafni, A., Ne'eman, G., 2009. Competition between honeybees (Apis mellifera) and native solitary bees in the Mediterranean region of Israel—Implications for conservation. Israel Journal of Plant Sciences 57, 171-183.
+Sih, A., Baltus, M.-S., 1987. Patch size, pollinator behavior, and pollinator limitation in catnip. Ecology 68, 1679-1690.
+Simpson, B., Neff, J., Moldenke, A., 1977. Reproductive systems of Larrea. Mabry, T, J,, Hunziker, J, H,, DiFeo, D, R,, jr ed (s). Creosote bush: biology and chemistry of Larrea in the New World deserts. Stroudsburg, Dowden, Hutchinson & Ross Inc, 92-114.
+Simpson, B.B., Neff, J.L., 1987. Pollination Ecology in the Southwest. Aliso: A Journal of Systematic and Evolutionary Botany 11, 417-440.
+Sotomayor, D.A., Lortie, C.J., 2015. Indirect interactions in terrestrial plant communities: emerging patterns and research gaps. Ecosphere 6, art103.
+Sowig, P., 1989. Effects of flowering plant's patch size on species composition of pollinator communities, foraging strategies, and resource partitioning in bumblebees (Hymenoptera: Apidae). Oecologia 78, 550-558.
+Suzán, H., Nabhan, G.P., Patten, D.T., 1994. Nurse plant and floral biology of a rare night?blooming cereus, Peniocereus striatus (Brandegee) F. Buxbaum. Conservation Biology 8, 461-470.
+Teskey, H., Vockeroth, J., Wood, D., 1981. Manual of Nearctic Diptera. Ottawa, Research Branch, Agriculture Canada, Monograph 27.
+Thomson, J.D., 1978. Effects of stand composition on insect visitation in two-species mixtures of Hieracium. American Midland Naturalist 100, 431-440.
+Tielbörger, K., Kadmon, R., 2000. Temporal environmental variation tips the balance between facilitation and interference in desert plants. Ecology 81, 1544-1553.
+Triplehorn, C., Johnson, N.F., 2005. Borror and delong’s introduction to the study of insects. Brooks. Cole, Belmont, California, USA.
+Valiente-Banuet, A., Bolongaro-Crevenna, A., Briones, O., Ezcurra, E., Rosas, M., Nuñez, H., Barnard, G., Vazquez, E., 1991. Spatial relationships between cacti and nurse shrubs in a semi?arid environment in central Mexico. Journal of Vegetation Science 2, 15-20.
+Valiente?Banuet, A., Verdú, M., 2007. Facilitation can increase the phylogenetic diversity of plant communities. Ecology letters 10, 1029-1036.
+Van Der Putten, W.H., 2009. A multitrophic perspective on functioning and evolution of facilitation in plant communities. Journal of Ecology 97, 1131-1138.
+Vasek, F.C., 1980. Creosote bush: long?lived clones in the Mojave Desert. American Journal of Botany 67, 246-255.
+Venables, W. N. & Ripley, B. D. (2002) MASS. Modern Applied Statistics with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0
+Vockeroth, J., 1992. The flower flies of the subfamily Syrphinae of Canada, Alaska, and Greenland: Diptera, Syrphidae. Agriculture Canada.
+Wainwright, C.M., 1978. Hymenopteran territoriality and its influences on the pollination ecology of Lupinus arizonicus. The Southwestern Naturalist, 605-615.
+Waser, N.M., 1986. Flower constancy: definition, cause, and measurement. The American Naturalist 127, 593-603.
+Wootton, J.T., 1994. The nature and consequences of indirect effects in ecological communities. Annual Review of Ecology and Systematics 25, 443-466.
+Yeaton, R.I., 1978. A cyclical relationship between Larrea tridentata and Opuntia leptocaulis in the northern Chihuahuan Desert. The Journal of Ecology, 651-656.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figures
+
+
+Figure 1: The contribution of each recognizable taxonomic group (RTU) to the total number of flowers visited (weighted by video length) for each treatment. 
+
+
+
+Figure 2: RTU specific responses in foraging duration before and during blooming at each microsite. The foraging duration did not vary with microsite but showed a significant decrease with blooming. This was driven by pollinators in the ‘other’ category, which was comprised of primarily beetles and muscoid flies. 
+
+
+
+
+
+Figure 3: Heterospecific pollen deposition on the stigmas of Malacothrix glabrata increased with distance (in cm). There was a marginally significant effect of distance to nearest M. glabrata on conspecific pollen deposition. Mean distance to shrub was 1.83 m, mean distance to nearest conspecific neighbour was 0.79 m and mean number of flowers of M. glabrata was 7.
+
+
+
+
+Figure 4: Pollinator visitation rates increased with the number of Larrea tridentata flowers. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 5: Relative Interaction Index (RII) values for five community interaction metrics among two treatments: A) Microsite (Shrub – Open) B) Blooming (Pre-Blooming – Blooming). Values shown are means ± 95% bootstrapped confidence intervals. Values greater than zero indicate positive effects, while values that are significantly lower than zero indicate negative effects. Values that are not significantly different from zero are neutral.
+
+
+
+
+
+Figure 6: Hobo Pendant Data Loggers recorded microenvironmental conditions for the extent of the study period. Values shown are mean hourly temperatures for all microsites (eight open and eight shrub) between March 17th and May 14th.  
+
+
+
+
+
+
+
+
+
+
+
+Tables
+
+Table 1: Results from quasi-Poisson GLMM (glmmPQL, MASS) testing for RTU specific responses to blooming stage. The log-transformed length of video was used as an offset as a measure of exposure. The repID (shrub ID + microsite) was used a random effect to account for the repeated measures study design. Post hoc comparisons (lsmeans) contrasting RTU specific responses between pre-blooming and blooming were done on significant interactions. Significance was denoted at ? = 0.05 and shown in bold.   
+Total flower visitsForaging boutsCoeff?2pCoeff?2pMicrosite (shrub)-0.3374804.19030.040655-0.3113834.63220.03137Blooming (bloom)-1.72941715.4730< 0.0001-1.68305412.21570.0004739RTUNA197.0575<0.0001NA217.5031<0.00001Flowers.pot0.0643257.87430.0050140.0427634.07410.4354RTU*bloomingNA70.0222<0.0001NA70.35<0.0001
+Contrast: Pre blooming vs bloomingRTUEstimateSEt.ratiopestimateSEt.ratiopSolitary bee1.7294.44193.9140.00011.6831.48403.4780.0005Bombyliidae0.04603.38860.1180.90570.3956.3.55681.1120.2662Honeybee24.9969778380.0000.999724.334965302.30.0000.9997Lepidoptera-2.40171.28900-1.8620.0629-2.07711.0625-1.9550.0508Other-0.0197.2403-0.0820.93470.1341.20650.640.5163Syrphid3.0563.33478.813<0.00013.1228.34049.173<0.0001
+Table 2: Results from GLMM (glmmTMB) testing for the influence of heterospecific annual floral density and shrub blooming density on the frequency of pollinator floral visits and foraging bouts. The log-transformed length of video was used as an offset as a measure of exposure. The repID (shrub ID + microsite) was used a random effect in both models to account for the repeated measures study design. Significance was denoted at ? = 0.05 and shown in bold. 
+Total flower visitsForaging boutsCoeffSEzpCoeffSEzpMicrosite (shrub)-0.36600.16944 -2.1600.03077-0.330190.14706-2.250.02475Blooming (bloom)-1.23960.16353-7.581<0.0001-1.245710.14513-8.58<0.0001Flowers.pot0.080840.027112.9810.002870.059430.023742.5030.01230Heterospecific
+ annual bloom density0.04013
+0.02342
+1.713
+0.08664
+0.04086
+0.01984
+2.059
+0.03950
+Microsite (shrub)-0.32890.16998-1.9350.05301-0.315390.14829-2.130.033435Blooming (bloom)-1.16620.18601-6.269<0.0001-1.208750.16707-7.24<0.0001Flowers.pot0.075980.027032.8110.004940.052960.023762.2290.025799Heterospecific 
+blooming shrub density-0.0494
+0.04093
+-1.207
+0.22744
+0.03124
+0.03744
+-0.84
+0.403997
+
+
+Table 3: Results from Gamma GLMM (lme4, glmer.nb) testing for differences foraging duration and the proportion of flowers visited per visit in response to microsite (shrub and open) and blooming stage (pre-blooming and full bloom). The repID (shrub ID + microsite) was used a random effect in both models to account for the repeated measures study design. Significance was denoted at ? = 0.05 and shown in bold. Non-significant interactions were excluded from all models.
+Foraging durationProportion of flowers visitedCoef?2 valuep – valueCoef?2 valuep – valueMicrosite (shrub)-0.0472600.04640.8295-0.035381.00510.46515Blooming (bloom)-0.77793123.1788<0.00010.08050.53350.31609Microsite * BloomingNANANA-0.204437.06910.00784
+Table 4: Results from quasi-Poisson GLMM (MASS, glmmPQL) testing for the influence of L. tridentata, and two metrics of conspecific density on conspecific and heterospecific pollen deposition. Sample ID nested in flower ID nested in plant was used as a random effect to account for multiples samples coming from individual plants. Significance was denoted at ? = 0.05 and shown in bold.
+Conspecific Pollen DepositionHeterospecific Pollen DepositionCoef?2 p Coef?2 p Distance to L. tridentata0.00020.88030.35330.0013023.7883<0.0001Distance to M. glabrata0.00153.81460.0541-0.00142.16560.1411M. glabrata floral number0.00892.00270.1620-0.01222.37130.1236
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Insect abundance (Melyridae: excluded)Arthropod Species RichnessBee abundanceBee richnessCoef?2 p Coef?2 pCoef?2 p Coef?2pMicrosite0.40615.49<0.00010.14546.620.010.0580.0790.778-0.065 0.1250.724Blooming-0.39613.590.00023-0.25425.6<0.0001-0.080.210.646-0.0560.0940.759Microsite * Blooming-0.277
+3.455
+0.063
+NANANANANANANANANAPercent coverAnnual RichnessAnnual Bloom DensityBlooming shrub density within 2 mCoef?2pCoef?2pCoef?2pCoef?2pMicrosite1.7599165.4<0.00010.07190.7070.40-0.280.6010.4380.3664.0830.04331Blooming-0.79334.18<0.00010.14072.7010.10-1.3613.360.00031.67149.7<0.0001Microsite * blooming0.794
+22.81<0.0001NANANANANANANANANATable 5: Results from GLMM testing for differences in arthopod, bee and plant communities in response to response to microsite (shrub and open) and blooming stage (full bloom and pre-blooming). Melyridae beetles comprised 1217/3384 individuals, models were fit with them excluded, included and individually. The repID (shrub ID + microsite) was used a random effect in all models to account for the repeated measures study design. Significance was denoted at ? = 0.05 and shown in bold. 
+
+Table 6: Permutation test ANOVA on RDA testing for changes in influence of shrub microsite and understory annual vegetation on arthropod community composition with phenological shift into flowering of Larrea tridentata. The constraining variables of the pre-blooming RDA explained 12.5% of the total variation and the blooming RDA explained 4%. 
+Pre-bloomingBloomingDfVarianceFpDfVarianceFpMicrosite10.043969.56870.00110.010742.05610.005Percent cover10.006881.49830.08710.005070.97000.471Annual richness10.004430.96530.44910.007011.34210.119Annual bloom density10.006191.34700.13110.001970.37650.995
+
+
+
+
+
+
+
+Appendix A – Model validation and full models
+
+Model selection from results of Table 1, full model of Table 1 and RTU interaction models for Table 3
+Table A1: Likelihood ratio test comparison of random intercept model, additive and interaction GLMM negative binomial models for where total flower visits are the response variable. Null model is flowers.pot with the random intercept, additive is flower.pot + blooming + microsite and interaction in flowers.pot + blooming * microsite. 
+
+ModelDFAICBICChisqP > ChisqNull41164.81178.6Additive61111.61132.357.1788<0.00001Interaction term71113.61137.80.03220.8576
+
+Table A2: Likelihood ratio test comparison of random intercept model, additive and interaction GLMM negative binomial models for where total plant visits are the response variable. Null model is flowers.pot with the random intercept, additive is flower.pot + blooming + microsite and interaction in flowers.pot + blooming * microsite.
+ModelDFAICBICChisqP > ChisqNull41066.01079.8Additive61000.71021.569.2940<0.00001Interaction term71002.71026.90.00720.9326
+Table A3: Results from negative binomial generalized linear mixed models (lme4, glmer.nb) testing for differences in the frequency of pollinator floral visits and foraging bouts in response to microsite (shrub and open) and blooming stage (pre-blooming and full bloom). Conspecific floral density was included as a predictor and the log-transformed length of video was used as an offset as a measure of exposure. The repID (shrub ID + microsite) was used a random effect in both models to account for the repeated measures study design. Significance was denoted at ? = 0.05 and shown in bold. Non-significant interactions were excluded from all models.
+Total flower visitsForaging boutsCoeff?2pCoeff?2pMicrosite (shrub)-0.34934.49790.03396-0.32585.11830.0237Blooming (bloom)-1.247361.52<0.0001-1.251376.883<0.0001Flowers.pot0.06946.90130.00860.04744.11090.0426Microsite * BloomingNANANANANANA
+
+
+
+Table A4: Full models. Quasipoisson GLMM (glmmPQL, MASS) with three-way interaction term for RTU*blooming*microsite. This output from Wald’s Type 3 test. Total flower visits and foraging bouts as response. Rep ID as random effect. 
+
+
+Flower visitsForaging bouts?2Dfp?2DfpBlooming16.31141<0.000111.281210.0007829RTU121.6835<0.0001131.3405<0.0001Microsite6.700810.0096373.656910.0558390Flowers.pot9.419410.0021474.564010.0326507Blooming:RTU56.91115<0.000153.00335<0.0001Blooming:microsite3.639410.0564262.343610.1258002Rtu:microsite5.499650.3579843.828950.5743031    Blooming:RTU:
+microsite7.519050.1848124.199550.5210663
+
+Table A5: Gamma GLMM (glmer lme4) models for proportions of flowers visited including Blooming * RTU interaction to test for differences in RTU response to blooming stage.
+EstimateStd ErrorZPBlooming-0.1160640.140156-0.8280.40761RTU.Bombylid-0.2474700.112323-2.2030.02758RTU.Honeybee0.1862430.2407110.7740.43910RTU.Lep-0.3295900.262264-1.2570.20886RTU.Other-0.3004360.095633-3.1420.00168RTU.Syrphid-0.1732760.085192-2.0340.04196Blooming * RTU.Bombylid0.2022340.1746501.1580.24689Blooming* RTU.Lep0.0694110.2973030.2330.81540Blooming * RTU.Other0.0334650.1530650.2190.82693Blooming * Syrphid0.0067370.1713380.0390.96863
+Table A6: Gamma GLMM (glmer lme4) for proportions of flowers visited including Microsite * RTU interaction to test for differences in RTU response to microsite.
+EstimateStd ErrorZPMicrosite-0.29560.1499-1.9730.04852RTU.Bombylid-0.33730.1226-2.7520.00592RTU.Honeybee0.35310.24151.4620.14375RTU.Lep-0.47340.1472-3.2150.00131RTU.Other-0.47380.1117-4.2432.2e-05RTU.Syrphid-0.34210.1079-3.1720.00152Microsite * RTU.Bombylid0.28880.17171.6820.09253Microsite * RTU.Lep0.20570.21110.9740.32988Microsite * RTU.Other0.26550.14861.7870.07399Microsite * Syrphid0.35270.14102.5020.01235
+Table A7: Post-hoc constrast (lsmeans) on significant interaction from Table A6.
+Proportion of flowers visitedContrastEstimateSEt.ratiopOpen, bee – shrub, bee0.29562765730.149852021.973  0.7122Open, bombylid – shrub, bombylid
+0.00677855450.122213480.055  1.0000Open, honeybee – shrub, honeybeenonEstNANANAOpen, lep – Shrub, lep0.08994095120.172035450.523  1.0000Open, other – Shrub, other0.03010748010.087276580.345  1.0000Open, syrphid – shrub, syrphid-0.05704366240.08160285-0.699  0.9999
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Appendix B – Arthropod RTU list
+
+Table B1: A list of all RTU for Chapter 2. All RTU all exclusive and no individuals were double counted. 118 taxonomic groups were counted. The full dataset has been published openly (Braun and Lortie, 2018).
+
+OrderSuperfamilyFamilySubfamilyGenusSpeciesTotal CollectedAranae14ColeopteraBuprestidae67Chrysomelidae7Coccinellidae6Curculionidae15Meloidae
+MeloinaeCysteodemus2MeloidaeMeloinaeEupomphaEupompha elegans3Meloidae
+MeloinaeLytta
+Lytta auriculata3MeloidaeMeloinaeLytta
+1Melyridae1243DipteraAcalyptrate - Tiny1Anthomyiidae4Asilidae76BombyliidaeUssinae8BombyliidaeAnthracinaeAphoebantus2Bombyliidae23Calliphoridae1Canacidae1Cecidomyiidae55Chamaemyiidae1Chloropidae21Chyromyidae1Drosophilidae1Ephydridae12Heleomyzidae73Milichiidae10Muscidae3Mythicomyiidae258Phoridae17Pipunculidae8RichardiidaeOmomyia3Sarcophagidae22Sciaridae6SyrphidaeSyrphinaeEupeodesEupeodes volucris19SyrphidaeSyrphinaeToxomerusToxomerus marginatus1Tachinidae17Tephritidae7Therevidae4HemipteraAnthocoridae3Aphididae10Berytidae
+GampsocorinaePronotacantha annulata17Berytidae4Cercopidae6Cicadellidae351Delphacidae2Geocoridae14Membracidae1Miridae96Nymph176Pentamoidae6ReduviidaeHarpactorinae10Rhopadilae7Tingidae2Lygaeoidea21Psylloidea2HymenopteraApoidea (Anthophila)AndrenidaeAndreninaeAncylandrena larreae1AndreninaeAndrena2PanurginaeCalliopsis1AndreninaeMegandrena encelia14ApidaeApinaeApis mellifera4ApinaeDiadasia12ApinaeEucera2ApinaeMellisodes4AndrenidaePanurginaePerdita1ColletidaeColletinaeColletes2HalictidaeHalictinaeHalictus7HalictinaeLasioglossum72MegachilidaeMegachilinaeAnthidium4MegachilinaeAshmeadiella4MegachilinaeAtoposmia1MegachilinaeHoplitis1MegachilinaeMegachile1MegachilinaeOsmia9MelittidaeDasypodainaeHesperapis2Apoidea (wasps)Crabronidae
+39CrabronidaePemphredoninae27CrabronidaeAstatinaeDryudella1CrabronidaeCrabroninaeMiscophus25SphecidaeAmmophilinaeAmmophila4Sphecidae1ChrysidoideaChrysididae12Dryinidae1FormicidoideaFormicidae71PompiloideaMutillidae11Myrmosidae1Pompilidae13VespoideaVespidaeEumeninae
+1ParasiticaCeraphronidae6Megaspilidae1Ceraphronoideawingless1Platygastridae7ChalcidoideaChalcididae3Encrytidae23Eucharitidae2Eulophidae16Eupelmidae13Eurytomidae4Mymaridae1Perilampidae1Pteromalidae25Torymidae10Trichogrammatidae4Signiphoridae3CynipoideaFigitidae1IchnuemoideaBraconidae1IchneumonidaeTersilochinae1Ichneumonidae1LepidopteraAdeloidea1LepidopteraNymphalidae2LepidopteraPapilionidae
+1Lepidoptera1Microcorphyia1NeuropteraChrysopidae1Orthoptera19Solifugae3Thysanoptera137Trichoptera1
+
+
+
+
+
+
+
+
+
+
+Appendix C – Sensitivity of arthropod community models
+
+Table C1: Negative binomial GLMM (glmer.nb, lme4) for arthropod abundance – Melyridae included and Melyridae only.
+Insect abundance (Melyridae: included)Melyridae: abundance onlyCoef?2 p Coef?2 p Microsite (shrub)-0.098721.8080.1787-1.192038.03940<0.0001Blooming (in bloom)-0.3928033.553<0.00001-0.29893.34850.067267Microsite * BloomingNANANA0.65217.12900.007585
+Table C2: Post-hoc contrasts interaction for abundance (Melyridae only) for microsite by  
+Blooming (lsmeans). 
+
+ContrastEstimateSEZppre,open - post,open0.29890890.16334821.830  0.2592pre,open - post,open1.19200620.19326886.168  <.0001pre,open - post,shrub0.83880730.18261364.593  <.0001post,open - pre,shrub0.89309730.19067214.684  <.0001post,open - post,shrub0.53989840.17991423.001  0.0143pre,shrub - post,shrub-0.35319890.1815186-1.946  0.2090
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Appendix D: Post-hoc contrasts
+
+Table D1: Results from post-hoc test (lsmeans, Tukey’s) for the Gamma generalized linear mixed model on significant interaction for proportion of flowers visited. Significance was denoted at ? = 0.05 and shown in bold. Proportion of flowers visited
+Proportion of flowers visitedContrastEstimateSEt.ratioppre,open - post,open0.035375480.048433500.730  0.8849pre,open - pre,shrub-0.080500420.08029773-1.003  0.7479pre,open - post,shrub0.159304710.087754661.815  0.2660post,open - pre,shrub-0.115875890.08384195-1.382  0.5106post,open - post,shrub0.123929240.091131591.360  0.5247pre,shrub - post,shrub0.239805130.059529064.028  0.0003
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Synthesis and General Conclusions
+
+The direct and indirect interactions between Larrea tridentata and its associated plant, arthropod and pollinator communities were examined within a diverse shrub and succulent desert scrub ecosystem located in the Mojave National Preserve. This thesis used a mechanistic approach to conceptually and empirically examine pollinator-mediated interactions of this foundational plant. Mechanistic approaches in community ecology are defined as the integration of individual-ecological concepts into the creation of theoretical frameworks (Schoener, 1986). A formal systematic review including 100 directly relevant papers was used to categorize the literature into a conceptual framework summarizing all mechanisms underlying pollination facilitation tested to date. Pollination facilitation research advanced a total of seven major mechanistic hypotheses that can be synthesized into the following four umbrella mechanisms: trait-based effects, floral display size, floral diversity, and apparent pollination support. This review revealed several research gaps that were then experimentally addressed: the need to include the temporal dimension, to test multiple mechanisms jointly, to incorporate interactions that do not require co-blooming and to study these interactions in harsh environments. 
+Foundational, desert shrubs that act as benefactors were hypothesized to impact the net outcome of pollination for associated annual plants depending on the phenological stage of the shrub. As predicted, L. tridentata interfered with the pollination of the representative phytometer species Malacothrix glabrata and facilitated associated annuals through its effects on climate amelioration. However, the interaction via pollinators shifted to exploitation competition upon blooming instead of the magnet species effect as predicted. This study confirmed the positive role of L. tridentata as a foundation plant but importantly suggests that facilitation for germination and growth early in life may involve a trade-off for reproduction later in life. The work from this thesis can be further framed into three important themes in ecology: Indirect interactions, stress gradients and functional ecology.
+Indirect interactions between species require the presence of a mediating, third species (Wootton, 1994). This diverse range of interactions falls into two general categories: trait-mediated and density-mediated (Werner and Peacor, 2003). Consequently, the conceptual framework broadly separates pollinator responses into behavioural and population responses. The framework was developed directly from the empirical literature and the individual concepts synthesized are exclusively from the perspective of the plant. Overall the specific mechanisms underlying pollinator responses have been neglected within this field. Ghazoul proposed that facilitation can result from the competitive displacement of pollinators to the less desirable plant (2006). In this study, competitive displacement of syrphid flies by bees may have contributed to the observed decrease in visitation rates to M. glabrata. At this time, empirical evidence connecting pollinator-pollinator interactions to competition or facilitation between plants is still lacking. Facilitation through population responses has rarely been studied and has been excluded from meta-analyses, despite the potential prevalence in natural systems (Jakobsson and Padron, 2014). In one of the few studies explicitly tested for population responses, Jackobsson and Padron (2014) separated facilitation via the magnet species effect from effects on population sizes. By tracking bumblebee abundances while testing for differences in visitation rates, they found that the invasive Lupinus facilitated native plants via pollinator population growth. Experimental work has found that pollinator densities mediate the density-dependence of pollinator mediated interactions (Ye et al., 2013). Integrating pollinator identity, interactions and behavioural ecology is the next step towards a fully mechanistic understanding of the framework and more complete understanding of plant-pollinator interactions at the community level.
+Stress-gradient hypothesis predicts that positive interactions are more common in harsh environments (Bertness and Callaway, 1994). Stress can result from environmental factors such as heat and salinity, or resource scarcity ie. droughts. When two organisms share the fundamental resource whose scarceness is the stressor, it is predicted that facilitation can only occur when neighbours increases the availability of this resource (Callaway, 2007; Maestre et al., 2009; Maestre and Cortina, 2004). Pollen limitation is an external factor that negatively influences the reproductive capacity of plants (Knight et al., 2005) and can be considered a stress that leads to inhibited seed production. Therefore, when a plant attracts additional pollinators or contributes to the maintenance of local pollinator populations, it increases local pollinator resource availability for neighbours. However, this systematic review revealed that neither desert nor arctic ecosystems have been studied in these contexts. Several meta-analyses have concluded that most sexually producing plants are pollen-limited (Knight et al., 2005; Larson and Barrett, 2000) and that the alpine is no more or less pollen-limited than more temperate lowlands (García-Camacho and Totland, 2009). This suggests the potential ubiquity of pollinator-mediated facilitation. As expected under the stress gradient hypothesis, L. tridentata facilitated understory annuals while stabilizing microclimates throughout the season. This is a frequently examined mechanism underlying nurse-protégé studies (Filazzola and Lortie, 2014). Facilitation was not measured between L. tridentata and M. glabrata, so this project still provides no evidence of pollination facilitation in desert ecosystems. Indirect interactions are mediated by organisms rather than the abiotic environment, therefore unless the harshness of an ecosystem directly leads to pollen limitation i.e. inhibits pollinators, it is unlikely that the frequency of pollination facilitation would increase with stress.  
+Understanding the function of communities through both time and space is a fundamental goal of community ecology. Any interaction is observed within a snapshot of time and space, and interaction networks are treated as stable, static entities (Poisot et al., 2015). This review revealed that incorporating interaction pathways that do not require co-blooming into experimental design is important because they operate concurrently with those that require co-blooming. This prediction was confirmed by the empirical experiment which demonstrated an intensification of competitive interactions when blooming. The difference in pollination rates between microsites was very small when L. tridentata was blooming and there was no difference in conspecific pollen deposition between microsites. Without incorporating the temporal dimensions, the conclusions of this experiment would have been very different and the ‘snapshot’ would not reflect these important interactions. Interactions are dynamic and networks frequently ‘rewire’ (CaraDonna et al., 2017). Competition between plants can influence linkage of plant-pollinator interactions (Carstensen et al., 2014). When a dominant plant blooms, it may induce a large scale rewiring within the community. Cornucopia plants sensu (Mosquin, 1971) continuously bloom for long periods, produce an abundance of nectar or pollen resources and are thus important to pollinators. Both the ecological function of L. tridentata and pollinator responses suggest that L. tridentata is a cornucopia species in this system, and our results suggest that pollinators switched to it when it entered a full bloom. Thus, a future model system for investigating how plants can rewire pollination networks and influence interaction turnover is cornucopia species.
+
+
+Literature Cited
+
+Bertness, M.D., Callaway, R., 1994. Positive interactions in communities. Trends in Ecology & Evolution 9, 191-193.
+Callaway, R.M., 2007. Positive interactions and interdependence in plant communities. Springer.
+CaraDonna, P.J., Petry, W.K., Brennan, R.M., Cunningham, J.L., Bronstein, J.L., Waser, N.M., Sanders, N.J., 2017. Interaction rewiring and the rapid turnover of plant–pollinator networks. Ecology letters 20, 385-394.
+Carstensen, D.W., Sabatino, M., Trøjelsgaard, K., Morellato, L.P.C., 2014. Beta diversity of plant-pollinator networks and the spatial turnover of pairwise interactions. PLoS One 9, e112903.
+Filazzola, A., Lortie, C.J., 2014. A systematic review and conceptual framework for the mechanistic pathways of nurse plants. Global Ecology and Biogeography 23, 1335-1345.
+García-Camacho, R., Totland, Ø., 2009. Pollen limitation in the alpine: a meta-analysis. Arctic, Antarctic, and Alpine Research 41, 103-111.
+Ghazoul, J., 2006. Floral diversity and the facilitation of pollination. Journal of Ecology 94, 295-304.
+Jakobsson, A., Padron, B., 2014. Does the invasive Lupinus polyphyllus increase pollinator visitation to a native herb through effects on pollinator population sizes? Oecologia 174, 217-226.
+Knight, T.M., Steets, J.A., Vamosi, J.C., Mazer, S.J., Burd, M., Campbell, D.R., Dudash, M.R., Johnston, M.O., Mitchell, R.J., Ashman, T.-L., 2005. Pollen limitation of plant reproduction: pattern and process. Annu. Rev. Ecol. Evol. Syst. 36, 467-497.
+Larson, B.M., Barrett, S.C., 2000. A comparative analysis of pollen limitation in flowering plants. Biological journal of the Linnean Society 69, 503-520.
+Maestre, F.T., Callaway, R.M., Valladares, F., Lortie, C.J., 2009. Refining the stress?gradient hypothesis for competition and facilitation in plant communities. Journal of Ecology 97, 199-205.
+Maestre, F.T., Cortina, J., 2004. Do positive interactions increase with abiotic stress? A test from a semi-arid steppe. Proceedings of the Royal Society of London B: Biological Sciences 271, S331-S333.
+Mosquin, T., 1971. Competition for pollinators as a stimulus for the evolution of flowering time. Oikos, 398-402.
+Poisot, T., Stouffer, D.B., Gravel, D., 2015. Beyond species: why ecological interaction networks vary through space and time. Oikos 124, 243-251.
+Schoener, T.W., 1986. Mechanistic approaches to community ecology: a new reductionism. American Zoologist 26, 81-106.
+Werner, E.E., Peacor, S.D., 2003. A review of trait?mediated indirect interactions in ecological communities. Ecology 84, 1083-1100.
+Wootton, J.T., 1994. The nature and consequences of indirect effects in ecological communities. Annual Review of Ecology and Systematics 25, 443-466.
+Ye, Z.-M., Dai, W.-K., Jin, X.-F., Gituru, R.W., Wang, Q.-F., Yang, C.-F., 2013. Competition and facilitation among plants for pollination: can pollinator abundance shift the plant–plant interactions? Plant Ecology 215, 3-13.
+
+
+
+
+vii
+
+
+75
+
+
+ii
+
+
+1
+
+
