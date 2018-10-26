@@ -1,0 +1,36 @@
+---
+title: "Chapter 2 Data and Statistics"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(lme4)
+library(lsmeans)
+source(system.file("utils", "allFit.R", package="lme4"))
+library(glmmTMB)
+
+
+
+source("Scripts/functions.R")
+```
+
+# Overview
+
+Chapter 2 data wrangling, data visualization and statistics.
+
+# Data wrangling and clean up
+This section creates several .csv files that get used later for stats
+
+
+### Video data clean up
+This section takes the raw datas, wrangles it into three formats, adds covariates and outputs the cleaned data as .csv files which re then sourced in later scripts
+```{r, code = readLines("Scripts/videowrangling.R")}
+```
