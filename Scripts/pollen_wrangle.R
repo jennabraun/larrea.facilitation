@@ -4,6 +4,8 @@ library(ggplot2)
 library(dplyr)
 library(lme4)
 library(cowplot)
+library(lsmeans)
+library(tidyr)
 
 counts <- read.csv("Clean Data/Pollen_Corrected.csv")
 cov <- read.csv("Clean Data/pollen_cov.csv")
@@ -19,6 +21,25 @@ sum(counts.ag$Con)
 sum(counts.ag$Het)
 
 counts.ag <- right_join(counts.ag, cov, by = "Rep")
+
+
+
+#ag by flower
+count.fl <- counts.ag %>% group_by(., Flower) %>% summarise(con = sum(Con))
+count.fl$f2 <- count.fl$Flower
+
+count.fl <- count.fl %>%
+  separate(Flower, c("Rep", "no"), " ")
+counts.fl <- right_join(count.fl, cov, by = "Rep")
+
+
+m1 <- MASS::glmmPQL(con~ d.flowers + microsite + dN1, ~1|Rep, family = quasipoisson, data = counts.fl)
+summary(m1)
+
+
+
+
+
 
 ggplot(data =counts.ag,(aes(microsite.x, Con))) + geom_boxplot()
 ggplot(data =counts.ag,(aes(microsite.x, Het))) + geom_boxplot()
@@ -37,8 +58,19 @@ counts.ag$Sample <- paste(counts.ag$Slide, counts.ag$Rep)
 counts.ag$d.S <- counts.ag$d.S %>% replace(is.na(.), 0)
 #m1 <- glmer.nb(Con ~ d.flowers + dN1 + d.S + (1|Sample/Flower/Rep), data = counts.ag)
 #summary(m1)
+#try microsites instead
 
-m2 <- MASS::glmmPQL(Con~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
+m1 <- MASS::glmmPQL(Con~d.flowers + microsite.x, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
+summary(m1)
+
+m2 <- MASS::glmmPQL(Con~d.flowers + dN1 * microsite.x, ~1|Rep/Flower/Sample, family = quasipoisson, data = counts.ag)
+summary(m2)
+
+library(lsmeans)
+lsmeans(m2, pairwise~microsite.x*dN1)
+
+
+m2 <- MASS::glmmPQL(Con~dN1 + d.flowers + d.S, ~1|Rep/Flower, family = quasipoisson, data = counts.ag)
 summary(m2)
 
 car::Anova(m2, type = 2)
@@ -49,11 +81,11 @@ mean(counts.ag$d.S)
 mean(counts.ag$dN1)
 mean(counts.ag$d.flowers)
 
-m3 <- MASS::glmmPQL(Het~dN1 + d.flowers + d.S, ~1|Sample/Flower/Rep, family = quasipoisson, data = counts.ag)
+m3 <- MASS::glmmPQL(Het~dN1 + d.flowers + d.S, ~1|Rep/Flower, family = quasipoisson, data = counts.ag)
 summary(m3)
 car::Anova(m3, type = 2)
 
-p3 <- ggplot(counts.ag, aes(dN1, Con)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Conspecific Neighbour") + ylab("Conspecific Pollen Deposition")
+p3 <- ggplot(counts.ag, aes(d.S, Con)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Larrea tridentata") + ylab("Conspecific Pollen Deposition")
 
 
 p4 <- ggplot(counts.ag, aes(d.S, Het)) + geom_point(shape = 1) + geom_smooth(colour = "black", size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab("Distance to Larrea tridentata") + ylab("Heterospecific Pollen Deposition")

@@ -42,6 +42,12 @@ car::Anova(m1, type = 2)
 m2 <- glmer.nb(Species ~ treatment * blooming + (1|plant.id), beemeta)
 summary(m2)
 
+
+
+m3 <- glmer.nb(abun ~ treatment + blooming + (1|plant.id), beemeta)
+summary(m3)
+car::Anova(m3, type = 2)
+
 library(glmmTMB)
 
 z1 <- glmmTMB(Species ~ treatment * blooming + (1|plant.id), data = beemeta, ziformula = ~1, family = nbinom2())

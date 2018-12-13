@@ -44,8 +44,14 @@ library(dplyr)
 d <- filter(d, "freq" > 5)
 wordcloud2(data = d, shape = "circle", size = 0.5)
 
+figPath = system.file("F:/School/larrea.facilitation/bee.png",package = "wordcloud2")
 
+wordcloud2(d, figPath = "F:/School/larrea.facilitation/bee.png", size = 0.5)
 
+library(devtools)
+devtools::install_github("lchiffon/wordcloud2")
+
+letterCloud(d, "R")
 
 set.seed(1234)
 wordcloud(words = d$word, freq = d$freq, min.freq = 1,

@@ -21,6 +21,18 @@ mean(byrep$dec.Length)
 
 sum(byrep$total.flowers)
 sum(byrep$total.visits)
+#new with nested effects
+fm1 <- glmer.nb(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID), data = byrep)
+
+
+summary(fm1)
+
+
+
+
+
+
+
 #base hypothesis testing model
 fm1 <- glmer.nb(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), data = byrep)
 
@@ -239,11 +251,15 @@ ggplot(byrep, aes(flowering, flowers.per.hour)) + geom_boxplot() + facet_grid(~t
 
 #testing importance of covariates
 #using TMB because glmer will not coverge. 
-base <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+base <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID/PlantID), family = "nbinom2", data = byrep)
 summary(base)
+
+
+
 
 c1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + understory.richness+ offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
 summary(c1)
+
 c1.1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + understory.richness+ offset(log(dec.Length)) + (1|repID), family = "nbinom1", data = byrep)
 summary(c1.1)
 AIC(c1, c1.1)
@@ -253,7 +269,9 @@ AIC(c1, c1.1)
 c2 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2)
 
+c2.nest <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID/PlantID), family = nbinom2(link = "log"), data = byrep)
 
+summary(c2.nest)
 
 c2.1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = "nbinom1", data = byrep)
 AIC(c2, c2.1)
@@ -263,6 +281,9 @@ summary(c2)
 c2.v <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2.v)
 
+c2.vnest <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
+
+summary(c2.vnest)
 
 c3 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
 summary(c3)
