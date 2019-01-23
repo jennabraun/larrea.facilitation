@@ -29,12 +29,17 @@ car::Anova(mFullPQv, type = 3)
 
 mQ <- MASS::glmmPQL(total.flowers~flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
 summary(mQ)
-lsmeans(mQ, pairwise~flowering|rtu)
+ls1 <- lsmeans(mQ, pairwise~flowering|rtu, adjust = "Tukey")
 car::Anova(mQ, type = 3)
-
+plot(ls1)
 
 mQt <- MASS::glmmPQL(total.flowers~treatment * rtu + flowering + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
 summary(mQt)
+
+
+
+
+
 
 #RTU by microsite not significant
 

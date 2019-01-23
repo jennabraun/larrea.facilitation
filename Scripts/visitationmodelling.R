@@ -268,6 +268,7 @@ AIC(c1, c1.1)
 
 c2 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2)
+car::Anova(c2, type = 2)
 
 c2.nest <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID/PlantID), family = nbinom2(link = "log"), data = byrep)
 
@@ -280,6 +281,7 @@ summary(c2)
 
 c2.v <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2.v)
+car::Anova(c2.v, type = 2)
 
 c2.vnest <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
 
@@ -288,5 +290,10 @@ summary(c2.vnest)
 c3 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
 summary(c3)
 
+car::Anova(c3, type = 2)
+
 c2.v <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
 summary(c2.v)
+car::Anova(c2.v)
+AIC(c2.v)
+anova(c3, c2.v)
