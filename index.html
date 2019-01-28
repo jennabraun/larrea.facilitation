@@ -1018,6 +1018,7 @@ summary(metadata)</code></pre>
 <pre class="r"><code>#no beetle output
 write.csv(metadata, &quot;Output Data/metadata_onlybeetle.csv&quot;)
 write.csv(insects, &quot;Output Data/wide_onlybeetle.csv&quot;)</code></pre>
+<hr />
 </div>
 </div>
 <div id="statistics-and-modelling" class="section level1">
@@ -1041,6 +1042,7 @@ sum(byrep$total.flowers)</code></pre>
 <pre class="r"><code>sum(byrep$total.visits)</code></pre>
 <pre><code>## [1] 697</code></pre>
 <pre class="r"><code>#should be 925 and 697 - not 930 and 701.</code></pre>
+<p>Flower visits</p>
 <pre class="r"><code>#base hypothesis testing model
 #additive
 m1 &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
@@ -1184,11 +1186,8 @@ summary(null)</code></pre>
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>#model 1 is best fit</code></pre>
-</div>
-</div>
-<div id="modeling-foraging-instances" class="section level2">
-<h2>modeling foraging instances</h2>
-<pre class="r"><code>#base additive model
+<p>Foraging instances</p>
+<pre class="r"><code>#base additive model foraging instances
 m3 &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
 summary(m3)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
@@ -1293,7 +1292,7 @@ anova(m3,m5, null)</code></pre>
 ## m5    7 1002.687
 ## null  4 1065.955</code></pre>
 <pre class="r"><code>ggplot(byrep, aes(flowering, flowers.per.hour)) + geom_boxplot() + facet_grid(~treatment)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /> #testing importance of covariates using TMB because glmer will not coverge. Choosing family:</p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /> ###Testing importance of covariates using TMB because glmer will not coverge. Choosing family:</p>
 <pre class="r"><code>c1 &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + understory.richness+ offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
 summary(c1)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
@@ -1580,6 +1579,7 @@ summary(c2.v)</code></pre>
 ## het.shrub.blooming.neighbours  0.6964  1    0.40400    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
 <div id="rtu-visitation-modelling" class="section level3">
 <h3>RTU visitation modelling</h3>
 <p>Models for testing RTU-specificity</p>
@@ -2296,41 +2296,11 @@ anova(m1, m2, m3, null)</code></pre>
 ## m2    7 -3615.626
 ## m3    5 -3617.482
 ## null  3 -3602.359</code></pre>
-<pre class="r"><code>t1 &lt;- glmmTMB(dec.total.time ~ flowering * rtu.ag  + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)</code></pre>
-<pre><code>## Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-
-## definite Hessian matrix. See vignette(&#39;troubleshooting&#39;)</code></pre>
-<pre class="r"><code>summary(t1)</code></pre>
-<pre><code>##  Family: Gamma  ( log )
-## Formula:          dec.total.time ~ flowering * rtu.ag + (1 | repID)
-## Data: rtu.data
-## 
-##      AIC      BIC   logLik deviance df.resid 
-##       NA       NA       NA       NA      682 
-## 
-## Random effects:
-## 
-## Conditional model:
-##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.5782   0.7604  
-## Number of obs: 696, groups:  repID, 118
-## 
-## Dispersion estimate for Gamma family (sigma^2): 1.82 
-## 
-## Conditional model:
-##                               Estimate Std. Error z value Pr(&gt;|z|)
-## (Intercept)                    -3.4393         NA      NA       NA
-## floweringbloom                 -0.4748         NA      NA       NA
-## rtu.agbombylid                 -1.0581         NA      NA       NA
-## rtu.aghoneybee                 -0.7210         NA      NA       NA
-## rtu.aglep                      -2.2015         NA      NA       NA
-## rtu.agother                     1.3361         NA      NA       NA
-## rtu.agsyrphid                  -0.2399         NA      NA       NA
-## floweringbloom:rtu.agbombylid  -0.5107         NA      NA       NA
-## floweringbloom:rtu.aghoneybee   0.0000         NA      NA       NA
-## floweringbloom:rtu.aglep       -0.1883         NA      NA       NA
-## floweringbloom:rtu.agother     -0.7896         NA      NA       NA
-## floweringbloom:rtu.agsyrphid   -0.8074         NA      NA       NA</code></pre>
-<pre class="r"><code>ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)</code></pre>
+<pre class="r"><code>#t1 &lt;- glmmTMB(dec.total.time ~ flowering * rtu.ag  + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+#summary(t1)
+#convergence issues, not including rtu anyways
+
+ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)</code></pre>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-14-4.png" width="672" /></p>
 <pre class="r"><code>labels &lt;- c(pre = &quot;Pre-blooming&quot;, post = &quot;Blooming&quot;, bloom = &quot;Blooming&quot;)
@@ -2368,69 +2338,167 @@ filter(rtu.data, dec.total.time&lt;1.5) %&gt;% ggplot(aes(microsite, dec.total.t
 ## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
 ## font family not found in Windows font database</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-14-5.png" width="672" /></p>
-<p>Proportion of unique flowers visited per visit {r} rtu.data &lt;- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)</p>
-<p>ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()</p>
-<p>m1 &lt;- glmmTMB(prop.visited ~ flowering * microsite + (1|repID), family = Gamma(link = “log”), data = rtu.data) summary(m1) car::Anova(m1, type = 3) lsmeans(m1, pairwise~flowering*microsite)</p>
-<p>m2 &lt;- glmmTMB(prop.visited ~ flowering + microsite + (1|repID), family = Gamma(link = “log”), data = rtu.data) summary(m1) car::Anova(m1, type = 3)</p>
-<p>m1 &lt;- glmer(prop.visited ~ flowering * rtu.ag + (1|repID), family = Gamma(link = “log”), data = rtu.data)</p>
-<p>fm1 &lt;- m1</p>
 </div>
-</div>
-</div>
-<div id="recomputing" class="section level1">
-<h1>recomputing</h1>
-<p>diag.vals &lt;- getME(fm1,“theta”)[getME(fm1,“lower”) == 0] any(diag.vals &lt; 1e-6) # FALSE</p>
-</div>
-<div id="recompute-hessian" class="section level1">
-<h1>recompute Hessian</h1>
-<p>devfun &lt;- update(fm1, devFunOnly=TRUE) if (isLMM(fm1)) { pars &lt;- getME(fm1,“theta”) } else { ## GLMM: requires both random and fixed parameters pars &lt;- getME(fm1, c(“theta”,“fixef”)) } if (require(“numDeriv”)) { cat(“hess:”); print(hess &lt;- hessian(devfun, unlist(pars))) cat(“grad:”); print(grad &lt;- grad(devfun, unlist(pars))) cat(“scaled gradient:”) print(scgrad &lt;- solve(chol(hess), grad)) }</p>
-<p>fm1.restart &lt;- update(fm1, start=pars) all &lt;- allFit(fm1.restart) summary(all)</p>
-<p>m2 &lt;- all$bobyqa summary(m2) lsmeans(m2, pairwise~flowering*rtu.ag)</p>
-<p>m2null &lt;- glmer(prop.visited ~ (1|repID), family = Gamma(link = “log”), data = rtu.data)</p>
-<p>anova(m2, m2null) ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)</p>
-</div>
-<div id="now-rtu-microsite" class="section level1">
-<h1>now RTU microsite</h1>
-<p>m3 &lt;- glmer(prop.visited ~ microsite * rtu.ag + (1|repID), family = Gamma(link = “log”), data = rtu.data)</p>
-<p>fm1 &lt;- m3</p>
-</div>
-<div id="recomputing-1" class="section level1">
-<h1>recomputing</h1>
-<p>diag.vals &lt;- getME(fm1,“theta”)[getME(fm1,“lower”) == 0] any(diag.vals &lt; 1e-6) # FALSE</p>
-</div>
-<div id="recompute-hessian-1" class="section level1">
-<h1>recompute Hessian</h1>
-<p>devfun &lt;- update(fm1, devFunOnly=TRUE) if (isLMM(fm1)) { pars &lt;- getME(fm1,“theta”) } else { ## GLMM: requires both random and fixed parameters pars &lt;- getME(fm1, c(“theta”,“fixef”)) } if (require(“numDeriv”)) { cat(“hess:”); print(hess &lt;- hessian(devfun, unlist(pars))) cat(“grad:”); print(grad &lt;- grad(devfun, unlist(pars))) cat(“scaled gradient:”) print(scgrad &lt;- solve(chol(hess), grad)) }</p>
-<p>fm1.restart &lt;- update(fm1, start=pars) all &lt;- allFit(fm1.restart) summary(all)</p>
-<p>m3 &lt;- all$bobyqa summary(m3) lsmeans(m3, pairwise~microsite*rtu.ag)</p>
-<p>anova(m3, m2null)</p>
-<p>m1 &lt;- glmmTMB(prop.visited ~ microsite * flowering* + (1|repID), ziformula=~0,family=“Gamma”, data = rtu.data)</p>
-<p>bee &lt;- filter(rtu.data, rtu.ag == “bee”) shapiro.test(bee$prop.visited)</p>
-<p>l1 &lt;- lmer(log(prop.visited) ~ microsite *flowering + (1|repID), data = bee) shapiro.test(resid(l1)) plot(resid(l1)~predict(l1)) qqnorm(resid(l1)) summary(l1)</p>
-<p>lsmeans(l1, pairwise~flowering+microsite)</p>
-<p>l2 &lt;- lmer(log(dec.total.time) ~ (1|repID), data = bee)</p>
-<p>anova(l1, l2)</p>
-<p>ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= “Spectral”) + theme_Publication() + xlab(“Microsite”) + ylab(“Proportion of flowers visited”) + labs(fill=“”) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(“”, values = c(“bee” =“#D53E4F”, “bombylid”= “#FC8D59”, “honeybee”= “#FEE08B”, “lep”= “#D3D3D3”, “other”= “#99D594”, “syrphid” = “#3288BD”), labels = c(“Solitary Bee”, “Bombyliidae”, “Honeybee”, “Lepidoptera”, “Other”, “Syrphidae”))</p>
-<p>filter(rtu.data, dec.total.time&lt;1.5) %&gt;% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= “Spectral”) + theme_Publication() + xlab(“Microsite”) + ylab(“Duration of visit (decimal time)”) + labs(fill=“”) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(“”, values = c(“bee” =“#D53E4F”, “bombylid”= “#FC8D59”, “honeybee”= “#FEE08B”, “lep”= “#D3D3D3”, “other”= “#99D594”, “syrphid” = “#3288BD”), labels = c(“Solitary Bee”, “Bombyliidae”, “Honeybee”, “Lepidoptera”, “Other”, “Syrphidae”))</p>
-<p>ggplot(rtu.data, aes(flowering, dec.total.time, fill = rtu.ag)) + geom_boxplot()</p>
-<pre><code>
+<div id="proportion-of-unique-flowers-visited-per-foraging-instance" class="section level3">
+<h3>Proportion of unique flowers visited per foraging instance</h3>
+<pre class="r"><code>rtu.data &lt;- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 
-Figures
-{r}
-#rtu related figures
-byrtu &lt;- read.csv(&quot;Output Data/rtu_by_rep.csv&quot;)
-byobs &lt;- read.csv(&quot;Output Data/byobs_cleaned.csv&quot;)
-rtu.key &lt;- read.csv(&quot;Clean Data/video_rtu_key.csv&quot;)
-rtu.data &lt;- left_join(rtu.key, byobs, by = &quot;highest.rtu&quot;)
-#byrtu$treatment &lt;- relevel(byrtu$treatment, &quot;open&quot;)
-byobs$flowering &lt;- relevel(byobs$flowering, &quot;pre&quot;)
+ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>source(system.file(&quot;other_methods&quot;,&quot;lsmeans_methods.R&quot;,package=&quot;glmmTMB&quot;))
+m1 &lt;- glmmTMB(prop.visited ~ flowering * microsite + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+summary(m1)</code></pre>
+<pre><code>##  Family: Gamma  ( log )
+## Formula:          prop.visited ~ flowering * microsite + (1 | repID)
+## Data: rtu.data
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##  -2149.9  -2122.6   1080.9  -2161.9      691 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.07322  0.2706  
+## Number of obs: 697, groups:  repID, 118
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.126 
+## 
+## Conditional model:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                   -1.99385    0.04487  -44.44   &lt;2e-16 ***
+## floweringbloom                -0.04468    0.04899   -0.91   0.3618    
+## micrositeshrub                 0.05562    0.06501    0.86   0.3923    
+## floweringbloom:micrositeshrub -0.16835    0.07753   -2.17   0.0299 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(m1, type = 3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: prop.visited
+##                         Chisq Df Pr(&gt;Chisq)    
+## (Intercept)         1974.5779  1     &lt;2e-16 ***
+## flowering              0.8318  1     0.3618    
+## microsite              0.7319  1     0.3923    
+## flowering:microsite    4.7149  1     0.0299 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>lsmeans(m1, pairwise~flowering*microsite)</code></pre>
+<pre><code>## $lsmeans
+##  flowering microsite    lsmean         SE df asymp.LCL asymp.UCL
+##  pre       open      -1.993851 0.04486995 NA -2.081795 -1.905908
+##  bloom     open      -2.038531 0.05285380 NA -2.142123 -1.934940
+##  pre       shrub     -1.938236 0.04694204 NA -2.030240 -1.846231
+##  bloom     shrub     -2.151263 0.05952299 NA -2.267925 -2.034600
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast                    estimate         SE df z.ratio p.value
+##  pre,open - bloom,open     0.04468024 0.04899045 NA   0.912  0.7984
+##  pre,open - pre,shrub     -0.05561548 0.06500782 NA  -0.856  0.8277
+##  pre,open - bloom,shrub    0.15741140 0.07442518 NA   2.115  0.1482
+##  bloom,open - pre,shrub   -0.10029572 0.07064910 NA  -1.420  0.4870
+##  bloom,open - bloom,shrub  0.11273116 0.07965494 NA   1.415  0.4897
+##  pre,shrub - bloom,shrub   0.21302688 0.05975159 NA   3.565  0.0021
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+<pre class="r"><code>m2 &lt;- glmmTMB(prop.visited ~ flowering + microsite + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+summary(m1)</code></pre>
+<pre><code>##  Family: Gamma  ( log )
+## Formula:          prop.visited ~ flowering * microsite + (1 | repID)
+## Data: rtu.data
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##  -2149.9  -2122.6   1080.9  -2161.9      691 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.07322  0.2706  
+## Number of obs: 697, groups:  repID, 118
+## 
+## Dispersion estimate for Gamma family (sigma^2): 0.126 
+## 
+## Conditional model:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                   -1.99385    0.04487  -44.44   &lt;2e-16 ***
+## floweringbloom                -0.04468    0.04899   -0.91   0.3618    
+## micrositeshrub                 0.05562    0.06501    0.86   0.3923    
+## floweringbloom:micrositeshrub -0.16835    0.07753   -2.17   0.0299 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(m1, type = 3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: prop.visited
+##                         Chisq Df Pr(&gt;Chisq)    
+## (Intercept)         1974.5779  1     &lt;2e-16 ***
+## flowering              0.8318  1     0.3618    
+## microsite              0.7319  1     0.3923    
+## flowering:microsite    4.7149  1     0.0299 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>m2null &lt;- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
 
+anova(m1, m2, m2null)</code></pre>
+<pre><code>## Data: rtu.data
+## Models:
+## m2null: prop.visited ~ (1 | repID), zi=~0, disp=~1
+## m2: prop.visited ~ flowering + microsite + (1 | repID), zi=~0, disp=~1
+## m1: prop.visited ~ flowering * microsite + (1 | repID), zi=~0, disp=~1
+##        Df     AIC     BIC logLik deviance  Chisq Chi Df Pr(&gt;Chisq)  
+## m2null  3 -2142.5 -2128.9 1074.3  -2148.5                           
+## m2      5 -2147.2 -2124.4 1078.6  -2157.2 8.6446      2    0.01327 *
+## m1      6 -2149.9 -2122.6 1080.9  -2161.9 4.6997      1    0.03017 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>AIC(m1, m2, m2null)</code></pre>
+<pre><code>##        df       AIC
+## m1      6 -2149.878
+## m2      5 -2147.178
+## m2null  3 -2142.533</code></pre>
+<pre class="r"><code>ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= &quot;Spectral&quot;) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Proportion of flowers visited&quot;) + labs(fill=&quot;&quot;) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(&quot;&quot;, values = c(&quot;bee&quot; =&quot;#D53E4F&quot;, &quot;bombylid&quot;= &quot;#FC8D59&quot;, &quot;honeybee&quot;= &quot;#FEE08B&quot;, &quot;lep&quot;= &quot;#D3D3D3&quot;, &quot;other&quot;= &quot;#99D594&quot;, &quot;syrphid&quot; = &quot;#3288BD&quot;), labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;))</code></pre>
+<pre><code>## Warning: `legend.margin` must be specified using `margin()`. For the old
+## behavior use legend.spacing</code></pre>
+<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;,
+## which will replace the existing scale.</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
 
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
 
-ggplot(byobs, aes(microsite, prop.un.fl.visited)) + geom_boxplot() + facet_grid(~flowering) + theme_Publication()  + ylab(&quot;Proportion of flowers visited per visit&quot;) + xlab(&quot;Microsite&quot;) + facet_grid(~flowering,labeller=labeller(flowering = labels)) 
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
 
-ggplot(rtu.data, aes(rtu.ag, dec.total.time)) + geom_boxplot() + facet_grid(flowering~microsite, labeller=labeller(flowering = labels)) + theme_Publication() + xlab(&quot;RTU&quot;) + ylab(&quot;Time spent per visit&quot;)
-</code></pre>
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
+## $y, : font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
+## $y, : font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-15-3.png" width="672" /> ###Pollen Deposition</p>
+<hr />
+</div>
+</div>
+<div id="community-level-effects" class="section level2">
+<h2>Community level effects</h2>
 <div id="vegetation-modelling" class="section level3">
 <h3>Vegetation Modelling</h3>
 <p>GLMM for vegetation covariates</p>
@@ -2460,6 +2528,7 @@ Insitu observation of visitation to L. tridentata
 Script for making figures
 
 {r, code = readLines(&quot;Scripts/figures.R&quot;)}</code></pre>
+</div>
 </div>
 </div>
 <div id="rii" class="section level1">

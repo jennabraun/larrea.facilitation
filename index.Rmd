@@ -424,8 +424,9 @@ write.csv(insects, "Output Data/wide_onlybeetle.csv")
 
 ```
 
-
+***
 #Statistics and modelling
+
 ## Visitation and pollen deposition
 
 ### Visitation modelling
@@ -446,7 +447,7 @@ sum(byrep$total.visits)
 
 #should be 925 and 697 - not 930 and 701.
 ```
-
+Flower visits
 ```{r}
 #base hypothesis testing model
 #additive
@@ -472,10 +473,10 @@ car::Anova(m2, type = 3)
 
 #model 1 is best fit
 ```
-## modeling foraging instances
 
+Foraging instances
 ```{r}
-#base additive model
+#base additive model foraging instances
 m3 <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
 summary(m3)
 car::Anova(m3, type = 2)
@@ -497,7 +498,7 @@ AIC(m3, m5, null)
 ggplot(byrep, aes(flowering, flowers.per.hour)) + geom_boxplot() + facet_grid(~treatment)
 
 ```
-#testing importance of covariates
+###Testing importance of covariates
 using TMB because glmer will not coverge.
 Choosing family:
 ```{r}
@@ -627,8 +628,9 @@ null <- glmmTMB(dec.total.time ~(1|repID), family = Gamma(link = "log"), data = 
 anova(m1, m2, m3, null)
 AIC(m1, m2, m3, null)
 
-t1 <- glmmTMB(dec.total.time ~ flowering * rtu.ag  + (1|repID), family = Gamma(link = "log"), data = rtu.data)
-summary(t1)
+#t1 <- glmmTMB(dec.total.time ~ flowering * rtu.ag  + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+#summary(t1)
+#convergence issues, not including rtu anyways
 
 ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)
 
@@ -638,12 +640,13 @@ filter(rtu.data, dec.total.time<1.5) %>% ggplot(aes(microsite, dec.total.time, f
 
 ```
 
-Proportion of unique flowers visited per visit
-{r}
+###Proportion of unique flowers visited per foraging instance
+```{r}
 rtu.data <- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 
 ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()
 
+source(system.file("other_methods","lsmeans_methods.R",package="glmmTMB"))
 m1 <- glmmTMB(prop.visited ~ flowering * microsite + (1|repID), family = Gamma(link = "log"), data = rtu.data)
 summary(m1)
 car::Anova(m1, type = 3)
@@ -653,143 +656,19 @@ m2 <- glmmTMB(prop.visited ~ flowering + microsite + (1|repID), family = Gamma(l
 summary(m1)
 car::Anova(m1, type = 3)
 
+m2null <- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = "log"), data = rtu.data)
 
-m1 <- glmer(prop.visited ~ flowering * rtu.ag + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+anova(m1, m2, m2null)
+AIC(m1, m2, m2null)
 
-fm1 <- m1
-
-#recomputing
-diag.vals <- getME(fm1,"theta")[getME(fm1,"lower") == 0]
-any(diag.vals < 1e-6) # FALSE
-
-#recompute Hessian
-devfun <- update(fm1, devFunOnly=TRUE)
-if (isLMM(fm1)) {
-  pars <- getME(fm1,"theta")
-} else {
-  ## GLMM: requires both random and fixed parameters
-  pars <- getME(fm1, c("theta","fixef"))
-}
-if (require("numDeriv")) {
-  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
-  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
-  cat("scaled gradient:\n")
-  print(scgrad <- solve(chol(hess), grad))
-}
-
-fm1.restart <- update(fm1, start=pars)
-all <- allFit(fm1.restart)
-summary(all)
-
-m2 <- all$bobyqa
-summary(m2)
-lsmeans(m2, pairwise~flowering*rtu.ag)
-
-m2null <- glmer(prop.visited ~  (1|repID), family = Gamma(link = "log"), data = rtu.data)
-
-anova(m2, m2null)
 ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)
 
-
-#now RTU microsite
-
-m3 <- glmer(prop.visited ~ microsite * rtu.ag + (1|repID), family = Gamma(link = "log"), data = rtu.data)
-
-fm1 <- m3
-
-#recomputing
-diag.vals <- getME(fm1,"theta")[getME(fm1,"lower") == 0]
-any(diag.vals < 1e-6) # FALSE
-
-#recompute Hessian
-devfun <- update(fm1, devFunOnly=TRUE)
-if (isLMM(fm1)) {
-  pars <- getME(fm1,"theta")
-} else {
-  ## GLMM: requires both random and fixed parameters
-  pars <- getME(fm1, c("theta","fixef"))
-}
-if (require("numDeriv")) {
-  cat("hess:\n"); print(hess <- hessian(devfun, unlist(pars)))
-  cat("grad:\n"); print(grad <- grad(devfun, unlist(pars)))
-  cat("scaled gradient:\n")
-  print(scgrad <- solve(chol(hess), grad))
-}
-
-fm1.restart <- update(fm1, start=pars)
-all <- allFit(fm1.restart)
-summary(all)
-
-
-m3 <- all$bobyqa
-summary(m3)
-lsmeans(m3, pairwise~microsite*rtu.ag)
-
-
-anova(m3, m2null)
-
-
-
-
-
-
-
-
-m1 <- glmmTMB(prop.visited ~ microsite * flowering* + (1|repID), ziformula=~0,family="Gamma", data = rtu.data)
-
-
-bee <- filter(rtu.data, rtu.ag == "bee")
-shapiro.test(bee$prop.visited)
-
-
-l1 <- lmer(log(prop.visited) ~  microsite *flowering + (1|repID), data = bee)
-shapiro.test(resid(l1))
-plot(resid(l1)~predict(l1))
-qqnorm(resid(l1))
-summary(l1)
-
-lsmeans(l1, pairwise~flowering+microsite)
-
-
-l2 <- lmer(log(dec.total.time) ~   (1|repID), data = bee)
-
-anova(l1, l2)
-
-
-
 ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Proportion of flowers visited") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
-
-
-
-
-
-filter(rtu.data, dec.total.time<1.5) %>% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Duration of visit (decimal time)") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
-
-
-
-
-
-ggplot(rtu.data, aes(flowering, dec.total.time, fill = rtu.ag)) + geom_boxplot()
 ```
+###Pollen Deposition
 
-
-Figures
-{r}
-#rtu related figures
-byrtu <- read.csv("Output Data/rtu_by_rep.csv")
-byobs <- read.csv("Output Data/byobs_cleaned.csv")
-rtu.key <- read.csv("Clean Data/video_rtu_key.csv")
-rtu.data <- left_join(rtu.key, byobs, by = "highest.rtu")
-#byrtu$treatment <- relevel(byrtu$treatment, "open")
-byobs$flowering <- relevel(byobs$flowering, "pre")
-
-
-
-ggplot(byobs, aes(microsite, prop.un.fl.visited)) + geom_boxplot() + facet_grid(~flowering) + theme_Publication()  + ylab("Proportion of flowers visited per visit") + xlab("Microsite") + facet_grid(~flowering,labeller=labeller(flowering = labels)) 
-
-ggplot(rtu.data, aes(rtu.ag, dec.total.time)) + geom_boxplot() + facet_grid(flowering~microsite, labeller=labeller(flowering = labels)) + theme_Publication() + xlab("RTU") + ylab("Time spent per visit")
-
-```
+***
+##Community level effects
 
 ### Vegetation Modelling
 GLMM for vegetation covariates
