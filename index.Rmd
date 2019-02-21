@@ -601,15 +601,18 @@ ggplot(p, aes(treatment, visits)) + geom_bar(aes(fill = rtu), stat = "identity",
 byobs <- read.csv("Output Data/byobs_cleaned.csv")
 
 #observation level rtu data. Need to join simplified rtu to data sheet
+cov <- read.csv("Clean Data/video_cov.csv")
+#rtu.key <- read.csv("Clean Data/video_rtu_key.csv")
+cov$uniID <- paste(cov$Cam, cov$Date)
+cov$uniID <- gsub('\\s+', "", cov$uniID)
 
-rtu.key <- read.csv("Clean Data/video_rtu_key.csv")
-rtu.data <- left_join(rtu.key, byobs, by = "highest.rtu")
-rtu.data <- dplyr::select(rtu.data, rtu.ag, plant.id, microsite, flowering, video.date, video.length, flower.fov, total.time, flowers.visits, unique.fl.visited, uniID, dec.total.time)                    
+rtu.data <- right_join(cov, byobs, by = "uniID")
+rtu.data <- dplyr::select(rtu.data, plant.id, microsite, flowering.x, video.date, video.length, flower.fov, flowers.pot, total.time, flowers.visits, unique.fl.visited, uniID, dec.total.time)                    
 rtu.data$repID <- paste(rtu.data$plant.id, rtu.data$microsite)
 rtu.data$microsite <-as.factor(rtu.data$microsite)
 rtu.data$microsite <- relevel(rtu.data$microsite, "open")
 rtu.data$flowering <- relevel(rtu.data$flowering, "pre")
-
+rtu.data$flowers.pot <- as.numeric(as.character(rtu.data$flowers.pot))
 #count.rtu.fl <- rtu.data %>% group_by(uniID, rtu.ag) %>% summarise(total.flowers = sum(flowers.visits), total.visits = n()) 
 
 #viz. dec.total.time is the visit duration
@@ -619,9 +622,10 @@ ggplot(rtu.data, aes(dec.total.time)) + geom_density()
 
 #using gamma because continuous and positive, looks like it fits 
 
-m1 <- glmmTMB(dec.total.time ~ flowering + microsite + flower.fov + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+m1 <- glmmTMB(dec.total.time ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+summary(m1)
 car::Anova(m1, type =2)
-m2 <- glmmTMB(dec.total.time ~ flowering * microsite + flower.fov + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+m2 <- glmmTMB(dec.total.time ~ flowering * microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
 car::Anova(m2, type = 3)
 m3 <- glmmTMB(dec.total.time ~ flowering + microsite + (1|repID), family = Gamma(link = "log"), data = rtu.data)
 car::Anova(m3, type = 2)
@@ -633,11 +637,11 @@ AIC(m1, m2, m3, null)
 #summary(t1)
 #convergence issues, not including rtu anyways
 
-ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)
+#ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)
 
 labels <- c(pre = "Pre-blooming", post = "Blooming", bloom = "Blooming")
 
-filter(rtu.data, dec.total.time<1.5) %>% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Duration of visit (decimal time)") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
+#filter(rtu.data, dec.total.time<1.5) %>% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Duration of visit (decimal time)") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
 
 ```
 
@@ -648,14 +652,14 @@ rtu.data <- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()
 
 source(system.file("other_methods","lsmeans_methods.R",package="glmmTMB"))
-m1 <- glmmTMB(prop.visited ~ flowering * microsite + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+m1 <- glmmTMB(prop.visited ~ flowering * microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
 summary(m1)
 car::Anova(m1, type = 3)
 lsmeans(m1, pairwise~flowering*microsite)
 
-m2 <- glmmTMB(prop.visited ~ flowering + microsite + (1|repID), family = Gamma(link = "log"), data = rtu.data)
-summary(m1)
-car::Anova(m1, type = 3)
+m2 <- glmmTMB(prop.visited ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+summary(m2)
+car::Anova(m2, type = 3)
 
 m2null <- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = "log"), data = rtu.data)
 
@@ -664,7 +668,7 @@ AIC(m1, m2, m2null)
 
 ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)
 
-ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Proportion of flowers visited") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
+#ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Proportion of flowers visited") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
 ```
 
 ###Pollen Deposition
@@ -963,7 +967,7 @@ ggplot(data = metadata, aes(treatment, abun)) + geom_boxplot() + facet_grid(~blo
 
 m1 <- glmmTMB(abun ~ treatment * blooming + (1|repID), family = "nbinom2", data = metadata)
 summary(m1)
-lsmeans(m1, pairwise~blooming*treatment)
+#lsmeans(m1, pairwise~blooming*treatment)
 car::Anova(m1, type = 3)
 
 m2 <- glmmTMB(abun ~ treatment + blooming + (1|repID), family = "nbinom2", data = metadata)
@@ -1011,11 +1015,11 @@ m3 <- glmmTMB(abun ~  (1|repID),family = "nbinom2",  data = beetle)
 summary(m3)
 
 m4 <-  glmmTMB(abun ~ blooming + treatment + (1|repID), family = "nbinom1", data = beetle)
-  
+summary(m4)  
 anova(m1, m2, m3, m4)
 AIC(m1, m2, m3, m4)
 
-#one and two are pretty much the same, going with simpler, #4 is best
+#one and two are pretty much the same, going with simpler, #4 is best (nbinom1)
 car::Anova(m4, type = 2)
 ```
 
@@ -1065,14 +1069,14 @@ Arthropod Richness
 
 s1 <- glmmTMB(Species ~ blooming + treatment + (1|repID), family = poisson, data = beetle)
 summary(s1)
-#s1.nb <- glmmTMB(Species ~ blooming + treatment + (1|repID), family = "nbinom2", data = beetle)
-#summary(s1.nb)
+s1.nb <- glmmTMB(Species ~ blooming + treatment + (1|repID), family = "nbinom1", data = beetle)
+summary(s1.nb)
 s2 <- glmmTMB(Species ~ blooming * treatment + (1|repID), family = poisson, data = beetle)
 summary(s2)
 s3 <- glmmTMB(Species ~ (1|repID), family = poisson, data = beetle)
 summary(s3)
-AIC(s1, s2, s3)
-
+AIC(s1, s1.nb, s2, s3)
+#poisson best here
 anova(s1,s2, s3)
 car::Anova(s1, type = 2)
 
@@ -1080,12 +1084,81 @@ ggplot(beetle, aes(blooming, Species)) + geom_boxplot() + facet_grid(~treatment)
 ggplot(beetle, aes(treatment, Species)) + geom_boxplot() + facet_grid(~blooming)
 
 ```
+
 ```{r, species accumulation}
 #species accumulation
 insects <- read.csv("Output Data/wide_yesbeetle.csv")
 row.names(insects) <- insects$X
 insects <- select(insects, -X)
 plot(specaccum(insects), xlab = "# of samples", ylab = "# of species")
+```{r, bees only}
+
+insects <- read.csv("Output Data/wide_yesbeetle.csv")
+bees <- select(insects, 5:7,12,14,16,36,37,42,43,49,50,61,64,65,67,72,73,75,87,92,96)
+
+
+metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
+metadata <- filter(metadata, species != "buckhorn")
+metadata$plant.id <- as.character(metadata$plant.id)
+str(metadata)
+metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
+row.names(metadata) <- metadata$uniID
+
+
+beemeta <- metadata
+
+beemeta$abun <- apply(bees, 1, sum)
+#check for total
+sum(beemeta$abun)
+H <- diversity(bees)
+simp <- diversity(bees, "simpson")
+S <- specnumber(bees)
+J <- H/log(S)
+beemeta$H <- H
+beemeta$Simpson <- simp
+beemeta$Species <- S
+beemeta$Even <- J
+
+
+t.test(beemeta$Species ~ beemeta$blooming)
+
+library(glmmTMB)
+m1 <- glmmTMB(Species ~ treatment + blooming + (1|plant.id), family = "nbinom2", beemeta)
+summary(m1)
+
+car::Anova(m1, type = 2)
+m2 <- glmmTMB(Species ~ treatment + blooming + (1|plant.id), family = "poisson", beemeta)
+
+summary(m2)
+m3 <- glmmTMB(Species ~ treatment * blooming + (1|plant.id), family = "poisson", beemeta)
+
+null <- glmmTMB(Species ~  (1|plant.id), family = "poisson", beemeta)
+
+#poisson is best
+AIC(m1, m2, m3, null)
+#null model has lowest AIC
+car::Anova(m2, type = 2)
+
+
+#bee abundance
+
+m1 <- glmmTMB(abun ~ treatment + blooming + (1|plant.id), family = "nbinom2", beemeta)
+summary(m1)
+
+car::Anova(m1, type = 2)
+m2 <- glmmTMB(abun ~ treatment + blooming + (1|plant.id), family = "poisson", beemeta)
+
+summary(m2)
+m3 <- glmmTMB(abun ~ treatment * blooming + (1|plant.id), family = "poisson", beemeta)
+
+null <- glmmTMB(abun ~  (1|plant.id), family = "poisson", beemeta)
+
+#poisson is best
+AIC(m1, m2, m3, null)
+#null model has lowest AIC
+car::Anova(m2, type = 2)
+
+```
 
 ```
 

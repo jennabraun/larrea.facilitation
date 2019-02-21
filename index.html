@@ -646,7 +646,7 @@ sum(long.ag$Quantity)</code></pre>
 <pre><code>## [1] 3400</code></pre>
 <pre class="r"><code>counts &lt;- long.ag %&gt;% group_by(highest.rtu) %&gt;% summarise(Quantity = sum(Quantity))
 count(long.ag, highest.rtu)</code></pre>
-<pre><code>## # A tibble: 1,633 x 3
+<pre><code>## # A tibble: 1,636 x 3
 ## # Groups:   uniID [228]
 ##    uniID               highest.rtu          n
 ##    &lt;chr&gt;               &lt;chr&gt;            &lt;int&gt;
@@ -659,8 +659,8 @@ count(long.ag, highest.rtu)</code></pre>
 ##  7 4.10.2017 184 shrub Anthidium            1
 ##  8 4.10.2017 184 shrub Chrysomelidae        1
 ##  9 4.10.2017 184 shrub Cicadellidae         1
-## 10 4.10.2017 184 shrub Lasioglossum         1
-## # ... with 1,623 more rows</code></pre>
+## 10 4.10.2017 184 shrub Dialictus            1
+## # ... with 1,626 more rows</code></pre>
 <pre class="r"><code>#count number of specimens of each rtu and write to a table
 sp_by_rep &lt;- long %&gt;% group_by(highest.rtu) %&gt;% summarise(Quantity = sum(Quantity))
 write.csv(sp_by_rep, &quot;Output Data/pans_sp_by_rep.csv&quot;)
@@ -792,9 +792,9 @@ summary(metadata)</code></pre>
 ##  Min.   :0.000   Min.   :0.0000   Min.   : 0.000   Min.   :0.0000  
 ##  1st Qu.:1.332   1st Qu.:0.7321   1st Qu.: 4.000   1st Qu.:0.9138  
 ##  Median :1.748   Median :0.8056   Median : 6.000   Median :0.9577  
-##  Mean   :1.582   Mean   :0.7568   Mean   : 6.241   Mean   :0.9104  
+##  Mean   :1.583   Mean   :0.7569   Mean   : 6.254   Mean   :0.9104  
 ##  3rd Qu.:1.994   3rd Qu.:0.8571   3rd Qu.: 8.000   3rd Qu.:0.9821  
-##  Max.   :2.476   Max.   :1.0000   Max.   :15.000   Max.   :1.0000  
+##  Max.   :2.516   Max.   :1.0000   Max.   :15.000   Max.   :1.0000  
 ##                                                    NA&#39;s   :6</code></pre>
 <pre class="r"><code>#no Melyrid beetle output
 write.csv(metadata, &quot;Output Data/metadata_nobeetle.csv&quot;)
@@ -902,14 +902,14 @@ summary(metadata)</code></pre>
 ##  north                      :  0                      3rd Qu.:19.00  
 ##  yellow knocked over        :  0                      Max.   :55.00  
 ##                                                                      
-##        H            Simpson          Species            Even       
-##  Min.   :0.000   Min.   :0.0000   Min.   : 0.000   Min.   :0.0000  
-##  1st Qu.:1.233   1st Qu.:0.6239   1st Qu.: 5.000   1st Qu.:0.7950  
-##  Median :1.699   Median :0.7769   Median : 7.000   Median :0.8842  
-##  Mean   :1.569   Mean   :0.7034   Mean   : 7.096   Mean   :0.8413  
-##  3rd Qu.:1.991   3rd Qu.:0.8336   3rd Qu.: 9.000   3rd Qu.:0.9464  
-##  Max.   :2.552   Max.   :1.0000   Max.   :16.000   Max.   :1.0000  
-##                                                    NA&#39;s   :6</code></pre>
+##        H            Simpson          Species           Even       
+##  Min.   :0.000   Min.   :0.0000   Min.   : 0.00   Min.   :0.0000  
+##  1st Qu.:1.233   1st Qu.:0.6239   1st Qu.: 5.00   1st Qu.:0.7950  
+##  Median :1.699   Median :0.7769   Median : 7.00   Median :0.8842  
+##  Mean   :1.570   Mean   :0.7034   Mean   : 7.11   Mean   :0.8413  
+##  3rd Qu.:1.991   3rd Qu.:0.8344   3rd Qu.: 9.00   3rd Qu.:0.9464  
+##  Max.   :2.552   Max.   :1.0000   Max.   :16.00   Max.   :1.0000  
+##                                                   NA&#39;s   :6</code></pre>
 <pre class="r"><code>#beetle output
 write.csv(metadata, &quot;Output Data/metadata_yesbeetle.csv&quot;)
 write.csv(insects, &quot;Output Data/wide_yesbeetle.csv&quot;)</code></pre>
@@ -2201,7 +2201,7 @@ mPQ &lt;- MASS::glmmPQL(total.visits~flowering * rtu + treatment + flowers.pot +
 ##  $ total.visits                  : int  18 2 0 0 0 0 6 1 0 0 ...
 ##  $ total.flowers                 : int  35 5 0 0 0 0 8 2 0 0 ...
 ##  $ Length                        : Factor w/ 225 levels &quot;0:31:34&quot;,&quot;0:32:53&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
-##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-01-29 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
+##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-02-21 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
 ##  $ dec.Length                    : num  1.38 1.38 1.38 1.38 1.38 ...
 ##  $ visits.per.hour               : num  13.04 1.45 0 0 0 ...
 ##  $ flowers.per.hour              : num  25.35 3.62 0 0 0 ...
@@ -2223,15 +2223,20 @@ ggplot(p, aes(treatment, visits)) + geom_bar(aes(fill = rtu), stat = &quot;ident
 <pre class="r"><code>byobs &lt;- read.csv(&quot;Output Data/byobs_cleaned.csv&quot;)
 
 #observation level rtu data. Need to join simplified rtu to data sheet
+cov &lt;- read.csv(&quot;Clean Data/video_cov.csv&quot;)
+#rtu.key &lt;- read.csv(&quot;Clean Data/video_rtu_key.csv&quot;)
+cov$uniID &lt;- paste(cov$Cam, cov$Date)
+cov$uniID &lt;- gsub(&#39;\\s+&#39;, &quot;&quot;, cov$uniID)
 
-rtu.key &lt;- read.csv(&quot;Clean Data/video_rtu_key.csv&quot;)
-rtu.data &lt;- left_join(rtu.key, byobs, by = &quot;highest.rtu&quot;)
-rtu.data &lt;- dplyr::select(rtu.data, rtu.ag, plant.id, microsite, flowering, video.date, video.length, flower.fov, total.time, flowers.visits, unique.fl.visited, uniID, dec.total.time)                    
+rtu.data &lt;- right_join(cov, byobs, by = &quot;uniID&quot;)</code></pre>
+<pre><code>## Warning: Column `uniID` joining character vector and factor, coercing into
+## character vector</code></pre>
+<pre class="r"><code>rtu.data &lt;- dplyr::select(rtu.data, plant.id, microsite, flowering.x, video.date, video.length, flower.fov, flowers.pot, total.time, flowers.visits, unique.fl.visited, uniID, dec.total.time)                    
 rtu.data$repID &lt;- paste(rtu.data$plant.id, rtu.data$microsite)
 rtu.data$microsite &lt;-as.factor(rtu.data$microsite)
 rtu.data$microsite &lt;- relevel(rtu.data$microsite, &quot;open&quot;)
 rtu.data$flowering &lt;- relevel(rtu.data$flowering, &quot;pre&quot;)
-
+rtu.data$flowers.pot &lt;- as.numeric(as.character(rtu.data$flowers.pot))
 #count.rtu.fl &lt;- rtu.data %&gt;% group_by(uniID, rtu.ag) %&gt;% summarise(total.flowers = sum(flowers.visits), total.visits = n()) 
 
 #viz. dec.total.time is the visit duration
@@ -2246,28 +2251,54 @@ ggplot(rtu.data, aes(microsite, dec.total.time)) + geom_boxplot() + facet_grid(~
 <p><img src="index_files/figure-html/duration%20models-3.png" width="672" /></p>
 <pre class="r"><code>#using gamma because continuous and positive, looks like it fits 
 
-m1 &lt;- glmmTMB(dec.total.time ~ flowering + microsite + flower.fov + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
-car::Anova(m1, type =2)</code></pre>
+m1 &lt;- glmmTMB(dec.total.time ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+summary(m1)</code></pre>
+<pre><code>##  Family: Gamma  ( log )
+## Formula:          
+## dec.total.time ~ flowering + microsite + flowers.pot + (1 | repID)
+## Data: rtu.data
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##  -3615.5  -3588.2   1813.7  -3627.5      690 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.9557   0.9776  
+## Number of obs: 696, groups:  repID, 118
+## 
+## Dispersion estimate for Gamma family (sigma^2): 2.02 
+## 
+## Conditional model:
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -3.266345   0.338994  -9.635  &lt; 2e-16 ***
+## floweringbloom -0.762337   0.173090  -4.404 1.06e-05 ***
+## micrositeshrub -0.023523   0.234480  -0.100    0.920    
+## flowers.pot    -0.001618   0.030370  -0.053    0.958    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(m1, type =2)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: dec.total.time
-##              Chisq Df Pr(&gt;Chisq)    
-## flowering  18.8636  1  1.404e-05 ***
-## microsite   0.0131  1     0.9090    
-## flower.fov  0.0912  1     0.7627    
+##               Chisq Df Pr(&gt;Chisq)    
+## flowering   19.3976  1  1.061e-05 ***
+## microsite    0.0101  1     0.9201    
+## flowers.pot  0.0028  1     0.9575    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>m2 &lt;- glmmTMB(dec.total.time ~ flowering * microsite + flower.fov + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+<pre class="r"><code>m2 &lt;- glmmTMB(dec.total.time ~ flowering * microsite + flowers.pot + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
 car::Anova(m2, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
 ## Response: dec.total.time
 ##                       Chisq Df Pr(&gt;Chisq)    
-## (Intercept)         90.7226  1    &lt; 2e-16 ***
-## flowering            5.7776  1    0.01623 *  
-## microsite            0.2223  1    0.63728    
-## flower.fov           0.0449  1    0.83228    
-## flowering:microsite  2.0521  1    0.15200    
+## (Intercept)         93.9928  1    &lt; 2e-16 ***
+## flowering            5.9349  1    0.01484 *  
+## microsite            0.2376  1    0.62593    
+## flowers.pot          0.0005  1    0.98279    
+## flowering:microsite  2.0966  1    0.14762    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>m3 &lt;- glmmTMB(dec.total.time ~ flowering + microsite + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
@@ -2286,63 +2317,30 @@ anova(m1, m2, m3, null)</code></pre>
 ## Models:
 ## null: dec.total.time ~ (1 | repID), zi=~0, disp=~1
 ## m3: dec.total.time ~ flowering + microsite + (1 | repID), zi=~0, disp=~1
-## m1: dec.total.time ~ flowering + microsite + flower.fov + (1 | repID), zi=~0, disp=~1
-## m2: dec.total.time ~ flowering * microsite + flower.fov + (1 | repID), zi=~0, disp=~1
+## m1: dec.total.time ~ flowering + microsite + flowers.pot + (1 | repID), zi=~0, disp=~1
+## m2: dec.total.time ~ flowering * microsite + flowers.pot + (1 | repID), zi=~0, disp=~1
 ##      Df     AIC     BIC logLik deviance   Chisq Chi Df Pr(&gt;Chisq)    
 ## null  3 -3602.4 -3588.7 1804.2  -3608.4                              
 ## m3    5 -3617.5 -3594.8 1813.7  -3627.5 19.1225      2   7.04e-05 ***
-## m1    6 -3615.6 -3588.3 1813.8  -3627.6  0.0916      1     0.7622    
-## m2    7 -3615.6 -3583.8 1814.8  -3629.6  2.0523      1     0.1520    
+## m1    6 -3615.5 -3588.2 1813.7  -3627.5  0.0028      1     0.9575    
+## m2    7 -3615.6 -3583.8 1814.8  -3629.6  2.0965      1     0.1476    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>AIC(m1, m2, m3, null)</code></pre>
 <pre><code>##      df       AIC
-## m1    6 -3615.574
-## m2    7 -3615.626
+## m1    6 -3615.485
+## m2    7 -3615.581
 ## m3    5 -3617.482
 ## null  3 -3602.359</code></pre>
 <pre class="r"><code>#t1 &lt;- glmmTMB(dec.total.time ~ flowering * rtu.ag  + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
 #summary(t1)
 #convergence issues, not including rtu anyways
 
-ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)</code></pre>
-<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="index_files/figure-html/duration%20models-4.png" width="672" /></p>
-<pre class="r"><code>labels &lt;- c(pre = &quot;Pre-blooming&quot;, post = &quot;Blooming&quot;, bloom = &quot;Blooming&quot;)
+#ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)
 
-filter(rtu.data, dec.total.time&lt;1.5) %&gt;% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= &quot;Spectral&quot;) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Duration of visit (decimal time)&quot;) + labs(fill=&quot;&quot;) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(&quot;&quot;, values = c(&quot;bee&quot; =&quot;#D53E4F&quot;, &quot;bombylid&quot;= &quot;#FC8D59&quot;, &quot;honeybee&quot;= &quot;#FEE08B&quot;, &quot;lep&quot;= &quot;#D3D3D3&quot;, &quot;other&quot;= &quot;#99D594&quot;, &quot;syrphid&quot; = &quot;#3288BD&quot;), labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;))</code></pre>
-<pre><code>## Warning: `legend.margin` must be specified using `margin()`. For the old
-## behavior use legend.spacing</code></pre>
-<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;,
-## which will replace the existing scale.</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
+labels &lt;- c(pre = &quot;Pre-blooming&quot;, post = &quot;Blooming&quot;, bloom = &quot;Blooming&quot;)
 
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<p><img src="index_files/figure-html/duration%20models-5.png" width="672" /></p>
+#filter(rtu.data, dec.total.time&lt;1.5) %&gt;% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= &quot;Spectral&quot;) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Duration of visit (decimal time)&quot;) + labs(fill=&quot;&quot;) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(&quot;&quot;, values = c(&quot;bee&quot; =&quot;#D53E4F&quot;, &quot;bombylid&quot;= &quot;#FC8D59&quot;, &quot;honeybee&quot;= &quot;#FEE08B&quot;, &quot;lep&quot;= &quot;#D3D3D3&quot;, &quot;other&quot;= &quot;#99D594&quot;, &quot;syrphid&quot; = &quot;#3288BD&quot;), labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;))</code></pre>
 </div>
 <div id="proportion-of-unique-flowers-visited-per-foraging-instance" class="section level3">
 <h3>Proportion of unique flowers visited per foraging instance</h3>
@@ -2351,98 +2349,104 @@ filter(rtu.data, dec.total.time&lt;1.5) %&gt;% ggplot(aes(microsite, dec.total.t
 ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()</code></pre>
 <p><img src="index_files/figure-html/proportion-1.png" width="672" /></p>
 <pre class="r"><code>source(system.file(&quot;other_methods&quot;,&quot;lsmeans_methods.R&quot;,package=&quot;glmmTMB&quot;))
-m1 &lt;- glmmTMB(prop.visited ~ flowering * microsite + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+m1 &lt;- glmmTMB(prop.visited ~ flowering * microsite + flowers.pot + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
 summary(m1)</code></pre>
 <pre><code>##  Family: Gamma  ( log )
-## Formula:          prop.visited ~ flowering * microsite + (1 | repID)
+## Formula:          
+## prop.visited ~ flowering * microsite + flowers.pot + (1 | repID)
 ## Data: rtu.data
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##  -2149.9  -2122.6   1080.9  -2161.9      691 
+##  -2211.9  -2180.1   1113.0  -2225.9      690 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.07322  0.2706  
+##  repID  (Intercept) 0.04317  0.2078  
 ## Number of obs: 697, groups:  repID, 118
 ## 
-## Dispersion estimate for Gamma family (sigma^2): 0.126 
+## Dispersion estimate for Gamma family (sigma^2): 0.121 
 ## 
 ## Conditional model:
-##                               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                   -1.99385    0.04487  -44.44   &lt;2e-16 ***
-## floweringbloom                -0.04468    0.04899   -0.91   0.3618    
-## micrositeshrub                 0.05562    0.06501    0.86   0.3923    
-## floweringbloom:micrositeshrub -0.16835    0.07753   -2.17   0.0299 *  
+##                                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                   -1.455082   0.074087 -19.640   &lt;2e-16 ***
+## floweringbloom                 0.015428   0.047902   0.322    0.747    
+## micrositeshrub                 0.029692   0.055144   0.538    0.590    
+## flowers.pot                   -0.055854   0.006584  -8.483   &lt;2e-16 ***
+## floweringbloom:micrositeshrub -0.092542   0.074141  -1.248    0.212    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>car::Anova(m1, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
 ## Response: prop.visited
-##                         Chisq Df Pr(&gt;Chisq)    
-## (Intercept)         1974.5779  1     &lt;2e-16 ***
-## flowering              0.8318  1     0.3618    
-## microsite              0.7319  1     0.3923    
-## flowering:microsite    4.7149  1     0.0299 *  
+##                        Chisq Df Pr(&gt;Chisq)    
+## (Intercept)         385.7399  1     &lt;2e-16 ***
+## flowering             0.1037  1     0.7474    
+## microsite             0.2899  1     0.5903    
+## flowers.pot          71.9668  1     &lt;2e-16 ***
+## flowering:microsite   1.5580  1     0.2120    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>lsmeans(m1, pairwise~flowering*microsite)</code></pre>
 <pre><code>## $lsmeans
 ##  flowering microsite    lsmean         SE df asymp.LCL asymp.UCL
-##  pre       open      -1.993851 0.04486995 NA -2.081795 -1.905908
-##  bloom     open      -2.038531 0.05285380 NA -2.142123 -1.934940
-##  pre       shrub     -1.938236 0.04694204 NA -2.030240 -1.846231
-##  bloom     shrub     -2.151263 0.05952299 NA -2.267925 -2.034600
+##  pre       open      -2.023315 0.03805395 NA -2.097900 -1.948731
+##  bloom     open      -2.007888 0.04700111 NA -2.100008 -1.915767
+##  pre       shrub     -1.993624 0.04022685 NA -2.072467 -1.914781
+##  bloom     shrub     -2.070738 0.05395316 NA -2.176485 -1.964992
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast                    estimate         SE df z.ratio p.value
-##  pre,open - bloom,open     0.04468024 0.04899045 NA   0.912  0.7984
-##  pre,open - pre,shrub     -0.05561548 0.06500782 NA  -0.856  0.8277
-##  pre,open - bloom,shrub    0.15741140 0.07442518 NA   2.115  0.1482
-##  bloom,open - pre,shrub   -0.10029572 0.07064910 NA  -1.420  0.4870
-##  bloom,open - bloom,shrub  0.11273116 0.07965494 NA   1.415  0.4897
-##  pre,shrub - bloom,shrub   0.21302688 0.05975159 NA   3.565  0.0021
+##  pre,open - bloom,open    -0.01542768 0.04790249 NA  -0.322  0.9885
+##  pre,open - pre,shrub     -0.02969173 0.05514448 NA  -0.538  0.9496
+##  pre,open - bloom,shrub    0.04742293 0.06629350 NA   0.715  0.8910
+##  bloom,open - pre,shrub   -0.01426404 0.06229601 NA  -0.229  0.9958
+##  bloom,open - bloom,shrub  0.06285061 0.07090418 NA   0.886  0.8119
+##  pre,shrub - bloom,shrub   0.07711465 0.05839133 NA   1.321  0.5497
 ## 
 ## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
-<pre class="r"><code>m2 &lt;- glmmTMB(prop.visited ~ flowering + microsite + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+<pre class="r"><code>m2 &lt;- glmmTMB(prop.visited ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
 summary(m1)</code></pre>
 <pre><code>##  Family: Gamma  ( log )
-## Formula:          prop.visited ~ flowering * microsite + (1 | repID)
+## Formula:          
+## prop.visited ~ flowering * microsite + flowers.pot + (1 | repID)
 ## Data: rtu.data
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##  -2149.9  -2122.6   1080.9  -2161.9      691 
+##  -2211.9  -2180.1   1113.0  -2225.9      690 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.07322  0.2706  
+##  repID  (Intercept) 0.04317  0.2078  
 ## Number of obs: 697, groups:  repID, 118
 ## 
-## Dispersion estimate for Gamma family (sigma^2): 0.126 
+## Dispersion estimate for Gamma family (sigma^2): 0.121 
 ## 
 ## Conditional model:
-##                               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                   -1.99385    0.04487  -44.44   &lt;2e-16 ***
-## floweringbloom                -0.04468    0.04899   -0.91   0.3618    
-## micrositeshrub                 0.05562    0.06501    0.86   0.3923    
-## floweringbloom:micrositeshrub -0.16835    0.07753   -2.17   0.0299 *  
+##                                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                   -1.455082   0.074087 -19.640   &lt;2e-16 ***
+## floweringbloom                 0.015428   0.047902   0.322    0.747    
+## micrositeshrub                 0.029692   0.055144   0.538    0.590    
+## flowers.pot                   -0.055854   0.006584  -8.483   &lt;2e-16 ***
+## floweringbloom:micrositeshrub -0.092542   0.074141  -1.248    0.212    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>car::Anova(m1, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
 ## Response: prop.visited
-##                         Chisq Df Pr(&gt;Chisq)    
-## (Intercept)         1974.5779  1     &lt;2e-16 ***
-## flowering              0.8318  1     0.3618    
-## microsite              0.7319  1     0.3923    
-## flowering:microsite    4.7149  1     0.0299 *  
+##                        Chisq Df Pr(&gt;Chisq)    
+## (Intercept)         385.7399  1     &lt;2e-16 ***
+## flowering             0.1037  1     0.7474    
+## microsite             0.2899  1     0.5903    
+## flowers.pot          71.9668  1     &lt;2e-16 ***
+## flowering:microsite   1.5580  1     0.2120    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>m2null &lt;- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
@@ -2451,54 +2455,22 @@ anova(m1, m2, m2null)</code></pre>
 <pre><code>## Data: rtu.data
 ## Models:
 ## m2null: prop.visited ~ (1 | repID), zi=~0, disp=~1
-## m2: prop.visited ~ flowering + microsite + (1 | repID), zi=~0, disp=~1
-## m1: prop.visited ~ flowering * microsite + (1 | repID), zi=~0, disp=~1
-##        Df     AIC     BIC logLik deviance  Chisq Chi Df Pr(&gt;Chisq)  
-## m2null  3 -2142.5 -2128.9 1074.3  -2148.5                           
-## m2      5 -2147.2 -2124.4 1078.6  -2157.2 8.6446      2    0.01327 *
-## m1      6 -2149.9 -2122.6 1080.9  -2161.9 4.6997      1    0.03017 *
+## m2: prop.visited ~ flowering + microsite + flowers.pot + (1 | repID), zi=~0, disp=~1
+## m1: prop.visited ~ flowering * microsite + flowers.pot + (1 | repID), zi=~0, disp=~1
+##        Df     AIC     BIC logLik deviance   Chisq Chi Df Pr(&gt;Chisq)    
+## m2null  3 -2142.5 -2128.9 1074.3  -2148.5                              
+## m2      6 -2212.3 -2185.1 1112.2  -2224.3 75.8206      3  2.417e-16 ***
+## m1      7 -2211.9 -2180.1 1113.0  -2225.9  1.5582      1     0.2119    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>AIC(m1, m2, m2null)</code></pre>
 <pre><code>##        df       AIC
-## m1      6 -2149.878
-## m2      5 -2147.178
+## m1      7 -2211.912
+## m2      6 -2212.354
 ## m2null  3 -2142.533</code></pre>
 <pre class="r"><code>ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)</code></pre>
 <p><img src="index_files/figure-html/proportion-2.png" width="672" /></p>
-<pre class="r"><code>ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= &quot;Spectral&quot;) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Proportion of flowers visited&quot;) + labs(fill=&quot;&quot;) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(&quot;&quot;, values = c(&quot;bee&quot; =&quot;#D53E4F&quot;, &quot;bombylid&quot;= &quot;#FC8D59&quot;, &quot;honeybee&quot;= &quot;#FEE08B&quot;, &quot;lep&quot;= &quot;#D3D3D3&quot;, &quot;other&quot;= &quot;#99D594&quot;, &quot;syrphid&quot; = &quot;#3288BD&quot;), labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;))</code></pre>
-<pre><code>## Warning: `legend.margin` must be specified using `margin()`. For the old
-## behavior use legend.spacing</code></pre>
-<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;,
-## which will replace the existing scale.</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<p><img src="index_files/figure-html/proportion-3.png" width="672" /></p>
+<pre class="r"><code>#ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= &quot;Spectral&quot;) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Proportion of flowers visited&quot;) + labs(fill=&quot;&quot;) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(&quot;&quot;, values = c(&quot;bee&quot; =&quot;#D53E4F&quot;, &quot;bombylid&quot;= &quot;#FC8D59&quot;, &quot;honeybee&quot;= &quot;#FEE08B&quot;, &quot;lep&quot;= &quot;#D3D3D3&quot;, &quot;other&quot;= &quot;#99D594&quot;, &quot;syrphid&quot; = &quot;#3288BD&quot;), labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;))</code></pre>
 </div>
 <div id="pollen-deposition" class="section level3">
 <h3>Pollen Deposition</h3>
@@ -3691,10 +3663,10 @@ sum(metadata$abun)</code></pre>
 ##  $ X            : Factor w/ 2 levels &quot;&quot;,&quot;blue and white knocked over&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ uniID        : Factor w/ 228 levels &quot;4.10.2017 184 open&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
 ##  $ abun         : int  12 14 18 16 21 30 13 11 0 27 ...
-##  $ H            : num  1.31 1.22 2.35 1.75 1.72 ...
-##  $ Simpson      : num  0.667 0.612 0.889 0.773 0.789 ...
-##  $ Species      : int  5 5 12 8 7 12 6 6 0 10 ...
-##  $ Even         : num  0.817 0.755 0.946 0.844 0.886 ...
+##  $ H            : num  1.31 1.22 2.43 1.75 1.72 ...
+##  $ Simpson      : num  0.667 0.612 0.895 0.773 0.789 ...
+##  $ Species      : int  5 5 13 8 7 12 6 6 0 10 ...
+##  $ Even         : num  0.817 0.755 0.947 0.844 0.886 ...
 ##  $ repID        : chr  &quot;184 open&quot; &quot;184 shrub&quot; &quot;189 open&quot; &quot;189 shrub&quot; ...</code></pre>
 <pre class="r"><code>ggplot(data = metadata, aes(abun)) + geom_freqpoly()</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -3737,27 +3709,8 @@ summary(m1)</code></pre>
 ## treatmentshrub:bloomingpost -0.27674    0.14887  -1.859 0.063043 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>lsmeans(m1, pairwise~blooming*treatment)</code></pre>
-<pre><code>## $lsmeans
-##  blooming treatment   lsmean         SE df asymp.LCL asymp.UCL
-##  pre      open      2.270597 0.07511011 NA  2.123384  2.417811
-##  post     open      1.874363 0.07690305 NA  1.723636  2.025090
-##  pre      shrub     2.676700 0.07073449 NA  2.538063  2.815337
-##  post     shrub     2.003730 0.07485804 NA  1.857011  2.150449
-## 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-##  contrast                 estimate        SE df z.ratio p.value
-##  pre,open - post,open    0.3962344 0.1074970 NA   3.686  0.0013
-##  pre,open - pre,shrub   -0.4061023 0.1031741 NA  -3.936  0.0005
-##  pre,open - post,shrub   0.2668677 0.1060436 NA   2.517  0.0574
-##  post,open - pre,shrub  -0.8023367 0.1044866 NA  -7.679  &lt;.0001
-##  post,open - post,shrub -0.1293667 0.1073210 NA  -1.205  0.6234
-##  pre,shrub - post,shrub  0.6729700 0.1029907 NA   6.534  &lt;.0001
-## 
-## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
-<pre class="r"><code>car::Anova(m1, type = 3)</code></pre>
+<pre class="r"><code>#lsmeans(m1, pairwise~blooming*treatment)
+car::Anova(m1, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
 ## Response: abun
@@ -3894,13 +3847,13 @@ sum(beetle$abun)</code></pre>
 ##  $ X            : Factor w/ 2 levels &quot;&quot;,&quot;blue and white knocked over&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ uniID        : Factor w/ 228 levels &quot;4.10.2017 184 open&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
 ##  $ abun         : int  18 16 20 18 22 30 20 11 0 29 ...
-##  $ H            : num  1.51 1.44 2.44 1.91 1.83 ...
-##  $ Simpson      : num  0.741 0.688 0.9 0.809 0.806 ...
-##  $ Species      : int  6 6 13 9 8 12 7 6 0 11 ...
-##  $ Even         : num  0.844 0.804 0.952 0.868 0.88 ...
+##  $ H            : num  1.51 1.44 2.51 1.91 1.83 ...
+##  $ Simpson      : num  0.741 0.688 0.905 0.809 0.806 ...
+##  $ Species      : int  6 6 14 9 8 12 7 6 0 11 ...
+##  $ Even         : num  0.844 0.804 0.951 0.868 0.88 ...
 ##  $ repID        : chr  &quot;184 open&quot; &quot;184 shrub&quot; &quot;189 open&quot; &quot;189 shrub&quot; ...</code></pre>
 <pre class="r"><code>sum(beetle$H)</code></pre>
-<pre><code>## [1] 357.6368</code></pre>
+<pre><code>## [1] 357.8503</code></pre>
 <pre class="r"><code>ggplot(data = beetle, aes(abun)) + geom_freqpoly()</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="index_files/figure-html/melyride%20included-1.png" width="672" /></p>
@@ -3983,8 +3936,31 @@ summary(m3)</code></pre>
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>m4 &lt;-  glmmTMB(abun ~ blooming + treatment + (1|repID), family = &quot;nbinom1&quot;, data = beetle)
-  
-anova(m1, m2, m3, m4)</code></pre>
+summary(m4)  </code></pre>
+<pre><code>##  Family: nbinom1  ( log )
+## Formula:          abun ~ blooming + treatment + (1 | repID)
+## Data: beetle
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   1556.6   1573.8   -773.3   1546.6      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.04362  0.2088  
+## Number of obs: 228, groups:  repID, 126
+## 
+## Overdispersion parameter for nbinom1 family (): 2.45 
+## 
+## Conditional model:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     2.90596    0.05872   49.48  &lt; 2e-16 ***
+## bloomingpost   -0.39826    0.06402   -6.22 4.93e-10 ***
+## treatmentshrub -0.07724    0.07354   -1.05    0.294    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>anova(m1, m2, m3, m4)</code></pre>
 <pre><code>## Data: beetle
 ## Models:
 ## m3: abun ~ (1 | repID), zi=~0, disp=~1
@@ -4004,7 +3980,7 @@ anova(m1, m2, m3, m4)</code></pre>
 ## m2  6 1561.792
 ## m3  3 1586.917
 ## m4  5 1556.603</code></pre>
-<pre class="r"><code>#one and two are pretty much the same, going with simpler, #4 is best
+<pre class="r"><code>#one and two are pretty much the same, going with simpler, #4 is best (nbinom1)
 car::Anova(m4, type = 2)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
@@ -4039,10 +4015,10 @@ sum(onlybeetle$abun)</code></pre>
 ##  $ X            : Factor w/ 2 levels &quot;&quot;,&quot;blue and white knocked over&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ uniID        : Factor w/ 228 levels &quot;4.10.2017 184 open&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
 ##  $ abun         : int  18 16 20 18 22 30 20 11 0 29 ...
-##  $ H            : num  1.51 1.44 2.44 1.91 1.83 ...
-##  $ Simpson      : num  0.741 0.688 0.9 0.809 0.806 ...
-##  $ Species      : int  6 6 13 9 8 12 7 6 0 11 ...
-##  $ Even         : num  0.844 0.804 0.952 0.868 0.88 ...
+##  $ H            : num  1.51 1.44 2.51 1.91 1.83 ...
+##  $ Simpson      : num  0.741 0.688 0.905 0.809 0.806 ...
+##  $ Species      : int  6 6 14 9 8 12 7 6 0 11 ...
+##  $ Even         : num  0.844 0.804 0.951 0.868 0.88 ...
 ##  $ repID        : chr  &quot;184 open&quot; &quot;184 shrub&quot; &quot;189 open&quot; &quot;189 shrub&quot; ...</code></pre>
 <pre class="r"><code>ggplot(data = onlybeetle, aes(abun)) + geom_freqpoly()</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -4167,46 +4143,69 @@ summary(s1)</code></pre>
 ## Data: beetle
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1139.9   1153.6   -566.0   1131.9      224 
+##   1142.5   1156.2   -567.2   1134.5      224 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.01996  0.1413  
+##  repID  (Intercept) 0.02127  0.1458  
 ## Number of obs: 228, groups:  repID, 126
 ## 
 ## Conditional model:
 ##                Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)     2.00148    0.04719   42.41  &lt; 2e-16 ***
-## bloomingpost   -0.25055    0.05032   -4.98 6.39e-07 ***
-## treatmentshrub  0.14453    0.05616    2.57   0.0101 *  
+## (Intercept)     2.00415    0.04739   42.29  &lt; 2e-16 ***
+## bloomingpost   -0.25442    0.05030   -5.06 4.24e-07 ***
+## treatmentshrub  0.14540    0.05652    2.57   0.0101 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>#s1.nb &lt;- glmmTMB(Species ~ blooming + treatment + (1|repID), family = &quot;nbinom2&quot;, data = beetle)
-#summary(s1.nb)
-s2 &lt;- glmmTMB(Species ~ blooming * treatment + (1|repID), family = poisson, data = beetle)
+<pre class="r"><code>s1.nb &lt;- glmmTMB(Species ~ blooming + treatment + (1|repID), family = &quot;nbinom1&quot;, data = beetle)
+summary(s1.nb)</code></pre>
+<pre><code>##  Family: nbinom1  ( log )
+## Formula:          Species ~ blooming + treatment + (1 | repID)
+## Data: beetle
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   1144.1   1161.3   -567.1   1134.1      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.01633  0.1278  
+## Number of obs: 228, groups:  repID, 126
+## 
+## Overdispersion parameter for nbinom1 family (): 0.0795 
+## 
+## Conditional model:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     2.00597    0.04813   41.68  &lt; 2e-16 ***
+## bloomingpost   -0.25487    0.05213   -4.89 1.01e-06 ***
+## treatmentshrub  0.14564    0.05679    2.56   0.0103 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>s2 &lt;- glmmTMB(Species ~ blooming * treatment + (1|repID), family = poisson, data = beetle)
 summary(s2)</code></pre>
 <pre><code>##  Family: poisson  ( log )
 ## Formula:          Species ~ blooming * treatment + (1 | repID)
 ## Data: beetle
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1140.5   1157.7   -565.3   1130.5      223 
+##   1143.0   1160.2   -566.5   1133.0      223 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.01981  0.1407  
+##  repID  (Intercept) 0.02112  0.1453  
 ## Number of obs: 228, groups:  repID, 126
 ## 
 ## Conditional model:
 ##                             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                  1.97129    0.05422   36.36  &lt; 2e-16 ***
-## bloomingpost                -0.18714    0.07366   -2.54  0.01107 *  
-## treatmentshrub               0.20023    0.07349    2.72  0.00644 ** 
-## bloomingpost:treatmentshrub -0.11843    0.10065   -1.18  0.23933    
+## (Intercept)                  1.97358    0.05438   36.29  &lt; 2e-16 ***
+## bloomingpost                -0.19014    0.07365   -2.58  0.00983 ** 
+## treatmentshrub               0.20177    0.07371    2.74  0.00619 ** 
+## bloomingpost:treatmentshrub -0.12001    0.10062   -1.19  0.23296    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>s3 &lt;- glmmTMB(Species ~ (1|repID), family = poisson, data = beetle)
@@ -4216,35 +4215,37 @@ summary(s3)</code></pre>
 ## Data: beetle
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1167.5   1174.4   -581.8   1163.5      226 
+##   1170.9   1177.7   -583.4   1166.9      226 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.02234  0.1495  
+##  repID  (Intercept) 0.02362  0.1537  
 ## Number of obs: 228, groups:  repID, 126
 ## 
 ## Conditional model:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)   1.9501     0.0288   67.71   &lt;2e-16 ***
+## (Intercept)  1.95137    0.02897   67.35   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>AIC(s1, s2, s3)</code></pre>
-<pre><code>##    df      AIC
-## s1  4 1139.917
-## s2  5 1140.532
-## s3  2 1167.531</code></pre>
-<pre class="r"><code>anova(s1,s2, s3)</code></pre>
+<pre class="r"><code>AIC(s1, s1.nb, s2, s3)</code></pre>
+<pre><code>##       df      AIC
+## s1     4 1142.469
+## s1.nb  5 1144.141
+## s2     5 1143.046
+## s3     2 1170.885</code></pre>
+<pre class="r"><code>#poisson best here
+anova(s1,s2, s3)</code></pre>
 <pre><code>## Data: beetle
 ## Models:
 ## s3: Species ~ (1 | repID), zi=~0, disp=~1
 ## s1: Species ~ blooming + treatment + (1 | repID), zi=~0, disp=~1
 ## s2: Species ~ blooming * treatment + (1 | repID), zi=~0, disp=~1
 ##    Df    AIC    BIC  logLik deviance   Chisq Chi Df Pr(&gt;Chisq)    
-## s3  2 1167.5 1174.4 -581.77   1163.5                              
-## s1  4 1139.9 1153.6 -565.96   1131.9 31.6144      2  1.365e-07 ***
-## s2  5 1140.5 1157.7 -565.27   1130.5  1.3848      1     0.2393    
+## s3  2 1170.9 1177.7 -583.44   1166.9                              
+## s1  4 1142.5 1156.2 -567.23   1134.5 32.4159      2  9.141e-08 ***
+## s2  5 1143.0 1160.2 -566.52   1133.0  1.4229      1     0.2329    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>car::Anova(s1, type = 2)</code></pre>
@@ -4252,8 +4253,8 @@ summary(s3)</code></pre>
 ## 
 ## Response: Species
 ##             Chisq Df Pr(&gt;Chisq)    
-## blooming  24.7919  1  6.386e-07 ***
-## treatment  6.6226  1    0.01007 *  
+## blooming  25.5826  1  4.239e-07 ***
+## treatment  6.6195  1    0.01009 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>ggplot(beetle, aes(blooming, Species)) + geom_boxplot() + facet_grid(~treatment)</code></pre>
@@ -4266,6 +4267,210 @@ row.names(insects) &lt;- insects$X
 insects &lt;- select(insects, -X)
 plot(specaccum(insects), xlab = &quot;# of samples&quot;, ylab = &quot;# of species&quot;)</code></pre>
 <p><img src="index_files/figure-html/species%20accumulation-1.png" width="672" /></p>
+<pre class="r"><code>insects &lt;- read.csv(&quot;Output Data/wide_yesbeetle.csv&quot;)
+bees &lt;- select(insects, 5:7,12,14,16,36,37,42,43,49,50,61,64,65,67,72,73,75,87,92,96)
+
+
+metadata &lt;- read.csv(&quot;Clean Data/pantraps_cov.csv&quot;, header = TRUE)
+metadata &lt;- filter(metadata, species != &quot;buckhorn&quot;)
+metadata$plant.id &lt;- as.character(metadata$plant.id)
+str(metadata)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  9 variables:
+##  $ plant.id     : chr  &quot;296&quot; &quot;296&quot; &quot;189&quot; &quot;189&quot; ...
+##  $ species      : Factor w/ 2 levels &quot;buckhorn&quot;,&quot;larrea&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 2 1 2 1 2 1 2 1 2 1 ...
+##  $ blooming     : Factor w/ 2 levels &quot;post&quot;,&quot;pre&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ date         : Factor w/ 21 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ percent.cover: int  15 3 25 2 40 15 40 3 70 10 ...
+##  $ rich         : int  3 3 6 6 1 3 3 2 3 4 ...
+##  $ perennial    : Factor w/ 5 levels &quot;&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ X            : Factor w/ 6 levels &quot;&quot;,&quot;blue and white knocked over&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<pre class="r"><code>metadata$uniID &lt;- paste(metadata$date, metadata$plant.id, metadata$treatment)
+row.names(metadata) &lt;- metadata$uniID
+
+
+beemeta &lt;- metadata
+
+beemeta$abun &lt;- apply(bees, 1, sum)
+#check for total
+sum(beemeta$abun)</code></pre>
+<pre><code>## [1] 144</code></pre>
+<pre class="r"><code>H &lt;- diversity(bees)
+simp &lt;- diversity(bees, &quot;simpson&quot;)
+S &lt;- specnumber(bees)
+J &lt;- H/log(S)
+beemeta$H &lt;- H
+beemeta$Simpson &lt;- simp
+beemeta$Species &lt;- S
+beemeta$Even &lt;- J
+
+
+t.test(beemeta$Species ~ beemeta$blooming)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  beemeta$Species by beemeta$blooming
+## t = 0.30599, df = 224.71, p-value = 0.7599
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1662234  0.2273345
+## sample estimates:
+## mean in group post  mean in group pre 
+##          0.5583333          0.5277778</code></pre>
+<pre class="r"><code>library(glmmTMB)
+m1 &lt;- glmmTMB(Species ~ treatment + blooming + (1|plant.id), family = &quot;nbinom2&quot;, beemeta)
+summary(m1)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          Species ~ treatment + blooming + (1 | plant.id)
+## Data: beemeta
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    454.3    471.5   -222.2    444.3      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups   Name        Variance  Std.Dev. 
+##  plant.id (Intercept) 2.836e-08 0.0001684
+## Number of obs: 228, groups:  plant.id, 63
+## 
+## Overdispersion parameter for nbinom2 family (): 15.7 
+## 
+## Conditional model:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -0.55101    0.15266  -3.610 0.000307 ***
+## treatmentshrub -0.06457    0.18278  -0.353 0.723867    
+## bloomingpre    -0.05632    0.18327  -0.307 0.758605    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(m1, type = 2)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: Species
+##            Chisq Df Pr(&gt;Chisq)
+## treatment 0.1248  1     0.7239
+## blooming  0.0944  1     0.7586</code></pre>
+<pre class="r"><code>m2 &lt;- glmmTMB(Species ~ treatment + blooming + (1|plant.id), family = &quot;poisson&quot;, beemeta)
+
+summary(m2)</code></pre>
+<pre><code>##  Family: poisson  ( log )
+## Formula:          Species ~ treatment + blooming + (1 | plant.id)
+## Data: beemeta
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    452.4    466.2   -222.2    444.4      224 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups   Name        Variance Std.Dev.
+##  plant.id (Intercept) 0.01397  0.1182  
+## Number of obs: 228, groups:  plant.id, 63
+## 
+## Conditional model:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -0.55806    0.15905  -3.509  0.00045 ***
+## treatmentshrub -0.06454    0.17970  -0.359  0.71948    
+## bloomingpre    -0.05522    0.18050  -0.306  0.75966    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>m3 &lt;- glmmTMB(Species ~ treatment * blooming + (1|plant.id), family = &quot;poisson&quot;, beemeta)
+
+null &lt;- glmmTMB(Species ~  (1|plant.id), family = &quot;poisson&quot;, beemeta)
+
+#poisson is best
+AIC(m1, m2, m3, null)</code></pre>
+<pre><code>##      df      AIC
+## m1    5 454.3296
+## m2    4 452.4455
+## m3    5 454.4016
+## null  2 448.6682</code></pre>
+<pre class="r"><code>#null model has lowest AIC
+car::Anova(m2, type = 2)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: Species
+##            Chisq Df Pr(&gt;Chisq)
+## treatment 0.1290  1     0.7195
+## blooming  0.0936  1     0.7597</code></pre>
+<pre class="r"><code>#bee abundance
+
+m1 &lt;- glmmTMB(abun ~ treatment + blooming + (1|plant.id), family = &quot;nbinom2&quot;, beemeta)
+summary(m1)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          abun ~ treatment + blooming + (1 | plant.id)
+## Data: beemeta
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    503.7    520.9   -246.9    493.7      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups   Name        Variance Std.Dev.
+##  plant.id (Intercept) 0.005254 0.07249 
+## Number of obs: 228, groups:  plant.id, 63
+## 
+## Overdispersion parameter for nbinom2 family (): 1.86 
+## 
+## Conditional model:
+##                Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)    -0.47282    0.17801  -2.656   0.0079 **
+## treatmentshrub -0.05412    0.19352  -0.280   0.7797   
+## bloomingpre     0.07755    0.19354   0.401   0.6886   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(m1, type = 2)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: abun
+##            Chisq Df Pr(&gt;Chisq)
+## treatment 0.0782  1     0.7797
+## blooming  0.1606  1     0.6886</code></pre>
+<pre class="r"><code>m2 &lt;- glmmTMB(abun ~ treatment + blooming + (1|plant.id), family = &quot;poisson&quot;, beemeta)
+
+summary(m2)</code></pre>
+<pre><code>##  Family: poisson  ( log )
+## Formula:          abun ~ treatment + blooming + (1 | plant.id)
+## Data: beemeta
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    507.6    521.3   -249.8    499.6      224 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups   Name        Variance Std.Dev.
+##  plant.id (Intercept) 0.1509   0.3884  
+## Number of obs: 228, groups:  plant.id, 63
+## 
+## Conditional model:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -0.54750    0.15925  -3.438 0.000586 ***
+## treatmentshrub -0.05558    0.16673  -0.333 0.738882    
+## bloomingpre     0.09348    0.16864   0.554 0.579347    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>m3 &lt;- glmmTMB(abun ~ treatment * blooming + (1|plant.id), family = &quot;poisson&quot;, beemeta)
+
+null &lt;- glmmTMB(abun ~  (1|plant.id), family = &quot;poisson&quot;, beemeta)
+
+#poisson is best
+AIC(m1, m2, m3, null)</code></pre>
+<pre><code>##      df      AIC
+## m1    5 503.7089
+## m2    4 507.5898
+## m3    5 509.3348
+## null  2 504.0082</code></pre>
+<pre class="r"><code>#null model has lowest AIC
+car::Anova(m2, type = 2)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: abun
+##            Chisq Df Pr(&gt;Chisq)
+## treatment 0.1111  1     0.7389
+## blooming  0.3073  1     0.5793</code></pre>
+<p>```</p>
 <p>Need to add code for bee abundance and bee diversity. Bee abundance won’t change, diversity is unlikely.</p>
 </div>
 <div id="visitation-to-l.-tridentata" class="section level3">
@@ -5276,7 +5481,7 @@ pre.beetle &lt;- rii.m(pre.beetle, c(1:7), 8)</code></pre>
 ## 13   0.38461538
 ## 15  -0.23076923
 ## 17   0.20000000
-## 19  -0.18181818
+## 19  -0.21739130
 ## 21   0.00000000
 ## 23   0.00000000
 ## 25   0.20000000
@@ -5309,14 +5514,14 @@ pre.beetle &lt;- rii.m(pre.beetle, c(1:7), 8)</code></pre>
 ## 79  -0.07692308
 ## 81   0.06666667
 ## 83   0.00000000
-## 85   0.16666667
+## 85   0.20000000
 ## 87   0.15789474
 ## 89   0.33333333
 ## 91  -0.11111111
 ## 93   0.33333333
 ## 95   0.28571429
 ## 97   0.14285714
-## 99  -0.08333333
+## 99  -0.04000000
 ## 101  0.00000000
 ## 103  0.33333333
 ## 105  0.28571429
@@ -6074,7 +6279,7 @@ rii.open.beet.pan &lt;- rii.b(open.beet.pan, c(1:7), 8)</code></pre>
 ## 13   0.27272727
 ## 15  -0.33333333
 ## 17  -0.14285714
-## 19  -0.23809524
+## 19  -0.27272727
 ## 21  -0.10000000
 ## 23  -0.66666667
 ## 25  -0.23076923
@@ -6210,14 +6415,14 @@ rii.open.beet.pan &lt;- rii.b(open.beet.pan, c(1:7), 8)</code></pre>
 ## 75  -0.27272727
 ## 77   0.42857143
 ## 79  -0.14285714
-## 81  -0.07692308
+## 81  -0.11111111
 ## 83  -0.22222222
 ## 85  -0.66666667
 ## 87   0.05882353
 ## 89  -0.53846154
 ## 91  -0.38461538
 ## 93  -0.06666667
-## 95  -0.83333333
+## 95  -0.84615385
 ## 97  -0.50000000
 ## 99  -0.06666667
 ## 101 -0.38461538</code></pre>

@@ -4,8 +4,8 @@ library(ggplot2)
 library(vegan)
 
 
-insects <- read.csv("Clean Data/wide_yesbeetle.csv")
-bees <- select(insects, 5:7,12,14,16,36,41,47,58,62,63,65,70,71,73,85,90,94)
+insects <- read.csv("Output Data/wide_yesbeetle.csv")
+bees <- select(insects, 5:7,12,14,16,36,37,42,43,49,50,61,64,65,67,72,73,75,87,92,96)
 
 
 metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
@@ -33,29 +33,42 @@ beemeta$Even <- J
 
 t.test(beemeta$Species ~ beemeta$blooming)
 
-library(lme4)
-m1 <- glmer.nb(Species ~ treatment + blooming + (1|plant.id), beemeta)
+library(glmmTMB)
+m1 <- glmmTMB(Species ~ treatment + blooming + (1|plant.id), family = "nbinom2", beemeta)
 summary(m1)
 
 car::Anova(m1, type = 2)
+m2 <- glmmTMB(Species ~ treatment + blooming + (1|plant.id), family = "poisson", beemeta)
 
-m2 <- glmer.nb(Species ~ treatment * blooming + (1|plant.id), beemeta)
 summary(m2)
+m3 <- glmmTMB(Species ~ treatment * blooming + (1|plant.id), family = "poisson", beemeta)
+
+null <- glmmTMB(Species ~  (1|plant.id), family = "poisson", beemeta)
+
+#poisson is best
+AIC(m1, m2, m3, null)
+#null model has lowest AIC
+car::Anova(m2, type = 2)
 
 
+#bee abundance
 
-m3 <- glmer.nb(abun ~ treatment + blooming + (1|plant.id), beemeta)
-summary(m3)
-car::Anova(m3, type = 2)
+m1 <- glmmTMB(abun ~ treatment + blooming + (1|plant.id), family = "nbinom2", beemeta)
+summary(m1)
 
-library(glmmTMB)
+car::Anova(m1, type = 2)
+m2 <- glmmTMB(abun ~ treatment + blooming + (1|plant.id), family = "poisson", beemeta)
 
-z1 <- glmmTMB(Species ~ treatment * blooming + (1|plant.id), data = beemeta, ziformula = ~1, family = nbinom2())
+summary(m2)
+m3 <- glmmTMB(abun ~ treatment * blooming + (1|plant.id), family = "poisson", beemeta)
 
-summary(z1)
+null <- glmmTMB(abun ~  (1|plant.id), family = "poisson", beemeta)
 
+#poisson is best
+AIC(m1, m2, m3, null)
+#null model has lowest AIC
+car::Anova(m2, type = 2)
 
-AIC(m1, z1)
 
 library(indicspecies)
 env <- read.csv("Clean Data/metadata_yesbeetle.csv")
