@@ -562,7 +562,7 @@ mP1 <- MASS::glmmPQL(total.visits~flowering * rtu + treatment + flowers.pot + he
 car::Anova(mP1, type = 3)
 
 
-mPt <- MASS::glmmPQL(total.visits~ flowering * rtu +  flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+mPt <- MASS::glmmPQL(total.visits~ flowering * rtu +  treatment + flowers.pot + het.annual.floral.density + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
 summary(mPt)
 car::Anova(mPt, type = 3)
 lsmeans(mPt, pairwise~flowering|rtu)
