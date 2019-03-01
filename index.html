@@ -1153,7 +1153,7 @@ summary(null)</code></pre>
 ## flowers.pot  0.02793    0.02943   0.949   0.3425  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>anova(m1,m2, null)</code></pre>
+<pre class="r"><code>anova(null, m1,m2)</code></pre>
 <pre><code>## Data: byrep
 ## Models:
 ## null: total.flowers ~ flowers.pot + offset(log(dec.Length)) + (1 | , zi=~0, disp=~1
@@ -1272,7 +1272,7 @@ summary(m5)</code></pre>
 null &lt;- glmmTMB(total.visits ~ flowers.pot + offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
 
 
-anova(m3,m5, null)</code></pre>
+anova(null, m3,m5)</code></pre>
 <pre><code>## Data: byrep
 ## Models:
 ## null: total.visits ~ flowers.pot + offset(log(dec.Length)) + (1 | repID), zi=~0, disp=~1
@@ -1593,6 +1593,93 @@ summary(c2.v)</code></pre>
 ## flowering                     52.3453  1  4.655e-13 ***
 ## flowers.pot                    4.9695  1    0.02580 *  
 ## het.shrub.blooming.neighbours  0.6964  1    0.40400    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>#each model with both covariates added
+c.visits &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours +  offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
+summary(c.visits)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          
+## total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density +  
+##     het.shrub.blooming.neighbours + offset(log(dec.Length)) +  
+##     (1 | repID)
+## Data: byrep
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    983.8   1011.3   -483.9    967.8      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.06305  0.2511  
+## Number of obs: 231, groups:  repID, 122
+## 
+## Overdispersion parameter for nbinom2 family (): 1.62 
+## 
+## Conditional model:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                    0.78369    0.26246   2.986  0.00283 ** 
+## treatmentshrub                -0.32301    0.14763  -2.188  0.02867 *  
+## floweringbloom                -1.15271    0.16661  -6.919 4.56e-12 ***
+## flowers.pot                    0.05947    0.02371   2.508  0.01214 *  
+## het.annual.floral.density      0.04105    0.01979   2.074  0.03809 *  
+## het.shrub.blooming.neighbours -0.03403    0.03720  -0.915  0.36034    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(c.visits, type = 2)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: total.visits
+##                                 Chisq Df Pr(&gt;Chisq)    
+## treatment                      4.7871  1    0.02867 *  
+## flowering                     47.8693  1  4.556e-12 ***
+## flowers.pot                    6.2902  1    0.01214 *  
+## het.annual.floral.density      4.3010  1    0.03809 *  
+## het.shrub.blooming.neighbours  0.8367  1    0.36034    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>c.flowers &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours +  offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
+summary(c.flowers)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          
+## total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density +  
+##     het.shrub.blooming.neighbours + offset(log(dec.Length)) +  
+##     (1 | repID)
+## Data: byrep
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   1094.1   1121.6   -539.0   1078.1      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.122    0.3492  
+## Number of obs: 231, groups:  repID, 122
+## 
+## Overdispersion parameter for nbinom2 family (): 1.09 
+## 
+## Conditional model:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                    0.81935    0.29727   2.756  0.00585 ** 
+## treatmentshrub                -0.34168    0.16938  -2.017  0.04367 *  
+## floweringbloom                -1.10834    0.18628  -5.950 2.69e-09 ***
+## flowers.pot                    0.08211    0.02705   3.035  0.00241 ** 
+## het.annual.floral.density      0.04102    0.02325   1.764  0.07769 .  
+## het.shrub.blooming.neighbours -0.05281    0.04066  -1.299  0.19400    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(c.flowers, type = 2)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: total.flowers
+##                                 Chisq Df Pr(&gt;Chisq)    
+## treatment                      4.0692  1   0.043673 *  
+## flowering                     35.3996  1  2.685e-09 ***
+## flowers.pot                    9.2098  1   0.002407 ** 
+## het.annual.floral.density      3.1125  1   0.077692 .  
+## het.shrub.blooming.neighbours  1.6870  1   0.193998    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
@@ -2467,7 +2554,7 @@ mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers
 ##  $ total.visits                  : int  18 2 0 0 0 0 6 1 0 0 ...
 ##  $ total.flowers                 : int  35 5 0 0 0 0 8 2 0 0 ...
 ##  $ Length                        : Factor w/ 225 levels &quot;0:31:34&quot;,&quot;0:32:53&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
-##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-02-28 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
+##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-03-01 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
 ##  $ dec.Length                    : num  1.38 1.38 1.38 1.38 1.38 ...
 ##  $ visits.per.hour               : num  13.04 1.45 0 0 0 ...
 ##  $ flowers.per.hour              : num  25.35 3.62 0 0 0 ...
