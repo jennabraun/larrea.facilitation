@@ -1366,24 +1366,24 @@ summary(c2)</code></pre>
 ## Data: byrep
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1088.0   1112.1   -537.0   1074.0      223 
+##   1093.7   1117.8   -539.9   1079.7      224 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.1376   0.3709  
-## Number of obs: 230, groups:  repID, 122
+##  repID  (Intercept) 0.1308   0.3616  
+## Number of obs: 231, groups:  repID, 122
 ## 
 ## Overdispersion parameter for nbinom2 family (): 1.09 
 ## 
 ## Conditional model:
 ##                           Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                0.81221    0.29875   2.719  0.00655 ** 
-## treatmentshrub            -0.36598    0.16944  -2.160  0.03077 *  
-## floweringbloom            -1.23964    0.16353  -7.581 3.44e-14 ***
-## flowers.pot                0.08084    0.02711   2.981  0.00287 ** 
-## het.annual.floral.density  0.04013    0.02342   1.713  0.08664 .  
+## (Intercept)                0.82562    0.29777   2.773  0.00556 ** 
+## treatmentshrub            -0.37743    0.16820  -2.244  0.02484 *  
+## floweringbloom            -1.22703    0.16269  -7.542 4.62e-14 ***
+## flowers.pot                0.08029    0.02705   2.969  0.00299 ** 
+## het.annual.floral.density  0.03988    0.02334   1.709  0.08749 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>car::Anova(c2, type = 2)</code></pre>
@@ -1391,10 +1391,10 @@ summary(c2)</code></pre>
 ## 
 ## Response: total.flowers
 ##                             Chisq Df Pr(&gt;Chisq)    
-## treatment                  4.6655  1   0.030774 *  
-## flowering                 57.4645  1  3.441e-14 ***
-## flowers.pot                8.8892  1   0.002869 ** 
-## het.annual.floral.density  2.9358  1   0.086636 .  
+## treatment                  5.0352  1   0.024838 *  
+## flowering                 56.8850  1  4.621e-14 ***
+## flowers.pot                8.8120  1   0.002993 ** 
+## het.annual.floral.density  2.9200  1   0.087488 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>c2.nest &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
@@ -1407,54 +1407,54 @@ summary(c2.nest)</code></pre>
 ## Data: byrep
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1090.0   1117.5   -537.0   1074.0      222 
+##   1095.7   1123.3   -539.9   1079.7      223 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups        Name        Variance Std.Dev.
-##  repID:PlantID (Intercept) 0.11653  0.3414  
-##  PlantID       (Intercept) 0.02494  0.1579  
-## Number of obs: 230, groups:  repID:PlantID, 122; PlantID, 61
+##  repID:PlantID (Intercept) 0.12228  0.34969 
+##  PlantID       (Intercept) 0.00987  0.09935 
+## Number of obs: 231, groups:  repID:PlantID, 122; PlantID, 61
 ## 
 ## Overdispersion parameter for nbinom2 family (): 1.09 
 ## 
 ## Conditional model:
 ##                           Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                0.81008    0.30049   2.696  0.00702 ** 
-## treatmentshrub            -0.36547    0.16724  -2.185  0.02886 *  
-## floweringbloom            -1.24045    0.16392  -7.568  3.8e-14 ***
-## flowers.pot                0.08092    0.02734   2.960  0.00307 ** 
-## het.annual.floral.density  0.04004    0.02343   1.709  0.08749 .  
+## (Intercept)                0.82490    0.29852   2.763  0.00572 ** 
+## treatmentshrub            -0.37733    0.16732  -2.255  0.02412 *  
+## floweringbloom            -1.22713    0.16283  -7.536 4.84e-14 ***
+## flowers.pot                0.08032    0.02714   2.960  0.00308 ** 
+## het.annual.floral.density  0.03984    0.02334   1.707  0.08789 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>c2.v &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
+<pre class="r"><code>c2.v &lt;- glmmTMB(total.visits ~ treatment + flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
 summary(c2.v)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
 ## Formula:          
-## total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density +  
-##     offset(log(dec.Length)) + (1 | repID)
+## total.visits ~ treatment + flowering + het.annual.floral.density +  
+##     flowers.pot + offset(log(dec.Length)) + (1 | repID)
 ## Data: byrep
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##    976.5   1000.6   -481.2    962.5      223 
+##    982.6   1006.7   -484.3    968.6      224 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.07118  0.2668  
-## Number of obs: 230, groups:  repID, 122
+##  repID  (Intercept) 0.06451  0.254   
+## Number of obs: 231, groups:  repID, 122
 ## 
-## Overdispersion parameter for nbinom2 family (): 1.63 
+## Overdispersion parameter for nbinom2 family (): 1.62 
 ## 
 ## Conditional model:
 ##                           Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                0.76550    0.26270   2.914  0.00357 ** 
-## treatmentshrub            -0.33019    0.14706  -2.245  0.02475 *  
-## floweringbloom            -1.24571    0.14513  -8.584  &lt; 2e-16 ***
-## flowers.pot                0.05943    0.02374   2.503  0.01230 *  
-## het.annual.floral.density  0.04086    0.01984   2.059  0.03950 *  
+## (Intercept)                0.78267    0.26236   2.983  0.00285 ** 
+## treatmentshrub            -0.34469    0.14616  -2.358  0.01836 *  
+## floweringbloom            -1.22921    0.14464  -8.498  &lt; 2e-16 ***
+## het.annual.floral.density  0.04049    0.01981   2.044  0.04097 *  
+## flowers.pot                0.05874    0.02371   2.477  0.01325 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>car::Anova(c2.v, type = 2)</code></pre>
@@ -1462,12 +1462,28 @@ summary(c2.v)</code></pre>
 ## 
 ## Response: total.visits
 ##                             Chisq Df Pr(&gt;Chisq)    
-## treatment                  5.0412  1    0.02475 *  
-## flowering                 73.6776  1    &lt; 2e-16 ***
-## flowers.pot                6.2673  1    0.01230 *  
-## het.annual.floral.density  4.2393  1    0.03950 *  
+## treatment                  5.5618  1    0.01836 *  
+## flowering                 72.2217  1    &lt; 2e-16 ***
+## het.annual.floral.density  4.1772  1    0.04097 *  
+## flowers.pot                6.1351  1    0.01325 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>q &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom1(link = &quot;log&quot;), data = byrep)
+car::Anova(q, type = 2)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: total.visits
+##                             Chisq Df Pr(&gt;Chisq)    
+## treatment                  2.3015  1    0.12925    
+## flowering                 57.8924  1  2.769e-14 ***
+## flowers.pot                6.5441  1    0.01052 *  
+## het.annual.floral.density 10.1798  1    0.00142 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>AIC(c2.v, q)</code></pre>
+<pre><code>##      df      AIC
+## c2.v  7 982.5998
+## q     7 988.4092</code></pre>
 <pre class="r"><code>c2.vnest &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
 summary(c2.vnest)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
@@ -1477,25 +1493,25 @@ summary(c2.vnest)</code></pre>
 ## Data: byrep
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##    978.4   1005.9   -481.2    962.4      222 
+##    984.6   1012.1   -484.3    968.6      223 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups        Name        Variance Std.Dev.
-##  repID:PlantID (Intercept) 0.04322  0.2079  
-##  PlantID       (Intercept) 0.03242  0.1801  
-## Number of obs: 230, groups:  repID:PlantID, 122; PlantID, 61
+##  repID:PlantID (Intercept) 0.04899  0.2213  
+##  PlantID       (Intercept) 0.01753  0.1324  
+## Number of obs: 231, groups:  repID:PlantID, 122; PlantID, 61
 ## 
-## Overdispersion parameter for nbinom2 family (): 1.65 
+## Overdispersion parameter for nbinom2 family (): 1.62 
 ## 
 ## Conditional model:
 ##                           Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                0.76487    0.26488   2.888  0.00388 ** 
-## treatmentshrub            -0.33021    0.14358  -2.300  0.02145 *  
-## floweringbloom            -1.24485    0.14539  -8.562  &lt; 2e-16 ***
-## flowers.pot                0.05925    0.02404   2.464  0.01373 *  
-## het.annual.floral.density  0.04121    0.01987   2.074  0.03810 *  
+## (Intercept)                0.78251    0.26356   2.969  0.00299 ** 
+## treatmentshrub            -0.34480    0.14425  -2.390  0.01684 *  
+## floweringbloom            -1.22826    0.14485  -8.479  &lt; 2e-16 ***
+## flowers.pot                0.05863    0.02389   2.455  0.01410 *  
+## het.annual.floral.density  0.04069    0.01984   2.051  0.04029 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Number of blooming shrub neighbours</p>
@@ -1589,7 +1605,7 @@ byrtu$treatment &lt;- relevel(byrtu$treatment, &quot;open&quot;)
 byrtu$flowering &lt;- relevel(byrtu$flowering, &quot;pre&quot;)
 
 #Full model (foraging instances)
-mFullPQ &lt;- MASS::glmmPQL(total.visits~flowering * rtu * treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
+mFullPQ &lt;- MASS::glmmPQL(total.visits~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
 <pre><code>## iteration 1</code></pre>
 <pre><code>## iteration 2</code></pre>
 <pre><code>## iteration 3</code></pre>
@@ -1604,20 +1620,21 @@ mFullPQ &lt;- MASS::glmmPQL(total.visits~flowering * rtu * treatment + flowers.p
 <pre><code>## Analysis of Deviance Table (Type III tests)
 ## 
 ## Response: total.visits
-##                            Chisq Df Pr(&gt;Chisq)    
-## (Intercept)              16.5596  1  4.714e-05 ***
-## flowering                11.2812  1  0.0007829 ***
-## rtu                     131.3404  5  &lt; 2.2e-16 ***
-## treatment                 3.6569  1  0.0558390 .  
-## flowers.pot               4.5640  1  0.0326507 *  
-## flowering:rtu            53.0033  5  3.358e-10 ***
-## flowering:treatment       2.3436  1  0.1258002    
-## rtu:treatment             3.8289  5  0.5743031    
-## flowering:rtu:treatment   4.1995  5  0.5210663    
+##                                  Chisq Df Pr(&gt;Chisq)    
+## (Intercept)                    19.8681  1  8.297e-06 ***
+## flowering                       9.7626  1   0.001781 ** 
+## rtu                           130.6380  5  &lt; 2.2e-16 ***
+## treatment                       3.5703  1   0.058821 .  
+## flowers.pot                     6.9279  1   0.008486 ** 
+## het.annual.floral.density       5.9225  1   0.014949 *  
+## het.shrub.blooming.neighbours   1.4649  1   0.226158    
+## flowering:rtu                  51.4774  5  6.904e-10 ***
+## flowering:treatment             2.5109  1   0.113063    
+## rtu:treatment                   3.8084  5   0.577314    
+## flowering:rtu:treatment         4.4364  5   0.488432    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>#full model flower visits
-mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
+<pre class="r"><code>mP1 &lt;- MASS::glmmPQL(total.visits~flowering * rtu + treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
 <pre><code>## iteration 1</code></pre>
 <pre><code>## iteration 2</code></pre>
 <pre><code>## iteration 3</code></pre>
@@ -1628,20 +1645,536 @@ mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers
 <pre><code>## iteration 8</code></pre>
 <pre><code>## iteration 9</code></pre>
 <pre><code>## iteration 10</code></pre>
+<pre class="r"><code>car::Anova(mP1, type = 3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type III tests)
+## 
+## Response: total.visits
+##                                  Chisq Df Pr(&gt;Chisq)    
+## (Intercept)                    25.3323  1  4.825e-07 ***
+## flowering                       9.5228  1   0.002029 ** 
+## rtu                           214.8311  5  &lt; 2.2e-16 ***
+## treatment                       4.1070  1   0.042707 *  
+## flowers.pot                     6.1402  1   0.013214 *  
+## het.annual.floral.density       5.3897  1   0.020256 *  
+## het.shrub.blooming.neighbours   1.2050  1   0.272315    
+## flowering:rtu                  67.1419  5  4.026e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>mPt &lt;- MASS::glmmPQL(total.visits~ flowering * rtu +  flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
+<pre><code>## iteration 1</code></pre>
+<pre><code>## iteration 2</code></pre>
+<pre><code>## iteration 3</code></pre>
+<pre><code>## iteration 4</code></pre>
+<pre><code>## iteration 5</code></pre>
+<pre><code>## iteration 6</code></pre>
+<pre><code>## iteration 7</code></pre>
+<pre><code>## iteration 8</code></pre>
+<pre><code>## iteration 9</code></pre>
+<pre><code>## iteration 10</code></pre>
+<pre class="r"><code>summary(mPt)</code></pre>
+<pre><code>## Linear mixed-effects model fit by maximum likelihood
+##  Data: byrtu 
+##   AIC BIC logLik
+##    NA  NA     NA
+## 
+## Random effects:
+##  Formula: ~1 | repID
+##         (Intercept) Residual
+## StdDev:   0.5154108 1.431395
+## 
+## Variance function:
+##  Structure: fixed weights
+##  Formula: ~invwt 
+## Fixed effects: total.visits ~ flowering * rtu + flowering + flowers.pot + het.annual.floral.density +      offset(log(dec.Length)) 
+##                                 Value Std.Error   DF   t-value p-value
+## (Intercept)                 -1.754374      0.31 1251 -5.640421  0.0000
+## floweringbloom              -1.622320      0.49 1251 -3.338926  0.0009
+## rtubombylid                 -0.251314      0.32 1251 -0.775084  0.4384
+## rtuhoneybee                 -2.197225      0.68 1251 -3.239789  0.0012
+## rtulep                      -3.113515      1.04 1251 -2.994742  0.0028
+## rtuother                     0.725937      0.26 1251  2.778710  0.0055
+## rtusyrphid                   1.986351      0.23 1251  8.685220  0.0000
+## flowers.pot                  0.053237      0.02 1251  2.427039  0.0154
+## het.annual.floral.density    0.036065      0.02 1251  2.235929  0.0255
+## floweringbloom:rtubombylid   1.254617      0.60 1251  2.084411  0.0373
+## floweringbloom:rtuhoneybee -22.705274  67240.22 1251 -0.000338  0.9997
+## floweringbloom:rtulep        3.660059      1.17 1251  3.117915  0.0019
+## floweringbloom:rtuother      1.510897      0.53 1251  2.873290  0.0041
+## floweringbloom:rtusyrphid   -1.439807      0.59 1251 -2.435786  0.0150
+##  Correlation: 
+##                            (Intr) flwrng rtbmby rthnyb rtulep rtuthr
+## floweringbloom             -0.268                                   
+## rtubombylid                -0.456  0.292                            
+## rtuhoneybee                -0.218  0.140  0.209                     
+## rtulep                     -0.142  0.091  0.136  0.065              
+## rtuother                   -0.566  0.362  0.543  0.260  0.169       
+## rtusyrphid                 -0.647  0.414  0.620  0.297  0.193  0.770
+## flowers.pot                -0.699 -0.061  0.000  0.000  0.000  0.000
+## het.annual.floral.density  -0.211  0.040  0.000  0.000  0.000  0.000
+## floweringbloom:rtubombylid  0.246 -0.801 -0.539 -0.113 -0.074 -0.293
+## floweringbloom:rtuhoneybee  0.000  0.000  0.000  0.000  0.000  0.000
+## floweringbloom:rtulep       0.126 -0.411 -0.121 -0.058 -0.886 -0.150
+## floweringbloom:rtuother     0.281 -0.916 -0.270 -0.129 -0.084 -0.497
+## floweringbloom:rtusyrphid   0.250 -0.815 -0.240 -0.115 -0.075 -0.298
+##                            rtsyrp flwrs. ht.n.. flwrngblm:rtb
+## floweringbloom                                               
+## rtubombylid                                                  
+## rtuhoneybee                                                  
+## rtulep                                                       
+## rtuother                                                     
+## rtusyrphid                                                   
+## flowers.pot                 0.000                            
+## het.annual.floral.density   0.000  0.166                     
+## floweringbloom:rtubombylid -0.334  0.000  0.000              
+## floweringbloom:rtuhoneybee  0.000  0.000  0.000  0.000       
+## floweringbloom:rtulep      -0.171  0.000  0.000  0.331       
+## floweringbloom:rtuother    -0.382  0.000  0.000  0.740       
+## floweringbloom:rtusyrphid  -0.387  0.000  0.000  0.658       
+##                            flwrngblm:rth flwrngblm:rtl flwrngblm:rtt
+## floweringbloom                                                      
+## rtubombylid                                                         
+## rtuhoneybee                                                         
+## rtulep                                                              
+## rtuother                                                            
+## rtusyrphid                                                          
+## flowers.pot                                                         
+## het.annual.floral.density                                           
+## floweringbloom:rtubombylid                                          
+## floweringbloom:rtuhoneybee                                          
+## floweringbloom:rtulep       0.000                                   
+## floweringbloom:rtuother     0.000         0.379                     
+## floweringbloom:rtusyrphid   0.000         0.337         0.753       
+## 
+## Standardized Within-Group Residuals:
+##         Min          Q1         Med          Q3         Max 
+## -2.08485613 -0.36838551 -0.22893229 -0.06441773 15.66049048 
+## 
+## Number of Observations: 1386
+## Number of Groups: 122</code></pre>
+<pre class="r"><code>car::Anova(mPt, type = 3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type III tests)
+## 
+## Response: total.visits
+##                              Chisq Df Pr(&gt;Chisq)    
+## (Intercept)                32.1390  1  1.435e-08 ***
+## flowering                  11.2622  1   0.000791 ***
+## rtu                       216.4378  5  &lt; 2.2e-16 ***
+## flowers.pot                 5.9506  1   0.014712 *  
+## het.annual.floral.density   5.0504  1   0.024620 *  
+## flowering:rtu              67.6441  5  3.166e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>lsmeans(mPt, pairwise~flowering|rtu)</code></pre>
+<pre><code>## $lsmeans
+## rtu = bee:
+##  flowering      lsmean           SE  df      lower.CL      upper.CL
+##  pre        -0.9048547 2.209981e-01 121 -1.342379e+00 -4.673306e-01
+##  bloom      -2.5271748 4.375210e-01 121 -3.393363e+00 -1.660987e+00
+## 
+## rtu = bombylid:
+##  flowering      lsmean           SE  df      lower.CL      upper.CL
+##  pre        -1.1561691 2.489613e-01 121 -1.649054e+00 -6.632845e-01
+##  bloom      -1.5238727 2.688019e-01 121 -2.056037e+00 -9.917084e-01
+## 
+## rtu = honeybee:
+##  flowering      lsmean           SE  df      lower.CL      upper.CL
+##  pre        -3.1020793 6.456038e-01 121 -4.380222e+00 -1.823936e+00
+##  bloom     -27.4296729 6.724022e+04 121 -1.331472e+05  1.330923e+05
+## 
+## rtu = lep:
+##  flowering      lsmean           SE  df      lower.CL      upper.CL
+##  pre        -4.0183700 1.018697e+00 121 -6.035149e+00 -2.001591e+00
+##  bloom      -1.9806311 3.349596e-01 121 -2.643772e+00 -1.317490e+00
+## 
+## rtu = other:
+##  flowering      lsmean           SE  df      lower.CL      upper.CL
+##  pre        -0.1789177 1.584316e-01 121 -4.925748e-01  1.347394e-01
+##  bloom      -0.2903411 1.528278e-01 121 -5.929040e-01  1.222189e-02
+## 
+## rtu = syrphid:
+##  flowering      lsmean           SE  df      lower.CL      upper.CL
+##  pre         1.0814964 9.568193e-02 121  8.920688e-01  1.270924e+00
+##  bloom      -1.9806311 3.349596e-01 121 -2.643772e+00 -1.317490e+00
+## 
+## Results are given on the log (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+## rtu = bee:
+##  contrast      estimate           SE   df t.ratio p.value
+##  pre - bloom  1.6223201 4.858809e-01 1251   3.339  0.0009
+## 
+## rtu = bombylid:
+##  contrast      estimate           SE   df t.ratio p.value
+##  pre - bloom  0.3677035 3.606267e-01 1251   1.020  0.3081
+## 
+## rtu = honeybee:
+##  contrast      estimate           SE   df t.ratio p.value
+##  pre - bloom 24.3275936 6.724022e+04 1251   0.000  0.9997
+## 
+## rtu = lep:
+##  contrast      estimate           SE   df t.ratio p.value
+##  pre - bloom -2.0377390 1.070400e+00 1251  -1.904  0.0572
+## 
+## rtu = other:
+##  contrast      estimate           SE   df t.ratio p.value
+##  pre - bloom  0.1114233 2.104098e-01 1251   0.530  0.5965
+## 
+## rtu = syrphid:
+##  contrast      estimate           SE   df t.ratio p.value
+##  pre - bloom  3.0621275 3.422986e-01 1251   8.946  &lt;.0001
+## 
+## Results are given on the log (not the response) scale.</code></pre>
+<pre class="r"><code>#full model flower visits
+mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
+<pre><code>## iteration 1</code></pre>
+<pre><code>## iteration 2</code></pre>
+<pre><code>## iteration 3</code></pre>
+<pre><code>## iteration 4</code></pre>
+<pre><code>## iteration 5</code></pre>
+<pre><code>## iteration 6</code></pre>
+<pre><code>## iteration 7</code></pre>
+<pre><code>## iteration 8</code></pre>
+<pre><code>## iteration 9</code></pre>
+<pre><code>## iteration 10</code></pre>
+<pre class="r"><code>summary(mFullPQv)</code></pre>
+<pre><code>## Linear mixed-effects model fit by maximum likelihood
+##  Data: byrtu 
+##   AIC BIC logLik
+##    NA  NA     NA
+## 
+## Random effects:
+##  Formula: ~1 | repID
+##         (Intercept) Residual
+## StdDev:   0.6254456 1.557716
+## 
+## Variance function:
+##  Structure: fixed weights
+##  Formula: ~invwt 
+## Fixed effects: total.flowers ~ flowering * rtu * treatment + flowers.pot + het.annual.floral.density +      het.shrub.blooming.neighbours + offset(log(dec.Length)) 
+##                                                Value Std.Error   DF
+## (Intercept)                                -0.979401      0.31 1239
+## floweringbloom                             -2.170939      0.60 1239
+## rtubombylid                                -1.386294      0.44 1239
+## rtuhoneybee                               -27.099837  91448.63 1239
+## rtulep                                     -4.158883      1.59 1239
+## rtuother                                   -0.115832      0.29 1239
+## rtusyrphid                                  1.435828      0.22 1239
+## treatmentshrub                             -1.087439      0.43  120
+## flowers.pot                                 0.074602      0.02 1239
+## het.annual.floral.density                   0.028843      0.02 1239
+## het.shrub.blooming.neighbours              -0.073878      0.04 1239
+## floweringbloom:rtubombylid                  2.772589      0.76 1239
+## floweringbloom:rtuhoneybee                  2.045460 130440.74 1239
+## floweringbloom:rtulep                       4.969813      1.72 1239
+## floweringbloom:rtuother                     2.255898      0.65 1239
+## floweringbloom:rtusyrphid                  -0.424227      0.69 1239
+## floweringbloom:treatmentshrub               1.620544      0.83 1239
+## rtubombylid:treatmentshrub                  1.486378      0.66 1239
+## rtuhoneybee:treatmentshrub                 26.457983  91448.63 1239
+## rtulep:treatmentshrub                       1.214444      2.26 1239
+## rtuother:treatmentshrub                     0.834954      0.53 1239
+## rtusyrphid:treatmentshrub                   0.749631      0.44 1239
+## floweringbloom:rtubombylid:treatmentshrub  -2.718522      1.10 1239
+## floweringbloom:rtuhoneybee:treatmentshrub -26.999103 164084.54 1239
+## floweringbloom:rtulep:treatmentshrub       -2.207696      2.45 1239
+## floweringbloom:rtuother:treatmentshrub     -1.349053      0.93 1239
+## floweringbloom:rtusyrphid:treatmentshrub   -2.454380      1.11 1239
+##                                             t-value p-value
+## (Intercept)                               -3.188597  0.0015
+## floweringbloom                            -3.628790  0.0003
+## rtubombylid                               -3.152829  0.0017
+## rtuhoneybee                               -0.000296  0.9998
+## rtulep                                    -2.623312  0.0088
+## rtuother                                  -0.404299  0.6861
+## rtusyrphid                                 6.562759  0.0000
+## treatmentshrub                            -2.529903  0.0127
+## flowers.pot                                3.431012  0.0006
+## het.annual.floral.density                  1.726618  0.0845
+## het.shrub.blooming.neighbours             -1.771301  0.0768
+## floweringbloom:rtubombylid                 3.640573  0.0003
+## floweringbloom:rtuhoneybee                 0.000016  1.0000
+## floweringbloom:rtulep                      2.888562  0.0039
+## floweringbloom:rtuother                    3.449004  0.0006
+## floweringbloom:rtusyrphid                 -0.619005  0.5360
+## floweringbloom:treatmentshrub              1.953852  0.0509
+## rtubombylid:treatmentshrub                 2.237183  0.0255
+## rtuhoneybee:treatmentshrub                 0.000289  0.9998
+## rtulep:treatmentshrub                      0.536803  0.5915
+## rtuother:treatmentshrub                    1.589935  0.1121
+## rtusyrphid:treatmentshrub                  1.707432  0.0880
+## floweringbloom:rtubombylid:treatmentshrub -2.470281  0.0136
+## floweringbloom:rtuhoneybee:treatmentshrub -0.000165  0.9999
+## floweringbloom:rtulep:treatmentshrub      -0.899880  0.3684
+## floweringbloom:rtuother:treatmentshrub    -1.447750  0.1479
+## floweringbloom:rtusyrphid:treatmentshrub  -2.210122  0.0273
+##  Correlation: 
+##                                           (Intr) flwrng rtbmby rthnyb
+## floweringbloom                            -0.182                     
+## rtubombylid                               -0.286  0.147              
+## rtuhoneybee                                0.000  0.000  0.000       
+## rtulep                                    -0.079  0.041  0.055  0.000
+## rtuother                                  -0.439  0.226  0.307  0.000
+## rtusyrphid                                -0.575  0.295  0.402  0.000
+## treatmentshrub                            -0.357  0.157  0.205  0.000
+## flowers.pot                               -0.702 -0.045  0.000  0.000
+## het.annual.floral.density                 -0.211  0.048  0.000  0.000
+## het.shrub.blooming.neighbours              0.017 -0.135  0.000  0.000
+## floweringbloom:rtubombylid                 0.165 -0.764 -0.577  0.000
+## floweringbloom:rtuhoneybee                 0.000  0.000  0.000 -0.701
+## floweringbloom:rtulep                      0.073 -0.338 -0.051  0.000
+## floweringbloom:rtuother                    0.192 -0.889 -0.134  0.000
+## floweringbloom:rtusyrphid                  0.184 -0.849 -0.128  0.000
+## floweringbloom:treatmentshrub              0.150 -0.702 -0.106  0.000
+## rtubombylid:treatmentshrub                 0.189 -0.097 -0.662  0.000
+## rtuhoneybee:treatmentshrub                 0.000  0.000  0.000 -1.000
+## rtulep:treatmentshrub                      0.056 -0.029 -0.039  0.000
+## rtuother:treatmentshrub                    0.240 -0.123 -0.167  0.000
+## rtusyrphid:treatmentshrub                  0.287 -0.147 -0.200  0.000
+## floweringbloom:rtubombylid:treatmentshrub -0.114  0.529  0.400  0.000
+## floweringbloom:rtuhoneybee:treatmentshrub  0.000  0.000  0.000  0.557
+## floweringbloom:rtulep:treatmentshrub      -0.051  0.237  0.036  0.000
+## floweringbloom:rtuother:treatmentshrub    -0.135  0.624  0.094  0.000
+## floweringbloom:rtusyrphid:treatmentshrub  -0.113  0.524  0.079  0.000
+##                                           rtulep rtuthr rtsyrp trtmnt
+## floweringbloom                                                       
+## rtubombylid                                                          
+## rtuhoneybee                                                          
+## rtulep                                                               
+## rtuother                                   0.085                     
+## rtusyrphid                                 0.111  0.617              
+## treatmentshrub                             0.057  0.314  0.411       
+## flowers.pot                                0.000  0.000  0.000  0.005
+## het.annual.floral.density                  0.000  0.000  0.000  0.004
+## het.shrub.blooming.neighbours              0.000  0.000  0.000 -0.022
+## floweringbloom:rtubombylid                -0.032 -0.177 -0.232 -0.118
+## floweringbloom:rtuhoneybee                 0.000  0.000  0.000  0.000
+## floweringbloom:rtulep                     -0.921 -0.078 -0.103 -0.052
+## floweringbloom:rtuother                   -0.037 -0.438 -0.270 -0.138
+## floweringbloom:rtusyrphid                 -0.036 -0.197 -0.319 -0.131
+## floweringbloom:treatmentshrub             -0.029 -0.163 -0.213 -0.478
+## rtubombylid:treatmentshrub                -0.037 -0.203 -0.266 -0.591
+## rtuhoneybee:treatmentshrub                 0.000  0.000  0.000  0.000
+## rtulep:treatmentshrub                     -0.701 -0.060 -0.078 -0.174
+## rtuother:treatmentshrub                   -0.046 -0.546 -0.337 -0.748
+## rtusyrphid:treatmentshrub                 -0.056 -0.307 -0.498 -0.895
+## floweringbloom:rtubombylid:treatmentshrub  0.022  0.123  0.161  0.357
+## floweringbloom:rtuhoneybee:treatmentshrub  0.000  0.000  0.000  0.000
+## floweringbloom:rtulep:treatmentshrub       0.646  0.055  0.072  0.160
+## floweringbloom:rtuother:treatmentshrub     0.026  0.307  0.190  0.422
+## floweringbloom:rtusyrphid:treatmentshrub   0.022  0.122  0.197  0.354
+##                                           flwrs. ht.n.. ht.s..
+## floweringbloom                                                
+## rtubombylid                                                   
+## rtuhoneybee                                                   
+## rtulep                                                        
+## rtuother                                                      
+## rtusyrphid                                                    
+## treatmentshrub                                                
+## flowers.pot                                                   
+## het.annual.floral.density                  0.170              
+## het.shrub.blooming.neighbours             -0.087 -0.098       
+## floweringbloom:rtubombylid                 0.000  0.000  0.000
+## floweringbloom:rtuhoneybee                 0.000  0.000  0.000
+## floweringbloom:rtulep                      0.000  0.000  0.000
+## floweringbloom:rtuother                    0.000  0.000  0.000
+## floweringbloom:rtusyrphid                  0.000  0.000  0.000
+## floweringbloom:treatmentshrub              0.009  0.005 -0.021
+## rtubombylid:treatmentshrub                 0.000  0.000  0.000
+## rtuhoneybee:treatmentshrub                 0.000  0.000  0.000
+## rtulep:treatmentshrub                      0.000  0.000  0.000
+## rtuother:treatmentshrub                    0.000  0.000  0.000
+## rtusyrphid:treatmentshrub                  0.000  0.000  0.000
+## floweringbloom:rtubombylid:treatmentshrub  0.000  0.000  0.000
+## floweringbloom:rtuhoneybee:treatmentshrub  0.000  0.000  0.000
+## floweringbloom:rtulep:treatmentshrub       0.000  0.000  0.000
+## floweringbloom:rtuother:treatmentshrub     0.000  0.000  0.000
+## floweringbloom:rtusyrphid:treatmentshrub   0.000  0.000  0.000
+##                                           flwrngblm:rtb flwrngblm:rth
+## floweringbloom                                                       
+## rtubombylid                                                          
+## rtuhoneybee                                                          
+## rtulep                                                               
+## rtuother                                                             
+## rtusyrphid                                                           
+## treatmentshrub                                                       
+## flowers.pot                                                          
+## het.annual.floral.density                                            
+## het.shrub.blooming.neighbours                                        
+## floweringbloom:rtubombylid                                           
+## floweringbloom:rtuhoneybee                 0.000                     
+## floweringbloom:rtulep                      0.266         0.000       
+## floweringbloom:rtuother                    0.699         0.000       
+## floweringbloom:rtusyrphid                  0.667         0.000       
+## floweringbloom:treatmentshrub              0.551         0.000       
+## rtubombylid:treatmentshrub                 0.382         0.000       
+## rtuhoneybee:treatmentshrub                 0.000         0.701       
+## rtulep:treatmentshrub                      0.022         0.000       
+## rtuother:treatmentshrub                    0.097         0.000       
+## rtusyrphid:treatmentshrub                  0.116         0.000       
+## floweringbloom:rtubombylid:treatmentshrub -0.692         0.000       
+## floweringbloom:rtuhoneybee:treatmentshrub  0.000        -0.795       
+## floweringbloom:rtulep:treatmentshrub      -0.186         0.000       
+## floweringbloom:rtuother:treatmentshrub    -0.490         0.000       
+## floweringbloom:rtusyrphid:treatmentshrub  -0.411         0.000       
+##                                           flwrngblm:rtl flwrngblm:rtt
+## floweringbloom                                                       
+## rtubombylid                                                          
+## rtuhoneybee                                                          
+## rtulep                                                               
+## rtuother                                                             
+## rtusyrphid                                                           
+## treatmentshrub                                                       
+## flowers.pot                                                          
+## het.annual.floral.density                                            
+## het.shrub.blooming.neighbours                                        
+## floweringbloom:rtubombylid                                           
+## floweringbloom:rtuhoneybee                                           
+## floweringbloom:rtulep                                                
+## floweringbloom:rtuother                    0.309                     
+## floweringbloom:rtusyrphid                  0.295         0.776       
+## floweringbloom:treatmentshrub              0.244         0.641       
+## rtubombylid:treatmentshrub                 0.034         0.089       
+## rtuhoneybee:treatmentshrub                 0.000         0.000       
+## rtulep:treatmentshrub                      0.646         0.026       
+## rtuother:treatmentshrub                    0.043         0.239       
+## rtusyrphid:treatmentshrub                  0.051         0.135       
+## floweringbloom:rtubombylid:treatmentshrub -0.184        -0.483       
+## floweringbloom:rtuhoneybee:treatmentshrub  0.000         0.000       
+## floweringbloom:rtulep:treatmentshrub      -0.701        -0.217       
+## floweringbloom:rtuother:treatmentshrub    -0.217        -0.702       
+## floweringbloom:rtusyrphid:treatmentshrub  -0.182        -0.479       
+##                                           flwrngblm:rts flwrngblm:t rtbmb:
+## floweringbloom                                                            
+## rtubombylid                                                               
+## rtuhoneybee                                                               
+## rtulep                                                                    
+## rtuother                                                                  
+## rtusyrphid                                                                
+## treatmentshrub                                                            
+## flowers.pot                                                               
+## het.annual.floral.density                                                 
+## het.shrub.blooming.neighbours                                             
+## floweringbloom:rtubombylid                                                
+## floweringbloom:rtuhoneybee                                                
+## floweringbloom:rtulep                                                     
+## floweringbloom:rtuother                                                   
+## floweringbloom:rtusyrphid                                                 
+## floweringbloom:treatmentshrub              0.612                          
+## rtubombylid:treatmentshrub                 0.085         0.307            
+## rtuhoneybee:treatmentshrub                 0.000         0.000       0.000
+## rtulep:treatmentshrub                      0.025         0.090       0.112
+## rtuother:treatmentshrub                    0.107         0.388       0.484
+## rtusyrphid:treatmentshrub                  0.159         0.464       0.579
+## floweringbloom:rtubombylid:treatmentshrub -0.461        -0.750      -0.604
+## floweringbloom:rtuhoneybee:treatmentshrub  0.000         0.000       0.000
+## floweringbloom:rtulep:treatmentshrub      -0.207        -0.336      -0.104
+## floweringbloom:rtuother:treatmentshrub    -0.545        -0.886      -0.273
+## floweringbloom:rtusyrphid:treatmentshrub  -0.617        -0.743      -0.229
+##                                           rthny: rtlp:t rtthr: rtsyr:
+## floweringbloom                                                       
+## rtubombylid                                                          
+## rtuhoneybee                                                          
+## rtulep                                                               
+## rtuother                                                             
+## rtusyrphid                                                           
+## treatmentshrub                                                       
+## flowers.pot                                                          
+## het.annual.floral.density                                            
+## het.shrub.blooming.neighbours                                        
+## floweringbloom:rtubombylid                                           
+## floweringbloom:rtuhoneybee                                           
+## floweringbloom:rtulep                                                
+## floweringbloom:rtuother                                              
+## floweringbloom:rtusyrphid                                            
+## floweringbloom:treatmentshrub                                        
+## rtubombylid:treatmentshrub                                           
+## rtuhoneybee:treatmentshrub                                           
+## rtulep:treatmentshrub                      0.000                     
+## rtuother:treatmentshrub                    0.000  0.142              
+## rtusyrphid:treatmentshrub                  0.000  0.170  0.733       
+## floweringbloom:rtubombylid:treatmentshrub  0.000 -0.068 -0.292 -0.350
+## floweringbloom:rtuhoneybee:treatmentshrub -0.557  0.000  0.000  0.000
+## floweringbloom:rtulep:treatmentshrub       0.000 -0.922 -0.131 -0.157
+## floweringbloom:rtuother:treatmentshrub     0.000 -0.080 -0.564 -0.413
+## floweringbloom:rtusyrphid:treatmentshrub   0.000 -0.067 -0.290 -0.395
+##                                           flwrngblm:rtb: flwrngblm:rth:
+## floweringbloom                                                         
+## rtubombylid                                                            
+## rtuhoneybee                                                            
+## rtulep                                                                 
+## rtuother                                                               
+## rtusyrphid                                                             
+## treatmentshrub                                                         
+## flowers.pot                                                            
+## het.annual.floral.density                                              
+## het.shrub.blooming.neighbours                                          
+## floweringbloom:rtubombylid                                             
+## floweringbloom:rtuhoneybee                                             
+## floweringbloom:rtulep                                                  
+## floweringbloom:rtuother                                                
+## floweringbloom:rtusyrphid                                              
+## floweringbloom:treatmentshrub                                          
+## rtubombylid:treatmentshrub                                             
+## rtuhoneybee:treatmentshrub                                             
+## rtulep:treatmentshrub                                                  
+## rtuother:treatmentshrub                                                
+## rtusyrphid:treatmentshrub                                              
+## floweringbloom:rtubombylid:treatmentshrub                              
+## floweringbloom:rtuhoneybee:treatmentshrub  0.000                       
+## floweringbloom:rtulep:treatmentshrub       0.254          0.000        
+## floweringbloom:rtuother:treatmentshrub     0.667          0.000        
+## floweringbloom:rtusyrphid:treatmentshrub   0.560          0.000        
+##                                           flwrngblm:rtl: flwrngblm:rtt:
+## floweringbloom                                                         
+## rtubombylid                                                            
+## rtuhoneybee                                                            
+## rtulep                                                                 
+## rtuother                                                               
+## rtusyrphid                                                             
+## treatmentshrub                                                         
+## flowers.pot                                                            
+## het.annual.floral.density                                              
+## het.shrub.blooming.neighbours                                          
+## floweringbloom:rtubombylid                                             
+## floweringbloom:rtuhoneybee                                             
+## floweringbloom:rtulep                                                  
+## floweringbloom:rtuother                                                
+## floweringbloom:rtusyrphid                                              
+## floweringbloom:treatmentshrub                                          
+## rtubombylid:treatmentshrub                                             
+## rtuhoneybee:treatmentshrub                                             
+## rtulep:treatmentshrub                                                  
+## rtuother:treatmentshrub                                                
+## rtusyrphid:treatmentshrub                                              
+## floweringbloom:rtubombylid:treatmentshrub                              
+## floweringbloom:rtuhoneybee:treatmentshrub                              
+## floweringbloom:rtulep:treatmentshrub                                   
+## floweringbloom:rtuother:treatmentshrub     0.299                       
+## floweringbloom:rtusyrphid:treatmentshrub   0.251          0.661        
+## 
+## Standardized Within-Group Residuals:
+##           Min            Q1           Med            Q3           Max 
+## -3.094915e+00 -3.957152e-01 -2.342040e-01 -1.979457e-13  1.295935e+01 
+## 
+## Number of Observations: 1386
+## Number of Groups: 122</code></pre>
 <pre class="r"><code>car::Anova(mFullPQv, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III tests)
 ## 
 ## Response: total.flowers
-##                            Chisq Df Pr(&gt;Chisq)    
-## (Intercept)               8.4350  1   0.003681 ** 
-## flowering                16.3114  1  5.374e-05 ***
-## rtu                     121.6834  5  &lt; 2.2e-16 ***
-## treatment                 6.7008  1   0.009637 ** 
-## flowers.pot               9.4194  1   0.002147 ** 
-## flowering:rtu            56.9111  5  5.275e-11 ***
-## flowering:treatment       3.6394  1   0.056426 .  
-## rtu:treatment             5.4996  5   0.357984    
-## flowering:rtu:treatment   7.5190  5   0.184812    
+##                                  Chisq Df Pr(&gt;Chisq)    
+## (Intercept)                    10.3691  1  0.0012814 ** 
+## flowering                      13.4297  1  0.0002477 ***
+## rtu                           122.2774  5  &lt; 2.2e-16 ***
+## treatment                       6.5276  1  0.0106215 *  
+## flowers.pot                    12.0057  1  0.0005304 ***
+## het.annual.floral.density       3.0404  1  0.0812140 .  
+## het.shrub.blooming.neighbours   3.1998  1  0.0736454 .  
+## flowering:rtu                  56.2173  5  7.331e-11 ***
+## flowering:treatment             3.8934  1  0.0484767 *  
+## rtu:treatment                   5.5265  5  0.3550496    
+## flowering:rtu:treatment         8.0131  5  0.1555130    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>mQ &lt;- MASS::glmmPQL(total.flowers~flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
@@ -1904,282 +2437,8 @@ mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers
 ## Number of Groups: 122</code></pre>
 <pre class="r"><code>#RTU by microsite not significant
 
-#lsmeans(mQt, pairwise~treatment|rtu)
-#lsmeans on insignificant interaction shows syrphid flies as significant though
 
-#total plant visits
-mPQ &lt;- MASS::glmmPQL(total.visits~flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
-<pre><code>## iteration 1</code></pre>
-<pre><code>## iteration 2</code></pre>
-<pre><code>## iteration 3</code></pre>
-<pre><code>## iteration 4</code></pre>
-<pre><code>## iteration 5</code></pre>
-<pre><code>## iteration 6</code></pre>
-<pre><code>## iteration 7</code></pre>
-<pre><code>## iteration 8</code></pre>
-<pre><code>## iteration 9</code></pre>
-<pre><code>## iteration 10</code></pre>
-<pre class="r"><code>summary(mPQ)</code></pre>
-<pre><code>## Linear mixed-effects model fit by maximum likelihood
-##  Data: byrtu 
-##   AIC BIC logLik
-##    NA  NA     NA
-## 
-## Random effects:
-##  Formula: ~1 | repID
-##         (Intercept) Residual
-## StdDev:   0.4928517 1.427885
-## 
-## Variance function:
-##  Structure: fixed weights
-##  Formula: ~invwt 
-## Fixed effects: total.visits ~ flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)) 
-##                                 Value Std.Error   DF   t-value p-value
-## (Intercept)                 -1.438304      0.31 1276 -4.652000  0.0000
-## floweringbloom              -1.683054      0.48 1276 -3.477724  0.0005
-## rtubombylid                 -0.251314      0.32 1276 -0.777056  0.4373
-## rtuhoneybee                 -2.197225      0.68 1276 -3.248034  0.0012
-## rtulep                      -3.113515      1.04 1276 -3.002363  0.0027
-## rtuother                     0.725937      0.26 1276  2.785781  0.0054
-## rtusyrphid                   1.986351      0.23 1276  8.707323  0.0000
-## treatmentshrub              -0.311383      0.15  120 -2.141549  0.0343
-## flowers.pot                  0.042763      0.02 1276  2.008388  0.0448
-## floweringbloom:rtubombylid   1.287406      0.60 1276  2.150947  0.0317
-## floweringbloom:rtuhoneybee -22.651870  65302.36 1276 -0.000347  0.9997
-## floweringbloom:rtulep        3.760142      1.17 1276  3.223484  0.0013
-## floweringbloom:rtuother      1.548997      0.52 1276  2.957261  0.0032
-## floweringbloom:rtusyrphid   -1.439807      0.59 1276 -2.441985  0.0147
-##  Correlation: 
-##                            (Intr) flwrng rtbmby rthnyb rtulep rtuthr
-## floweringbloom             -0.266                                   
-## rtubombylid                -0.458  0.292                            
-## rtuhoneybee                -0.219  0.140  0.209                     
-## rtulep                     -0.143  0.091  0.136  0.065              
-## rtuother                   -0.568  0.363  0.543  0.260  0.169       
-## rtusyrphid                 -0.649  0.415  0.620  0.297  0.193  0.770
-## treatmentshrub             -0.228 -0.002  0.000  0.000  0.000  0.000
-## flowers.pot                -0.671 -0.061  0.000  0.000  0.000  0.000
-## floweringbloom:rtubombylid  0.247 -0.804 -0.540 -0.113 -0.074 -0.293
-## floweringbloom:rtuhoneybee  0.000  0.000  0.000  0.000  0.000  0.000
-## floweringbloom:rtulep       0.127 -0.413 -0.121 -0.058 -0.889 -0.151
-## floweringbloom:rtuother     0.283 -0.919 -0.270 -0.129 -0.084 -0.497
-## floweringbloom:rtusyrphid   0.251 -0.816 -0.240 -0.115 -0.075 -0.298
-##                            rtsyrp trtmnt flwrs. flwrngblm:rtb
-## floweringbloom                                               
-## rtubombylid                                                  
-## rtuhoneybee                                                  
-## rtulep                                                       
-## rtuother                                                     
-## rtusyrphid                                                   
-## treatmentshrub              0.000                            
-## flowers.pot                 0.000  0.023                     
-## floweringbloom:rtubombylid -0.335  0.000  0.000              
-## floweringbloom:rtuhoneybee  0.000  0.000  0.000  0.000       
-## floweringbloom:rtulep      -0.172  0.000  0.000  0.334       
-## floweringbloom:rtuother    -0.383  0.000  0.000  0.743       
-## floweringbloom:rtusyrphid  -0.387  0.000  0.000  0.660       
-##                            flwrngblm:rth flwrngblm:rtl flwrngblm:rtt
-## floweringbloom                                                      
-## rtubombylid                                                         
-## rtuhoneybee                                                         
-## rtulep                                                              
-## rtuother                                                            
-## rtusyrphid                                                          
-## treatmentshrub                                                      
-## flowers.pot                                                         
-## floweringbloom:rtubombylid                                          
-## floweringbloom:rtuhoneybee                                          
-## floweringbloom:rtulep       0.000                                   
-## floweringbloom:rtuother     0.000         0.381                     
-## floweringbloom:rtusyrphid   0.000         0.339         0.754       
-## 
-## Standardized Within-Group Residuals:
-##         Min          Q1         Med          Q3         Max 
-## -2.14498460 -0.36739988 -0.22953853 -0.05722121 15.25618116 
-## 
-## Number of Observations: 1410
-## Number of Groups: 122</code></pre>
-<pre class="r"><code>car::Anova(mPQ, type = 3)</code></pre>
-<pre><code>## Analysis of Deviance Table (Type III tests)
-## 
-## Response: total.visits
-##                  Chisq Df Pr(&gt;Chisq)    
-## (Intercept)    21.8581  1  2.936e-06 ***
-## flowering      12.2159  1  0.0004739 ***
-## rtu           217.5031  5  &lt; 2.2e-16 ***
-## treatment       4.6322  1  0.0313768 *  
-## flowers.pot     4.0741  1  0.0435461 *  
-## flowering:rtu  70.3599  5  8.624e-14 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>lsmeans(mPQ, pairwise~flowering|rtu)</code></pre>
-<pre><code>## $lsmeans
-## rtu = bee:
-##  flowering      lsmean           SE  df      lower.CL      upper.CL
-##  pre        -0.8866116 2.196184e-01 120 -1.321441e+00 -4.517825e-01
-##  bloom      -2.5696655 4.359771e-01 120 -3.432870e+00 -1.706461e+00
-## 
-## rtu = bombylid:
-##  flowering      lsmean           SE  df      lower.CL      upper.CL
-##  pre        -1.1379260 2.476029e-01 120 -1.628162e+00 -6.476896e-01
-##  bloom      -1.5335735 2.632409e-01 120 -2.054772e+00 -1.012375e+00
-## 
-## rtu = honeybee:
-##  flowering      lsmean           SE  df      lower.CL      upper.CL
-##  pre        -3.0838362 6.436851e-01 120 -4.358288e+00 -1.809384e+00
-##  bloom     -27.4187600 6.530236e+04 120 -1.293215e+05  1.292667e+05
-## 
-## rtu = lep:
-##  flowering      lsmean           SE  df      lower.CL      upper.CL
-##  pre        -4.0001269 1.015934e+00 120 -6.011605e+00 -1.988649e+00
-##  bloom      -1.9230383 3.176927e-01 120 -2.552048e+00 -1.294029e+00
-## 
-## rtu = other:
-##  flowering      lsmean           SE  df      lower.CL      upper.CL
-##  pre        -0.1606746 1.568853e-01 120 -4.712965e-01  1.499473e-01
-##  bloom      -0.2947319 1.487025e-01 120 -5.891526e-01 -3.112505e-04
-## 
-## rtu = syrphid:
-##  flowering      lsmean           SE  df      lower.CL      upper.CL
-##  pre         1.0997395 9.353236e-02 120  9.145519e-01  1.284927e+00
-##  bloom      -2.0231218 3.335431e-01 120 -2.683514e+00 -1.362730e+00
-## 
-## Results are averaged over the levels of: treatment 
-## Results are given on the log (not the response) scale. 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-## rtu = bee:
-##  contrast      estimate           SE   df t.ratio p.value
-##  pre - bloom  1.6830539 4.839527e-01 1276   3.478  0.0005
-## 
-## rtu = bombylid:
-##  contrast      estimate           SE   df t.ratio p.value
-##  pre - bloom  0.3956475 3.556753e-01 1276   1.112  0.2662
-## 
-## rtu = honeybee:
-##  contrast      estimate           SE   df t.ratio p.value
-##  pre - bloom 24.3349238 6.530236e+04 1276   0.000  0.9997
-## 
-## rtu = lep:
-##  contrast      estimate           SE   df t.ratio p.value
-##  pre - bloom -2.0770886 1.062522e+00 1276  -1.955  0.0508
-## 
-## rtu = other:
-##  contrast      estimate           SE   df t.ratio p.value
-##  pre - bloom  0.1340573 2.064640e-01 1276   0.649  0.5163
-## 
-## rtu = syrphid:
-##  contrast      estimate           SE   df t.ratio p.value
-##  pre - bloom  3.1228613 3.404428e-01 1276   9.173  &lt;.0001
-## 
-## Results are averaged over the levels of: treatment 
-## Results are given on the log (not the response) scale.</code></pre>
-<pre class="r"><code>mPt &lt;- MASS::glmmPQL(total.visits~treatment * rtu + flowering + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
-<pre><code>## iteration 1</code></pre>
-<pre><code>## iteration 2</code></pre>
-<pre><code>## iteration 3</code></pre>
-<pre><code>## iteration 4</code></pre>
-<pre><code>## iteration 5</code></pre>
-<pre><code>## iteration 6</code></pre>
-<pre><code>## iteration 7</code></pre>
-<pre><code>## iteration 8</code></pre>
-<pre><code>## iteration 9</code></pre>
-<pre><code>## iteration 10</code></pre>
-<pre class="r"><code>summary(mPt)</code></pre>
-<pre><code>## Linear mixed-effects model fit by maximum likelihood
-##  Data: byrtu 
-##   AIC BIC logLik
-##    NA  NA     NA
-## 
-## Random effects:
-##  Formula: ~1 | repID
-##         (Intercept) Residual
-## StdDev:   0.4644511 1.519879
-## 
-## Variance function:
-##  Structure: fixed weights
-##  Formula: ~invwt 
-## Fixed effects: total.visits ~ treatment * rtu + flowering + flowers.pot + offset(log(dec.Length)) 
-##                                 Value Std.Error   DF   t-value p-value
-## (Intercept)                 -1.426490      0.34 1276 -4.175374  0.0000
-## treatmentshrub              -0.561738      0.44  120 -1.290744  0.1993
-## rtubombylid                 -0.057158      0.37 1276 -0.156475  0.8757
-## rtuhoneybee                -26.003756  68441.79 1276 -0.000380  0.9997
-## rtulep                      -0.944462      0.48 1276 -1.963083  0.0499
-## rtuother                     1.143869      0.29 1276  3.912890  0.0001
-## rtusyrphid                   1.768339      0.28 1276  6.419979  0.0000
-## floweringbloom              -1.261155      0.13 1276 -9.353829  0.0000
-## flowers.pot                  0.042595      0.02 1276  1.928981  0.0540
-## treatmentshrub:rtubombylid   0.527162      0.57 1276  0.927552  0.3538
-## treatmentshrub:rtuhoneybee  24.617462  68441.79 1276  0.000360  0.9997
-## treatmentshrub:rtulep        0.145954      0.78 1276  0.187279  0.8515
-## treatmentshrub:rtuother      0.326307      0.48 1276  0.681974  0.4954
-## treatmentshrub:rtusyrphid    0.148583      0.46 1276  0.324479  0.7456
-##  Correlation: 
-##                            (Intr) trtmnt rtbmby rthnyb rtulep rtuthr
-## treatmentshrub             -0.468                                   
-## rtubombylid                -0.519  0.408                            
-## rtuhoneybee                 0.000  0.000  0.000                     
-## rtulep                     -0.394  0.310  0.369  0.000              
-## rtuother                   -0.649  0.509  0.607  0.000  0.461       
-## rtusyrphid                 -0.689  0.541  0.644  0.000  0.489  0.805
-## floweringbloom              0.037 -0.003  0.000  0.000  0.000  0.000
-## flowers.pot                -0.632  0.008  0.000  0.000  0.000  0.000
-## treatmentshrub:rtubombylid  0.334 -0.734 -0.643  0.000 -0.237 -0.390
-## treatmentshrub:rtuhoneybee  0.000  0.000  0.000 -1.000  0.000  0.000
-## treatmentshrub:rtulep       0.243 -0.535 -0.228  0.000 -0.617 -0.284
-## treatmentshrub:rtuother     0.396 -0.871 -0.371  0.000 -0.282 -0.611
-## treatmentshrub:rtusyrphid   0.414 -0.911 -0.387  0.000 -0.294 -0.484
-##                            rtsyrp flwrng flwrs. trtmntshrb:rtb
-## treatmentshrub                                                
-## rtubombylid                                                   
-## rtuhoneybee                                                   
-## rtulep                                                        
-## rtuother                                                      
-## rtusyrphid                                                    
-## floweringbloom              0.000                             
-## flowers.pot                 0.000 -0.223                      
-## treatmentshrub:rtubombylid -0.414  0.000  0.000               
-## treatmentshrub:rtuhoneybee  0.000  0.000  0.000  0.000        
-## treatmentshrub:rtulep      -0.302  0.000  0.000  0.410        
-## treatmentshrub:rtuother    -0.492  0.000  0.000  0.667        
-## treatmentshrub:rtusyrphid  -0.602  0.000  0.000  0.697        
-##                            trtmntshrb:rth trtmntshrb:rtl trtmntshrb:rtt
-## treatmentshrub                                                         
-## rtubombylid                                                            
-## rtuhoneybee                                                            
-## rtulep                                                                 
-## rtuother                                                               
-## rtusyrphid                                                             
-## floweringbloom                                                         
-## flowers.pot                                                            
-## treatmentshrub:rtubombylid                                             
-## treatmentshrub:rtuhoneybee                                             
-## treatmentshrub:rtulep       0.000                                      
-## treatmentshrub:rtuother     0.000          0.487                       
-## treatmentshrub:rtusyrphid   0.000          0.509          0.828        
-## 
-## Standardized Within-Group Residuals:
-##         Min          Q1         Med          Q3         Max 
-## -1.73014082 -0.39844129 -0.22147561 -0.08206282 15.03477730 
-## 
-## Number of Observations: 1410
-## Number of Groups: 122</code></pre>
-<pre class="r"><code>car::Anova(mPt, type = 3)</code></pre>
-<pre><code>## Analysis of Deviance Table (Type III tests)
-## 
-## Response: total.visits
-##                  Chisq Df Pr(&gt;Chisq)    
-## (Intercept)    17.6086  1  2.714e-05 ***
-## treatment       1.6827  1    0.19456    
-## rtu           103.2255  5  &lt; 2.2e-16 ***
-## flowering      88.3716  1  &lt; 2.2e-16 ***
-## flowers.pot     3.7583  1    0.05255 .  
-## treatment:rtu   1.3753  5    0.92699    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>#lsmeans(mPt, pairwise~treatment|rtu)
+
 #treatment not significant, pairwaise constrast for syrphids is</code></pre>
 <pre class="r"><code>str(byrtu)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    1410 obs. of  23 variables:
@@ -2201,7 +2460,7 @@ mPQ &lt;- MASS::glmmPQL(total.visits~flowering * rtu + treatment + flowers.pot +
 ##  $ total.visits                  : int  18 2 0 0 0 0 6 1 0 0 ...
 ##  $ total.flowers                 : int  35 5 0 0 0 0 8 2 0 0 ...
 ##  $ Length                        : Factor w/ 225 levels &quot;0:31:34&quot;,&quot;0:32:53&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
-##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-02-21 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
+##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-02-28 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
 ##  $ dec.Length                    : num  1.38 1.38 1.38 1.38 1.38 ...
 ##  $ visits.per.hour               : num  13.04 1.45 0 0 0 ...
 ##  $ flowers.per.hour              : num  25.35 3.62 0 0 0 ...
@@ -2410,43 +2669,41 @@ summary(m1)</code></pre>
 ## 
 ## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
 <pre class="r"><code>m2 &lt;- glmmTMB(prop.visited ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
-summary(m1)</code></pre>
+summary(m2)</code></pre>
 <pre><code>##  Family: Gamma  ( log )
 ## Formula:          
-## prop.visited ~ flowering * microsite + flowers.pot + (1 | repID)
+## prop.visited ~ flowering + microsite + flowers.pot + (1 | repID)
 ## Data: rtu.data
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##  -2211.9  -2180.1   1113.0  -2225.9      690 
+##  -2212.4  -2185.1   1112.2  -2224.4      691 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.04317  0.2078  
+##  repID  (Intercept) 0.04177  0.2044  
 ## Number of obs: 697, groups:  repID, 118
 ## 
-## Dispersion estimate for Gamma family (sigma^2): 0.121 
+## Dispersion estimate for Gamma family (sigma^2): 0.122 
 ## 
 ## Conditional model:
-##                                Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                   -1.455082   0.074087 -19.640   &lt;2e-16 ***
-## floweringbloom                 0.015428   0.047902   0.322    0.747    
-## micrositeshrub                 0.029692   0.055144   0.538    0.590    
-## flowers.pot                   -0.055854   0.006584  -8.483   &lt;2e-16 ***
-## floweringbloom:micrositeshrub -0.092542   0.074141  -1.248    0.212    
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -1.4354689  0.0719549 -19.950   &lt;2e-16 ***
+## floweringbloom -0.0212773  0.0376365  -0.565    0.572    
+## micrositeshrub  0.0002944  0.0493337   0.006    0.995    
+## flowers.pot    -0.0565629  0.0065215  -8.673   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>car::Anova(m1, type = 3)</code></pre>
+<pre class="r"><code>car::Anova(m2, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
 ## Response: prop.visited
-##                        Chisq Df Pr(&gt;Chisq)    
-## (Intercept)         385.7399  1     &lt;2e-16 ***
-## flowering             0.1037  1     0.7474    
-## microsite             0.2899  1     0.5903    
-## flowers.pot          71.9668  1     &lt;2e-16 ***
-## flowering:microsite   1.5580  1     0.2120    
+##                Chisq Df Pr(&gt;Chisq)    
+## (Intercept) 397.9857  1     &lt;2e-16 ***
+## flowering     0.3196  1     0.5718    
+## microsite     0.0000  1     0.9952    
+## flowers.pot  75.2265  1     &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>m2null &lt;- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
@@ -3175,11 +3432,11 @@ shapiro.test(residuals(g2))</code></pre>
 <hr />
 <p>Annual Floral Density number of all blooms in quadrat</p>
 <pre class="r"><code>mean(visits$het.annual.floral.density, na.rm = TRUE)</code></pre>
-<pre><code>## [1] 0.9695652</code></pre>
+<pre><code>## [1] 0.965368</code></pre>
 <pre class="r"><code>sd(visits$het.annual.floral.density, na.rm = TRUE)</code></pre>
-<pre><code>## [1] 3.121126</code></pre>
+<pre><code>## [1] 3.114987</code></pre>
 <pre class="r"><code>ggplot(visits, aes(het.annual.floral.density)) + geom_density()</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="index_files/figure-html/annual%20floral%20density-1.png" width="672" /></p>
 <pre class="r"><code>g3.nb &lt;- glmmTMB(het.annual.floral.density ~ flowering * treatment + (1|repID), family = &quot;nbinom2&quot;, data = visits)
 
@@ -3198,23 +3455,23 @@ summary(g3.nb)</code></pre>
 ## Data: visits
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##    496.4    517.1   -242.2    484.4      224 
+##    496.9    517.6   -242.4    484.9      225 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance  Std.Dev. 
-##  repID  (Intercept) 2.177e-08 0.0001476
-## Number of obs: 230, groups:  repID, 122
+##  repID  (Intercept) 1.802e-08 0.0001342
+## Number of obs: 231, groups:  repID, 122
 ## 
 ## Overdispersion parameter for nbinom2 family (): 0.161 
 ## 
 ## Conditional model:
 ##                               Estimate Std. Error z value Pr(&gt;|z|)  
-## (Intercept)                    0.45676    0.34623   1.319   0.1871  
-## floweringbloom                -1.11481    0.51485  -2.165   0.0304 *
-## treatmentshrub                -0.06839    0.48626  -0.141   0.8882  
-## floweringbloom:treatmentshrub -0.50079    0.73983  -0.677   0.4985  
+## (Intercept)                    0.45676    0.34682   1.317   0.1878  
+## floweringbloom                -1.13251    0.51375  -2.204   0.0275 *
+## treatmentshrub                -0.06839    0.48708  -0.140   0.8883  
+## floweringbloom:treatmentshrub -0.48309    0.73961  -0.653   0.5136  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>summary(g3.nb.1)</code></pre>
@@ -3224,22 +3481,22 @@ summary(g3.nb)</code></pre>
 ## Data: visits
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##    494.9    512.1   -242.4    484.9      225 
+##    495.3    512.5   -242.7    485.3      226 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
-##  Groups Name        Variance Std.Dev. 
-##  repID  (Intercept) 3.09e-08 0.0001758
-## Number of obs: 230, groups:  repID, 122
+##  Groups Name        Variance  Std.Dev. 
+##  repID  (Intercept) 4.096e-08 0.0002024
+## Number of obs: 231, groups:  repID, 122
 ## 
 ## Overdispersion parameter for nbinom2 family (): 0.16 
 ## 
 ## Conditional model:
 ##                Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)      0.5717     0.3174   1.801 0.071689 .  
-## floweringbloom  -1.3581     0.3715  -3.656 0.000256 ***
-## treatmentshrub  -0.2857     0.3686  -0.775 0.438277    
+## (Intercept)      0.5679     0.3174   1.789 0.073560 .  
+## floweringbloom  -1.3664     0.3714  -3.680 0.000234 ***
+## treatmentshrub  -0.2787     0.3686  -0.756 0.449489    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>summary(g3.nb.null)</code></pre>
@@ -3248,20 +3505,20 @@ summary(g3.nb)</code></pre>
 ## Data: visits
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##    501.5    511.8   -247.7    495.5      227 
+##    502.0    512.4   -248.0    496.0      228 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.6631   0.8143  
-## Number of obs: 230, groups:  repID, 122
+##  repID  (Intercept) 0.6587   0.8116  
+## Number of obs: 231, groups:  repID, 122
 ## 
-## Overdispersion parameter for nbinom2 family (): 0.173 
+## Overdispersion parameter for nbinom2 family (): 0.172 
 ## 
 ## Conditional model:
 ##             Estimate Std. Error z value Pr(&gt;|z|)
-## (Intercept)  -0.3400     0.2835  -1.199     0.23</code></pre>
+## (Intercept)  -0.3425     0.2834  -1.209    0.227</code></pre>
 <pre class="r"><code>anova(g3.nb, g3.nb.null, g3.nb.1, g3.p, g3.nb.type1, test = &quot;Chisq&quot;)</code></pre>
 <pre><code>## Data: visits
 ## Models:
@@ -3270,12 +3527,12 @@ summary(g3.nb)</code></pre>
 ## g3.nb.type1: het.annual.floral.density ~ 1 + (1 | repID), zi=~0, disp=~1
 ## g3.nb.1: het.annual.floral.density ~ flowering + treatment + (1 | repID), zi=~0, disp=~1
 ## g3.nb: het.annual.floral.density ~ flowering * treatment + (1 | repID), zi=~0, disp=~1
-##             Df    AIC    BIC  logLik deviance   Chisq Chi Df Pr(&gt;Chisq)
-## g3.p         2 655.11 661.99 -325.55   651.11                          
-## g3.nb.null   3 501.46 511.77 -247.73   495.46 155.650      1  &lt; 2.2e-16
-## g3.nb.type1  3 503.19 513.50 -248.59   497.19   0.000      0   1.000000
-## g3.nb.1      5 494.89 512.08 -242.45   484.89  12.297      2   0.002136
-## g3.nb        6 496.44 517.06 -242.22   484.44   0.457      1   0.499019
+##             Df    AIC    BIC  logLik deviance    Chisq Chi Df Pr(&gt;Chisq)
+## g3.p         2 656.25 663.14 -326.13   652.25                           
+## g3.nb.null   3 502.04 512.37 -248.02   496.04 156.2088      1  &lt; 2.2e-16
+## g3.nb.type1  3 503.76 514.08 -248.88   497.76   0.0000      0   1.000000
+## g3.nb.1      5 495.32 512.53 -242.66   485.32  12.4342      2   0.001995
+## g3.nb        6 496.90 517.55 -242.45   484.90   0.4255      1   0.514183
 ##                
 ## g3.p           
 ## g3.nb.null  ***
@@ -3289,23 +3546,23 @@ summary(g3.nb)</code></pre>
 ## 
 ## Response: het.annual.floral.density
 ##             Chisq Df Pr(&gt;Chisq)    
-## flowering 13.3642  1  0.0002565 ***
-## treatment  0.6008  1  0.4382765    
+## flowering 13.5397  1  0.0002336 ***
+## treatment  0.5719  1  0.4494890    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>AIC(g3.nb, g3.nb.1, g3.p, g3.nb.type1, g3.nb.null)</code></pre>
 <pre><code>##             df      AIC
-## g3.nb        6 496.4356
-## g3.nb.1      5 494.8926
-## g3.p         2 655.1089
-## g3.nb.type1  3 503.1899
-## g3.nb.null   3 501.4584</code></pre>
+## g3.nb        6 496.8968
+## g3.nb.1      5 495.3223
+## g3.p         2 656.2507
+## g3.nb.type1  3 503.7565
+## g3.nb.null   3 502.0419</code></pre>
 <pre class="r"><code>#negative binomial type 2, additive model
 
 ggplot(visits, aes(treatment, het.annual.floral.density)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Heterospecific Annual Floral Density&quot;)</code></pre>
 <pre><code>## Warning: `legend.margin` must be specified using `margin()`. For the old
 ## behavior use legend.spacing</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
 <pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
 ## font family not found in Windows font database
 
