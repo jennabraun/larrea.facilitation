@@ -12,7 +12,7 @@ summary$t <- factor(summary$t, levels = c("shrub pre", "open pre", "shrub bloom"
 
 
 
-ggplot(summary, aes(rtu, mean.visits, group = t)) + geom_bar(aes (fill = t), stat = "identity", position = "dodge", color = "black") + geom_errorbar(aes(ymin = mean.visits - se.visits, ymax = mean.visits + se.visits), width = 0.2, position = position_dodge(0.9)) + theme_Publication() + ylab("Mean Foraging Instances per hour") + scale_x_discrete(labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae")) + theme(axis.text.x = element_text(angle = 90, vjust = 0.2)) + scale_fill_manual("", values = c("shrub pre" ="#168421", "open pre"= "#a3820b", "shrub bloom"= "#7acc55", "open bloom"= "#efc33b")) + theme(legend.position = "none", legend.title = element_blank(),axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank()) + xlab("")
+ggplot(summary, aes(rtu, mean.visits, group = t)) + geom_bar(aes (fill = t), stat = "identity", position = "dodge", color = "black") + geom_errorbar(aes(ymin = mean.visits - se.visits, ymax = mean.visits + se.visits), width = 0.2, position = position_dodge(0.9)) + theme_Publication() + ylab("Mean Foraging Instance Rate") + scale_x_discrete(labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae")) + theme(axis.text.x = element_text(angle = 90, vjust = 0.2)) + scale_fill_manual("", values = c("shrub pre" ="#168421", "open pre"= "#a3820b", "shrub bloom"= "#7acc55", "open bloom"= "#efc33b")) + theme(legend.position = "none", legend.title = element_blank(),axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank()) + xlab("")
 
 
                                                        
