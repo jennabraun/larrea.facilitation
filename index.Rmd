@@ -439,6 +439,16 @@ byrep$repID <- paste(byrep$PlantID, byrep$treatment)
 byrep$treatment <- relevel(byrep$treatment, "open")
 byrep$flowering <- relevel(byrep$flowering, "pre")
 
+count(byrep, Date)
+dates <- read.csv("Clean Data/dates.csv")
+dates$Dates <- gsub('\\s+', "", dates$Dates)
+
+
+dates$Date <- dates$Dates
+byrep <- left_join(byrep, dates, by = "Date")
+
+
+
 #calculate mean video length
 mean(byrep$dec.Length)
 
@@ -452,12 +462,17 @@ Flower visits
 ```{r, visitation models base}
 #base hypothesis testing model
 #additive
-m1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+m1 <- glmmTMB(total.flowers ~ treatment+mean.Temp + flowering + flowers.pot + het.annual.floral.density +  offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
 summary(m1)
 
-plot(residuals(m1)~predict(m1))
-car::Anova(m1, type = 2)
+a1 <-aov(byrep$mean.Temp~byrep$day)
+summary(a1)
+cor.test(byrep$mean.Temp, byrep$day)
+ggplot(byrep, aes(day, mean.Temp)) + geom_smooth()
 
+
+plot(residuals(m1)~predict(m1))
+car::Anova(m1, type = 3)
 
 #interactive model
 
@@ -580,8 +595,45 @@ summary(mPt)
 car::Anova(mPt, type = 3)
 lsmeans(mPt, pairwise~flowering|rtu)
 
+byrtu$Date
+dates$Date <- as.factor(dates$Date)
+dates$day
+
+dates <- read.csv("Clean Data/dates.csv")
+byrtu <- left_join(byrtu, dates, by = "Date")
+
+sbees <- filter(byrtu, rtu == "syrphid")
+
+m1 <- glmmTMB(total.visits ~ flowering + treatment + flowers.pot + het.annual.floral.density +  offset(log(dec.Length)) + (1|repID), family="poisson", data = sbees)
+summary(m1)
+
+m2 <- glmmTMB(total.visits ~ day +flowering + treatment + flowers.pot + het.annual.floral.density +  offset(log(dec.Length)) + (1|repID), family="nbinom2", data = sbees)
+summary(m2)
+
+AIC(m1, m2)
+
+m2 <- glmmTMB(total.visits ~ flowering  +  treatment + flowers.pot + het.annual.floral.density + day + offset(log(dec.Length)) + (1|repID), family="nbinom1", data = sbees)
+
+m3 <- glmmTMB(total.visits ~ flowering  +  treatment + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), ziformula = ~1, family="poisson", data = sbees)
+
+AIC(m1, m2, m3)
+
+summary(m3)
+car::Anova(m3)
+
+library(DHARMa)
+r1 <- simulateResiduals(m1)
+testZeroInflation(r1)
+testDispersion(r1, alternative = "greater")
 
 
+
+library(sjstats)
+overdisp(m2)
+overdisp(m1)
+
+
+car::Anova(m3)
 #full model flower visits
 mFullPQv <- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
 summary(mFullPQv)
@@ -1681,6 +1733,8 @@ all.new$metric <- relevel(all.new$metric, "visits", "arth.abundance", "arth.rich
 
 metrics <- c("Floral Visits \n per Hour", "Arthropod \n Abundance", "Arthropod \n Richness", "Annual Cover", "Annual Species \n Richness")
 
+write.csv(all.boot, "Output Data/allboot.csv")
+write.csv(all.new, "Output Data/allnewboot.csv")
 #summary(a1)
 #plot this
 library(cowplot)

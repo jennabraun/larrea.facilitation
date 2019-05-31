@@ -14,13 +14,14 @@ onlybeetle <- read.csv("Output Data/metadata_onlybeetle.csv")
 labels <- c(pre = "Pre-blooming", post = "Blooming", bloom = "Blooming")
 visits$flowering <- relevel(visits$flowering, "pre")
 metadata$blooming <- relevel(metadata$blooming, "pre")
+metadata$treatment <- relevel(metadata$treatment, "shrub")
 incbeetle$blooming <- relevel(incbeetle$blooming, "pre")
 onlybeetle$blooming <- relevel(onlybeetle$blooming, "pre")
 byrtu$flowering <- relevel(byrtu$flowering, "pre")
 
 ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot() + theme_Publication() + ylab("Percent Annual Vegetation Cover") + xlab("Microsite")
 
-p1 <- ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot() + theme_Publication() + ylab("Percent Annual Vegetation Cover") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels))
+ggplot(metadata, aes(treatment, percent.cover, fill = treatment)) + geom_boxplot() + theme_Publication() + ylab("Percent Annual Vegetation Cover") + xlab("Microsite") + facet_grid(~blooming,labeller=labeller(blooming = labels)) + scale_fill_manual("", values = c("shrub" ="black", "open"= "white"))
 
 ggplot(metadata, aes(treatment, rich)) + geom_boxplot() + theme_Publication() + ylab("Annual Species Richness") + xlab("Microsite")                                     
 
@@ -112,8 +113,18 @@ p <- byrtu %>% group_by(treatment, flowering, rtu) %>% dplyr::summarise(visits =
 
 ggplot(p, aes(treatment, visits)) + geom_bar(aes(fill = rtu), stat = "identity", colour = "black") + facet_grid(~flowering, labeller=labeller(flowering = labels))+ theme_Publication() + xlab("Microsite") + ylab("Total Flowers Visited") + labs(fill="") + theme(legend.text = element_text(size = 16))  + scale_fill_brewer(palette= "Spectral") + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
 
+metadata$t <- paste(metadata$treatment, metadata$blooming)
+metadata$t <- as.factor(metadata$t)
+metadata$t <- factor(metadata$t, levels = c("shrub pre", "open pre", "shrub post", "open post"))
 
-p1 <- ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot() + theme_Publication() + ggtitle("Percent Annual Cover") + ylab("") + xlab("") + facet_grid(~blooming,labeller=labeller(blooming = labels))  +theme(plot.title = element_text(size = (10)))+ facet_grid(~blooming,labeller=labeller(blooming = labels))
+
+ggplot(metadata, aes(treatment, percent.cover)) + geom_boxplot(aes(fill = t)) + theme_Publication() + ggtitle("Percent Annual Cover") + ylab("") + xlab("") + facet_grid(~blooming,labeller=labeller(blooming = labels))  +theme(plot.title = element_text(size = (10)))+ facet_grid(~blooming,labeller=labeller(blooming = labels)) + scale_fill_manual("", values = c("shrub pre" ="#168421", "open pre"= "#a3820b", "shrub post"= "#7acc55", "open post"= "#efc33b"))
+                                                                                                                                                                                                                                            , labels = c("Shrub", "Open", "Shrub", "Open"))
+
+p1
+
+
+
 
 p2 <- ggplot(visits, aes(treatment, understory.richness)) + geom_boxplot() + theme_Publication() + ylab("") + xlab("") + ggtitle("Annual Richness")+theme(plot.title = element_text(size = (10))) + facet_grid(~flowering,labeller=labeller(flowering = labels))
 
@@ -123,6 +134,9 @@ p3 <- ggplot(metadata, aes(treatment, abun)) + geom_boxplot() + theme_Publicatio
 
 
 p4 <- ggplot(incbeetle, aes(treatment, Species)) + geom_boxplot() + theme_Publication() + ylab("") + xlab("") + facet_grid(~blooming,labeller=labeller(blooming = labels)) + ggtitle("Arthropod Richness")+theme(plot.title = element_text(size = (10)))
+
+
+
 
 p1
 plot_grid(p1, p2, p3, p4, labels = c("A", "B", "C", "D"))
