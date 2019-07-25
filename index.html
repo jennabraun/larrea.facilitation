@@ -11,7 +11,7 @@
 
 
 
-<title></title>
+<title>index.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -299,8 +299,7 @@ div.tocify {
 </div>
 
 
-<div id="disentangling-the-drivers-and-trade-offs-of-pollinator-mediated-interactions-between-the-foundation-shrub-creosote-bush-larrea-tridentata-and-the-annual-desert-dandelion-malacothrix-glabrata" class="section level1">
-<h1>Disentangling the drivers and trade-offs of pollinator-mediated interactions between the foundation shrub Creosote bush (Larrea tridentata) and the annual desert dandelion (Malacothrix glabrata)</h1>
+<p>#Disentangling the drivers and trade-offs of pollinator-mediated interactions between the foundation shrub Creosote bush (Larrea tridentata) and the annual desert dandelion (Malacothrix glabrata)</p>
 
 <hr />
 
@@ -310,8 +309,7 @@ div.tocify {
 
 <hr />
 
-<p><img src="Images/site.jpg" width="1000" /></p>
-</div>
+<p><img src="./Images/site.jpg" /><!-- --></p>
 </div>
 <div id="data-wrangling-and-clean-up" class="section level1">
 <h1>Data wrangling and clean up</h1>
@@ -371,9 +369,8 @@ vids$uniID &lt;- paste(vids$Rep, vids$video.date)
 vids$uniID &lt;- gsub(&#39;\\s+&#39;, &quot;&quot;, vids$uniID)
 
 #subset flower visits where insect flies on
-flr &lt;- filter(vids, flowers.visits != 0 &amp; flies.on == &quot;Y&quot;) </code></pre>
-<pre><code>## Warning: package &#39;bindrcpp&#39; was built under R version 3.4.4</code></pre>
-<pre class="r"><code>summary(flr)</code></pre>
+flr &lt;- filter(vids, flowers.visits != 0 &amp; flies.on == &quot;Y&quot;) 
+summary(flr)</code></pre>
 <pre><code>##       Recorder       Rep               plant.id    microsite        
 ##  Brian    : 49   Length:697         193    : 34   Length:697        
 ##  Jenna    :527   Class :character   146    : 32   Class :character  
@@ -694,14 +691,13 @@ metadata &lt;- read.csv(&quot;Clean Data/pantraps_cov.csv&quot;, header = TRUE)
 metadata &lt;- filter(metadata, species != &quot;buckhorn&quot;)
 metadata$plant.id &lt;- as.character(metadata$plant.id)
 str(metadata)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    228 obs. of  9 variables:
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  8 variables:
 ##  $ plant.id     : chr  &quot;296&quot; &quot;296&quot; &quot;189&quot; &quot;189&quot; ...
 ##  $ species      : Factor w/ 2 levels &quot;buckhorn&quot;,&quot;larrea&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 2 1 2 1 2 1 2 1 2 1 ...
 ##  $ blooming     : Factor w/ 2 levels &quot;post&quot;,&quot;pre&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ date         : Factor w/ 21 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ percent.cover: int  15 3 25 2 40 15 40 3 70 10 ...
-##  $ rich         : int  3 3 6 6 1 3 3 2 3 4 ...
 ##  $ perennial    : Factor w/ 5 levels &quot;&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ X            : Factor w/ 6 levels &quot;&quot;,&quot;blue and white knocked over&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <pre class="r"><code>metadata$uniID &lt;- paste(metadata$date, metadata$plant.id, metadata$treatment)
@@ -772,30 +768,30 @@ summary(metadata)</code></pre>
 ##  3rd Qu.:18.56                                                           
 ##  Max.   :28.51                                                           
 ##                                                                          
-##  percent.cover        rich      perennial 
-##  Min.   : 1.00   Min.   :1.00       :223  
-##  1st Qu.: 2.00   1st Qu.:2.00   1   :  4  
-##  Median :10.00   Median :3.00   2   :  1  
-##  Mean   :18.82   Mean   :3.25   3   :  0  
-##  3rd Qu.:30.00   3rd Qu.:4.00   east:  0  
-##  Max.   :80.00   Max.   :8.00             
-##                                           
-##                            X          uniID                abun       
-##                             :227   Length:228         Min.   : 0.000  
-##  blue and white knocked over:  1   Class :character   1st Qu.: 5.000  
-##  east                       :  0   Mode  :character   Median : 9.000  
-##  east side                  :  0                      Mean   : 9.404  
-##  north                      :  0                      3rd Qu.:12.000  
-##  yellow knocked over        :  0                      Max.   :30.000  
-##                                                                       
-##        H            Simpson          Species            Even       
-##  Min.   :0.000   Min.   :0.0000   Min.   : 0.000   Min.   :0.0000  
-##  1st Qu.:1.332   1st Qu.:0.7321   1st Qu.: 4.000   1st Qu.:0.9138  
-##  Median :1.748   Median :0.8056   Median : 6.000   Median :0.9577  
-##  Mean   :1.583   Mean   :0.7569   Mean   : 6.254   Mean   :0.9104  
-##  3rd Qu.:1.994   3rd Qu.:0.8571   3rd Qu.: 8.000   3rd Qu.:0.9821  
-##  Max.   :2.516   Max.   :1.0000   Max.   :15.000   Max.   :1.0000  
-##                                                    NA&#39;s   :6</code></pre>
+##  percent.cover   perennial                            X      
+##  Min.   : 1.00       :223                              :227  
+##  1st Qu.: 2.00   1   :  4   blue and white knocked over:  1  
+##  Median :10.00   2   :  1   east                       :  0  
+##  Mean   :18.82   3   :  0   east side                  :  0  
+##  3rd Qu.:30.00   east:  0   north                      :  0  
+##  Max.   :80.00              yellow knocked over        :  0  
+##                                                              
+##     uniID                abun              H            Simpson      
+##  Length:228         Min.   : 0.000   Min.   :0.000   Min.   :0.0000  
+##  Class :character   1st Qu.: 5.000   1st Qu.:1.332   1st Qu.:0.7321  
+##  Mode  :character   Median : 9.000   Median :1.748   Median :0.8056  
+##                     Mean   : 9.404   Mean   :1.583   Mean   :0.7569  
+##                     3rd Qu.:12.000   3rd Qu.:1.994   3rd Qu.:0.8571  
+##                     Max.   :30.000   Max.   :2.516   Max.   :1.0000  
+##                                                                      
+##     Species            Even       
+##  Min.   : 0.000   Min.   :0.0000  
+##  1st Qu.: 4.000   1st Qu.:0.9138  
+##  Median : 6.000   Median :0.9577  
+##  Mean   : 6.254   Mean   :0.9104  
+##  3rd Qu.: 8.000   3rd Qu.:0.9821  
+##  Max.   :15.000   Max.   :1.0000  
+##                   NA&#39;s   :6</code></pre>
 <pre class="r"><code>#no Melyrid beetle output
 write.csv(metadata, &quot;Output Data/metadata_nobeetle.csv&quot;)
 write.csv(insects, &quot;Output Data/wide_nobeetle.csv&quot;)</code></pre>
@@ -810,14 +806,13 @@ metadata &lt;- read.csv(&quot;Clean Data/pantraps_cov.csv&quot;, header = TRUE)
 metadata &lt;- filter(metadata, species != &quot;buckhorn&quot;)
 metadata$plant.id &lt;- as.character(metadata$plant.id)
 str(metadata)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    228 obs. of  9 variables:
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  8 variables:
 ##  $ plant.id     : chr  &quot;296&quot; &quot;296&quot; &quot;189&quot; &quot;189&quot; ...
 ##  $ species      : Factor w/ 2 levels &quot;buckhorn&quot;,&quot;larrea&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 2 1 2 1 2 1 2 1 2 1 ...
 ##  $ blooming     : Factor w/ 2 levels &quot;post&quot;,&quot;pre&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ date         : Factor w/ 21 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ percent.cover: int  15 3 25 2 40 15 40 3 70 10 ...
-##  $ rich         : int  3 3 6 6 1 3 3 2 3 4 ...
 ##  $ perennial    : Factor w/ 5 levels &quot;&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ X            : Factor w/ 6 levels &quot;&quot;,&quot;blue and white knocked over&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <pre class="r"><code>metadata$uniID &lt;- paste(metadata$date, metadata$plant.id, metadata$treatment)
@@ -886,30 +881,30 @@ summary(metadata)</code></pre>
 ##  3rd Qu.:18.56                                                           
 ##  Max.   :28.51                                                           
 ##                                                                          
-##  percent.cover        rich      perennial 
-##  Min.   : 1.00   Min.   :1.00       :223  
-##  1st Qu.: 2.00   1st Qu.:2.00   1   :  4  
-##  Median :10.00   Median :3.00   2   :  1  
-##  Mean   :18.82   Mean   :3.25   3   :  0  
-##  3rd Qu.:30.00   3rd Qu.:4.00   east:  0  
-##  Max.   :80.00   Max.   :8.00             
-##                                           
-##                            X          uniID                abun      
-##                             :227   Length:228         Min.   : 0.00  
-##  blue and white knocked over:  1   Class :character   1st Qu.:10.00  
-##  east                       :  0   Mode  :character   Median :14.00  
-##  east side                  :  0                      Mean   :14.86  
-##  north                      :  0                      3rd Qu.:19.00  
-##  yellow knocked over        :  0                      Max.   :55.00  
-##                                                                      
-##        H            Simpson          Species           Even       
-##  Min.   :0.000   Min.   :0.0000   Min.   : 0.00   Min.   :0.0000  
-##  1st Qu.:1.233   1st Qu.:0.6239   1st Qu.: 5.00   1st Qu.:0.7950  
-##  Median :1.699   Median :0.7769   Median : 7.00   Median :0.8842  
-##  Mean   :1.570   Mean   :0.7034   Mean   : 7.11   Mean   :0.8413  
-##  3rd Qu.:1.991   3rd Qu.:0.8344   3rd Qu.: 9.00   3rd Qu.:0.9464  
-##  Max.   :2.552   Max.   :1.0000   Max.   :16.00   Max.   :1.0000  
-##                                                   NA&#39;s   :6</code></pre>
+##  percent.cover   perennial                            X      
+##  Min.   : 1.00       :223                              :227  
+##  1st Qu.: 2.00   1   :  4   blue and white knocked over:  1  
+##  Median :10.00   2   :  1   east                       :  0  
+##  Mean   :18.82   3   :  0   east side                  :  0  
+##  3rd Qu.:30.00   east:  0   north                      :  0  
+##  Max.   :80.00              yellow knocked over        :  0  
+##                                                              
+##     uniID                abun             H            Simpson      
+##  Length:228         Min.   : 0.00   Min.   :0.000   Min.   :0.0000  
+##  Class :character   1st Qu.:10.00   1st Qu.:1.233   1st Qu.:0.6239  
+##  Mode  :character   Median :14.00   Median :1.699   Median :0.7769  
+##                     Mean   :14.86   Mean   :1.570   Mean   :0.7034  
+##                     3rd Qu.:19.00   3rd Qu.:1.991   3rd Qu.:0.8344  
+##                     Max.   :55.00   Max.   :2.552   Max.   :1.0000  
+##                                                                     
+##     Species           Even       
+##  Min.   : 0.00   Min.   :0.0000  
+##  1st Qu.: 5.00   1st Qu.:0.7950  
+##  Median : 7.00   Median :0.8842  
+##  Mean   : 7.11   Mean   :0.8413  
+##  3rd Qu.: 9.00   3rd Qu.:0.9464  
+##  Max.   :16.00   Max.   :1.0000  
+##                  NA&#39;s   :6</code></pre>
 <pre class="r"><code>#beetle output
 write.csv(metadata, &quot;Output Data/metadata_yesbeetle.csv&quot;)
 write.csv(insects, &quot;Output Data/wide_yesbeetle.csv&quot;)</code></pre>
@@ -924,14 +919,13 @@ metadata &lt;- read.csv(&quot;Clean Data/pantraps_cov.csv&quot;, header = TRUE)
 metadata &lt;- filter(metadata, species != &quot;buckhorn&quot;)
 metadata$plant.id &lt;- as.character(metadata$plant.id)
 str(metadata)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    228 obs. of  9 variables:
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  8 variables:
 ##  $ plant.id     : chr  &quot;296&quot; &quot;296&quot; &quot;189&quot; &quot;189&quot; ...
 ##  $ species      : Factor w/ 2 levels &quot;buckhorn&quot;,&quot;larrea&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 2 1 2 1 2 1 2 1 2 1 ...
 ##  $ blooming     : Factor w/ 2 levels &quot;post&quot;,&quot;pre&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ date         : Factor w/ 21 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ percent.cover: int  15 3 25 2 40 15 40 3 70 10 ...
-##  $ rich         : int  3 3 6 6 1 3 3 2 3 4 ...
 ##  $ perennial    : Factor w/ 5 levels &quot;&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ X            : Factor w/ 6 levels &quot;&quot;,&quot;blue and white knocked over&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <pre class="r"><code>metadata$uniID &lt;- paste(metadata$date, metadata$plant.id, metadata$treatment)
@@ -994,35 +988,33 @@ summary(metadata)</code></pre>
 ##  Mean   :18.46                                                           
 ##  3rd Qu.:18.56                                                           
 ##  Max.   :28.51                                                           
-##  percent.cover        rich      perennial 
-##  Min.   : 1.00   Min.   :1.00       :223  
-##  1st Qu.: 2.00   1st Qu.:2.00   1   :  4  
-##  Median :10.00   Median :3.00   2   :  1  
-##  Mean   :18.82   Mean   :3.25   3   :  0  
-##  3rd Qu.:30.00   3rd Qu.:4.00   east:  0  
-##  Max.   :80.00   Max.   :8.00             
-##                            X          uniID                abun       
-##                             :227   Length:228         Min.   : 0.000  
-##  blue and white knocked over:  1   Class :character   1st Qu.: 1.750  
-##  east                       :  0   Mode  :character   Median : 4.000  
-##  east side                  :  0                      Mean   : 5.452  
-##  north                      :  0                      3rd Qu.: 7.000  
-##  yellow knocked over        :  0                      Max.   :46.000  
-##        H            Simpson          Species            Even    
-##  Min.   :4.908   Min.   :0.9899   Min.   :0.0000   Min.   :  0  
-##  1st Qu.:4.908   1st Qu.:0.9899   1st Qu.:1.0000   1st Qu.:Inf  
-##  Median :4.908   Median :0.9899   Median :1.0000   Median :Inf  
-##  Mean   :4.908   Mean   :0.9899   Mean   :0.8553   Mean   :Inf  
-##  3rd Qu.:4.908   3rd Qu.:0.9899   3rd Qu.:1.0000   3rd Qu.:Inf  
-##  Max.   :4.908   Max.   :0.9899   Max.   :1.0000   Max.   :Inf</code></pre>
+##  percent.cover   perennial                            X      
+##  Min.   : 1.00       :223                              :227  
+##  1st Qu.: 2.00   1   :  4   blue and white knocked over:  1  
+##  Median :10.00   2   :  1   east                       :  0  
+##  Mean   :18.82   3   :  0   east side                  :  0  
+##  3rd Qu.:30.00   east:  0   north                      :  0  
+##  Max.   :80.00              yellow knocked over        :  0  
+##     uniID                abun              H            Simpson      
+##  Length:228         Min.   : 0.000   Min.   :4.908   Min.   :0.9899  
+##  Class :character   1st Qu.: 1.750   1st Qu.:4.908   1st Qu.:0.9899  
+##  Mode  :character   Median : 4.000   Median :4.908   Median :0.9899  
+##                     Mean   : 5.452   Mean   :4.908   Mean   :0.9899  
+##                     3rd Qu.: 7.000   3rd Qu.:4.908   3rd Qu.:0.9899  
+##                     Max.   :46.000   Max.   :4.908   Max.   :0.9899  
+##     Species            Even    
+##  Min.   :0.0000   Min.   :  0  
+##  1st Qu.:1.0000   1st Qu.:Inf  
+##  Median :1.0000   Median :Inf  
+##  Mean   :0.8553   Mean   :Inf  
+##  3rd Qu.:1.0000   3rd Qu.:Inf  
+##  Max.   :1.0000   Max.   :Inf</code></pre>
 <pre class="r"><code>#no beetle output
 write.csv(metadata, &quot;Output Data/metadata_onlybeetle.csv&quot;)
 write.csv(insects, &quot;Output Data/wide_onlybeetle.csv&quot;)</code></pre>
 <hr />
+<p>#Statistics and modelling</p>
 </div>
-</div>
-<div id="statistics-and-modelling" class="section level1">
-<h1>Statistics and modelling</h1>
 <div id="visitation-and-pollen-deposition" class="section level2">
 <h2>Visitation and pollen deposition</h2>
 <div id="visitation-modelling" class="section level3">
@@ -1033,7 +1025,39 @@ byrep$repID &lt;- paste(byrep$PlantID, byrep$treatment)
 byrep$treatment &lt;- relevel(byrep$treatment, &quot;open&quot;)
 byrep$flowering &lt;- relevel(byrep$flowering, &quot;pre&quot;)
 
-#calculate mean video length
+count(byrep, Date)</code></pre>
+<pre><code>## # A tibble: 20 x 2
+##    Date          n
+##    &lt;fct&gt;     &lt;int&gt;
+##  1 4.10.2017    11
+##  2 4.11.2017    10
+##  3 4.12.2017    12
+##  4 4.13.2017    12
+##  5 4.14.2017    12
+##  6 4.15.2017    12
+##  7 4.16.2017    11
+##  8 4.18.2017    12
+##  9 4.19.2017    12
+## 10 4.20.2017    12
+## 11 4.21.2017    12
+## 12 4.22.2017    12
+## 13 4.23.2017    12
+## 14 4.25.2017    12
+## 15 4.26.2017    12
+## 16 4.27.2017    12
+## 17 4.29.2017    12
+## 18 4.30.2017    12
+## 19 5.1.2017     12
+## 20 5.2.2017     11</code></pre>
+<pre class="r"><code>dates &lt;- read.csv(&quot;Clean Data/dates.csv&quot;)
+dates$Dates &lt;- gsub(&#39;\\s+&#39;, &quot;&quot;, dates$Dates)
+
+
+dates$Date &lt;- dates$Dates
+byrep &lt;- left_join(byrep, dates, by = &quot;Date&quot;)</code></pre>
+<pre><code>## Warning: Column `Date` joining factor and character vector, coercing into
+## character vector</code></pre>
+<pre class="r"><code>#calculate mean video length
 mean(byrep$dec.Length)</code></pre>
 <pre><code>## [1] 1.324978</code></pre>
 <pre class="r"><code>#calculate total flower visits and total foraging instances
@@ -1045,7 +1069,7 @@ sum(byrep$total.flowers)</code></pre>
 <p>Flower visits</p>
 <pre class="r"><code>#base hypothesis testing model
 #additive
-m1 &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
+m1 &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot +  offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
 summary(m1)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
 ## Formula:          
@@ -1073,8 +1097,6 @@ summary(m1)</code></pre>
 ## flowers.pot     0.06992    0.02667   2.622  0.00874 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>plot(residuals(m1)~predict(m1))</code></pre>
-<p><img src="index_files/figure-html/visitation%20models%20base-1.png" width="672" /></p>
 <pre class="r"><code>car::Anova(m1, type = 2)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
@@ -1186,7 +1208,7 @@ summary(null)</code></pre>
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>#model 1 is best fit</code></pre>
-<p>Foraging instances</p>
+<p>Foraging bouts</p>
 <pre class="r"><code>#base additive model foraging instances
 m3 &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = &quot;nbinom2&quot;, data = byrep)
 summary(m3)</code></pre>
@@ -1484,7 +1506,9 @@ car::Anova(q, type = 2)</code></pre>
 <pre><code>##      df      AIC
 ## c2.v  7 982.5998
 ## q     7 988.4092</code></pre>
-<pre class="r"><code>c2.vnest &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
+<pre class="r"><code>#nbinom2 better
+
+c2.vnest &lt;- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
 summary(c2.vnest)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
 ## Formula:          
@@ -1512,6 +1536,80 @@ summary(c2.vnest)</code></pre>
 ## floweringbloom            -1.22826    0.14485  -8.479  &lt; 2e-16 ***
 ## flowers.pot                0.05863    0.02389   2.455  0.01410 *  
 ## het.annual.floral.density  0.04069    0.01984   2.051  0.04029 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>#checking interactions
+c2.i &lt;- glmmTMB(total.visits ~ treatment * flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
+summary(c2.i)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          
+## total.visits ~ treatment * flowering + het.annual.floral.density +  
+##     flowers.pot + offset(log(dec.Length)) + (1 | repID)
+## Data: byrep
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    984.6   1012.1   -484.3    968.6      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.06381  0.2526  
+## Number of obs: 231, groups:  repID, 122
+## 
+## Overdispersion parameter for nbinom2 family (): 1.61 
+## 
+## Conditional model:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                    0.78997    0.26854   2.942  0.00326 ** 
+## treatmentshrub                -0.35953    0.18652  -1.928  0.05390 .  
+## floweringbloom                -1.24598    0.19511  -6.386  1.7e-10 ***
+## het.annual.floral.density      0.04060    0.01984   2.047  0.04066 *  
+## flowers.pot                    0.05873    0.02371   2.477  0.01326 *  
+## treatmentshrub:floweringbloom  0.03595    0.28041   0.128  0.89799    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>car::Anova(c2.i, type = 3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: total.visits
+##                             Chisq Df Pr(&gt;Chisq)    
+## (Intercept)                8.6539  1   0.003264 ** 
+## treatment                  3.7156  1   0.053905 .  
+## flowering                 40.7836  1  1.701e-10 ***
+## het.annual.floral.density  4.1901  1   0.040661 *  
+## flowers.pot                6.1345  1   0.013257 *  
+## treatment:flowering        0.0164  1   0.897987    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>c2.f &lt;- glmmTMB(total.flowers ~ treatment * flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
+summary(c2.f)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          
+## total.flowers ~ treatment * flowering + het.annual.floral.density +  
+##     flowers.pot + offset(log(dec.Length)) + (1 | repID)
+## Data: byrep
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   1095.7   1123.3   -539.9   1079.7      223 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups Name        Variance Std.Dev.
+##  repID  (Intercept) 0.1289   0.359   
+## Number of obs: 231, groups:  repID, 122
+## 
+## Overdispersion parameter for nbinom2 family (): 1.08 
+## 
+## Conditional model:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                    0.83601    0.30584   2.734  0.00627 ** 
+## treatmentshrub                -0.39872    0.22043  -1.809  0.07048 .  
+## floweringbloom                -1.24927    0.22058  -5.664 1.48e-08 ***
+## het.annual.floral.density      0.04008    0.02338   1.714  0.08653 .  
+## flowers.pot                    0.08033    0.02704   2.970  0.00297 ** 
+## treatmentshrub:floweringbloom  0.04714    0.31546   0.149  0.88121    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Number of blooming shrub neighbours</p>
@@ -2554,7 +2652,7 @@ mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers
 ##  $ total.visits                  : int  18 2 0 0 0 0 6 1 0 0 ...
 ##  $ total.flowers                 : int  35 5 0 0 0 0 8 2 0 0 ...
 ##  $ Length                        : Factor w/ 225 levels &quot;0:31:34&quot;,&quot;0:32:53&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
-##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-03-01 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
+##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-07-22 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
 ##  $ dec.Length                    : num  1.38 1.38 1.38 1.38 1.38 ...
 ##  $ visits.per.hour               : num  13.04 1.45 0 0 0 ...
 ##  $ flowers.per.hour              : num  25.35 3.62 0 0 0 ...
@@ -2694,137 +2792,137 @@ anova(m1, m2, m3, null)</code></pre>
 labels &lt;- c(pre = &quot;Pre-blooming&quot;, post = &quot;Blooming&quot;, bloom = &quot;Blooming&quot;)
 
 #filter(rtu.data, dec.total.time&lt;1.5) %&gt;% ggplot(aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= &quot;Spectral&quot;) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Duration of visit (decimal time)&quot;) + labs(fill=&quot;&quot;) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(&quot;&quot;, values = c(&quot;bee&quot; =&quot;#D53E4F&quot;, &quot;bombylid&quot;= &quot;#FC8D59&quot;, &quot;honeybee&quot;= &quot;#FEE08B&quot;, &quot;lep&quot;= &quot;#D3D3D3&quot;, &quot;other&quot;= &quot;#99D594&quot;, &quot;syrphid&quot; = &quot;#3288BD&quot;), labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;))</code></pre>
-</div>
-<div id="proportion-of-unique-flowers-visited-per-foraging-instance" class="section level3">
-<h3>Proportion of unique flowers visited per foraging instance</h3>
+<p>###Proportion of unique flowers visited per foraging instance</p>
 <pre class="r"><code>rtu.data &lt;- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 
 ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()</code></pre>
 <p><img src="index_files/figure-html/proportion-1.png" width="672" /></p>
 <pre class="r"><code>source(system.file(&quot;other_methods&quot;,&quot;lsmeans_methods.R&quot;,package=&quot;glmmTMB&quot;))
-m1 &lt;- glmmTMB(prop.visited ~ flowering * microsite + flowers.pot + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+
+
+
+#proportions should use logistic model
+
+m1 &lt;- glmmTMB(cbind(unique.fl.visited,flower.fov) ~ flowering * flowers.pot + microsite  + (1|repID), family = binomial, data = rtu.data)
+
 summary(m1)</code></pre>
-<pre><code>##  Family: Gamma  ( log )
+<pre><code>##  Family: binomial  ( logit )
 ## Formula:          
-## prop.visited ~ flowering * microsite + flowers.pot + (1 | repID)
+## cbind(unique.fl.visited, flower.fov) ~ flowering * flowers.pot +  
+##     microsite + (1 | repID)
 ## Data: rtu.data
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##  -2211.9  -2180.1   1113.0  -2225.9      690 
+##   1578.0   1605.3   -783.0   1566.0      691 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
-##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.04317  0.2078  
+##  Groups Name        Variance  Std.Dev. 
+##  repID  (Intercept) 2.136e-09 4.621e-05
 ## Number of obs: 697, groups:  repID, 118
 ## 
-## Dispersion estimate for Gamma family (sigma^2): 0.121 
-## 
 ## Conditional model:
-##                                Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                   -1.455082   0.074087 -19.640   &lt;2e-16 ***
-## floweringbloom                 0.015428   0.047902   0.322    0.747    
-## micrositeshrub                 0.029692   0.055144   0.538    0.590    
-## flowers.pot                   -0.055854   0.006584  -8.483   &lt;2e-16 ***
-## floweringbloom:micrositeshrub -0.092542   0.074141  -1.248    0.212    
+##                            Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                -1.27613    0.14741  -8.657  &lt; 2e-16 ***
+## floweringbloom             -0.36702    0.27460  -1.337    0.181    
+## flowers.pot                -0.06897    0.01378  -5.005 5.59e-07 ***
+## micrositeshrub             -0.04574    0.07273  -0.629    0.529    
+## floweringbloom:flowers.pot  0.03254    0.02373   1.371    0.170    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>car::Anova(m1, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
-## Response: prop.visited
-##                        Chisq Df Pr(&gt;Chisq)    
-## (Intercept)         385.7399  1     &lt;2e-16 ***
-## flowering             0.1037  1     0.7474    
-## microsite             0.2899  1     0.5903    
-## flowers.pot          71.9668  1     &lt;2e-16 ***
-## flowering:microsite   1.5580  1     0.2120    
+## Response: cbind(unique.fl.visited, flower.fov)
+##                         Chisq Df Pr(&gt;Chisq)    
+## (Intercept)           74.9409  1  &lt; 2.2e-16 ***
+## flowering              1.7863  1     0.1814    
+## flowers.pot           25.0481  1  5.592e-07 ***
+## microsite              0.3955  1     0.5294    
+## flowering:flowers.pot  1.8793  1     0.1704    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>lsmeans(m1, pairwise~flowering*microsite)</code></pre>
 <pre><code>## $lsmeans
 ##  flowering microsite    lsmean         SE df asymp.LCL asymp.UCL
-##  pre       open      -2.023315 0.03805395 NA -2.097900 -1.948731
-##  bloom     open      -2.007888 0.04700111 NA -2.100008 -1.915767
-##  pre       shrub     -1.993624 0.04022685 NA -2.072467 -1.914781
-##  bloom     shrub     -2.070738 0.05395316 NA -2.176485 -1.964992
+##  pre       open      -1.977767 0.05116867 NA -2.078056 -1.877478
+##  bloom     open      -2.013779 0.07825281 NA -2.167152 -1.860407
+##  pre       shrub     -2.023510 0.06066125 NA -2.142404 -1.904616
+##  bloom     shrub     -2.059522 0.08425332 NA -2.224656 -1.894389
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ##  contrast                    estimate         SE df z.ratio p.value
-##  pre,open - bloom,open    -0.01542768 0.04790249 NA  -0.322  0.9885
-##  pre,open - pre,shrub     -0.02969173 0.05514448 NA  -0.538  0.9496
-##  pre,open - bloom,shrub    0.04742293 0.06629350 NA   0.715  0.8910
-##  bloom,open - pre,shrub   -0.01426404 0.06229601 NA  -0.229  0.9958
-##  bloom,open - bloom,shrub  0.06285061 0.07090418 NA   0.886  0.8119
-##  pre,shrub - bloom,shrub   0.07711465 0.05839133 NA   1.321  0.5497
+##  pre,open - bloom,open    0.036012706 0.08376819 NA   0.430  0.9734
+##  pre,open - pre,shrub     0.045743006 0.07273415 NA   0.629  0.9228
+##  pre,open - bloom,shrub   0.081755712 0.11054832 NA   0.740  0.8811
+##  bloom,open - pre,shrub   0.009730299 0.11132745 NA   0.087  0.9998
+##  bloom,open - bloom,shrub 0.045743006 0.07273415 NA   0.629  0.9228
+##  pre,shrub - bloom,shrub  0.036012706 0.08376819 NA   0.430  0.9734
 ## 
 ## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
-<pre class="r"><code>m2 &lt;- glmmTMB(prop.visited ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
+<pre class="r"><code>m2 &lt;- glmmTMB(cbind(unique.fl.visited,flower.fov) ~ flowering + microsite + flowers.pot + (1|repID), family = binomial, data = rtu.data)
 summary(m2)</code></pre>
-<pre><code>##  Family: Gamma  ( log )
+<pre><code>##  Family: binomial  ( logit )
 ## Formula:          
-## prop.visited ~ flowering + microsite + flowers.pot + (1 | repID)
+## cbind(unique.fl.visited, flower.fov) ~ flowering + microsite +  
+##     flowers.pot + (1 | repID)
 ## Data: rtu.data
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##  -2212.4  -2185.1   1112.2  -2224.4      691 
+##   1577.9   1600.6   -784.0   1567.9      692 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
-##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.04177  0.2044  
+##  Groups Name        Variance Std.Dev. 
+##  repID  (Intercept) 2.29e-09 4.785e-05
 ## Number of obs: 697, groups:  repID, 118
 ## 
-## Dispersion estimate for Gamma family (sigma^2): 0.122 
-## 
 ## Conditional model:
-##                  Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)    -1.4354689  0.0719549 -19.950   &lt;2e-16 ***
-## floweringbloom -0.0212773  0.0376365  -0.565    0.572    
-## micrositeshrub  0.0002944  0.0493337   0.006    0.995    
-## flowers.pot    -0.0565629  0.0065215  -8.673   &lt;2e-16 ***
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -1.384479   0.124396 -11.130  &lt; 2e-16 ***
+## floweringbloom -0.008847   0.080561  -0.110    0.913    
+## micrositeshrub -0.045514   0.072725  -0.626    0.531    
+## flowers.pot    -0.058234   0.011211  -5.195 2.05e-07 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>car::Anova(m2, type = 3)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
-## Response: prop.visited
+## Response: cbind(unique.fl.visited, flower.fov)
 ##                Chisq Df Pr(&gt;Chisq)    
-## (Intercept) 397.9857  1     &lt;2e-16 ***
-## flowering     0.3196  1     0.5718    
-## microsite     0.0000  1     0.9952    
-## flowers.pot  75.2265  1     &lt;2e-16 ***
+## (Intercept) 123.8679  1  &lt; 2.2e-16 ***
+## flowering     0.0121  1     0.9126    
+## microsite     0.3917  1     0.5314    
+## flowers.pot  26.9839  1  2.052e-07 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>m2null &lt;- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = &quot;log&quot;), data = rtu.data)
 
-anova(m1, m2, m2null)</code></pre>
+anova(m2null, m1, m2)</code></pre>
 <pre><code>## Data: rtu.data
 ## Models:
 ## m2null: prop.visited ~ (1 | repID), zi=~0, disp=~1
-## m2: prop.visited ~ flowering + microsite + flowers.pot + (1 | repID), zi=~0, disp=~1
-## m1: prop.visited ~ flowering * microsite + flowers.pot + (1 | repID), zi=~0, disp=~1
-##        Df     AIC     BIC logLik deviance   Chisq Chi Df Pr(&gt;Chisq)    
-## m2null  3 -2142.5 -2128.9 1074.3  -2148.5                              
-## m2      6 -2212.3 -2185.1 1112.2  -2224.3 75.8206      3  2.417e-16 ***
-## m1      7 -2211.9 -2180.1 1113.0  -2225.9  1.5582      1     0.2119    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## m2: cbind(unique.fl.visited, flower.fov) ~ flowering + microsite + , zi=~0, disp=~1
+## m2:     flowers.pot + (1 | repID), zi=~0, disp=~1
+## m1: cbind(unique.fl.visited, flower.fov) ~ flowering * flowers.pot + , zi=~0, disp=~1
+## m1:     microsite + (1 | repID), zi=~0, disp=~1
+##        Df     AIC     BIC  logLik deviance  Chisq Chi Df Pr(&gt;Chisq)
+## m2null  3 -2142.5 -2128.9 1074.27  -2148.5                         
+## m2      5  1577.9  1600.7 -783.96   1567.9 0.0000      2     1.0000
+## m1      6  1578.0  1605.3 -783.02   1566.0 1.8671      1     0.1718</code></pre>
 <pre class="r"><code>AIC(m1, m2, m2null)</code></pre>
 <pre><code>##        df       AIC
-## m1      7 -2211.912
-## m2      6 -2212.354
+## m1      6  1578.048
+## m2      5  1577.915
 ## m2null  3 -2142.533</code></pre>
 <pre class="r"><code>ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)</code></pre>
 <p><img src="index_files/figure-html/proportion-2.png" width="672" /></p>
 <pre class="r"><code>#ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= &quot;Spectral&quot;) + theme_Publication() + xlab(&quot;Microsite&quot;) + ylab(&quot;Proportion of flowers visited&quot;) + labs(fill=&quot;&quot;) + theme(legend.text = element_text(size = 16)) + scale_fill_manual(&quot;&quot;, values = c(&quot;bee&quot; =&quot;#D53E4F&quot;, &quot;bombylid&quot;= &quot;#FC8D59&quot;, &quot;honeybee&quot;= &quot;#FEE08B&quot;, &quot;lep&quot;= &quot;#D3D3D3&quot;, &quot;other&quot;= &quot;#99D594&quot;, &quot;syrphid&quot; = &quot;#3288BD&quot;), labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;))</code></pre>
-</div>
-<div id="pollen-deposition" class="section level3">
-<h3>Pollen Deposition</h3>
+<p>###Pollen Deposition</p>
 <pre class="r"><code>counts &lt;- read.csv(&quot;Clean Data/Pollen_Corrected.csv&quot;)
 cov &lt;- read.csv(&quot;Clean Data/pollen_cov.csv&quot;)
 counts$X &lt;- as.numeric(as.character(counts$X))   </code></pre>
@@ -2860,18 +2958,6 @@ ggplot(data =counts.ag,(aes(microsite.x, Con))) + geom_boxplot()</code></pre>
 <p><img src="index_files/figure-html/pollen%20deposition-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(data =counts.ag,(aes(microsite.x, Het))) + geom_boxplot()</code></pre>
 <p><img src="index_files/figure-html/pollen%20deposition-2.png" width="672" /></p>
-<pre class="r"><code>t.test(counts.ag$Con ~ counts.ag$microsite.x)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  counts.ag$Con by counts.ag$microsite.x
-## t = 1.5147, df = 221.36, p-value = 0.1313
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -3.308033 25.285395
-## sample estimates:
-##  mean in group open mean in group shrub 
-##            75.68696            64.69828</code></pre>
 <pre class="r"><code>ggplot(data = counts.ag, (aes(Con))) + geom_freqpoly()</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="index_files/figure-html/pollen%20deposition-3.png" width="672" /></p>
@@ -2884,7 +2970,7 @@ ggplot(data =counts.ag,(aes(microsite.x, Con))) + geom_boxplot()</code></pre>
 <pre class="r"><code>counts.ag$Flower &lt;- paste(counts.ag$Rep, counts.ag$Flower)
 counts.ag$Sample &lt;- paste(counts.ag$Slide, counts.ag$Rep)
 counts.ag$d.S &lt;- counts.ag$d.S %&gt;% replace(is.na(.), 0)
-
+counts.ag &lt;- counts.ag %&gt;% mutate(., all = Con + Het)
 cor.test(counts.ag$Con, counts.ag$Het)</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
@@ -2992,8 +3078,30 @@ summary(m3)</code></pre>
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>null &lt;- glmmTMB(Con ~ (1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)
-
-AIC(m1, m2, m3, null)</code></pre>
+summary(null)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          Con ~ (1 | Rep/Flower)
+## Data: counts.ag
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   2379.3   2393.1  -1185.6   2371.3      227 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups     Name        Variance  Std.Dev. 
+##  Flower:Rep (Intercept) 3.583e-08 0.0001893
+##  Rep        (Intercept) 8.571e-02 0.2927643
+## Number of obs: 231, groups:  Flower:Rep, 78; Rep, 26
+## 
+## Overdispersion parameter for nbinom2 family (): 2.22 
+## 
+## Conditional model:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  4.20487    0.07338   57.31   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>AIC(m1, m2, m3, null)</code></pre>
 <pre><code>##      df      AIC
 ## m1    7 2381.494
 ## m2    6 2379.803
@@ -3011,116 +3119,139 @@ AIC(m1, m2, m3, null)</code></pre>
 ## m3    5 2378.7 2395.9 -1184.3   2368.7 2.6199      1     0.1055
 ## m2    6 2379.8 2400.5 -1183.9   2367.8 0.8609      1     0.3535
 ## m1    7 2381.5 2405.6 -1183.8   2367.5 0.3090      1     0.5783</code></pre>
-<pre class="r"><code>m4 &lt;- glmmTMB(Het ~ d.flowers + dN1 + d.S + (1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)
-summary(m4)</code></pre>
+<pre class="r"><code>m4 &lt;- glmmTMB(Het ~ d.flowers + dN1 + d.S + z +(1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)</code></pre>
+<pre><code>## Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-
+## definite Hessian matrix. See vignette(&#39;troubleshooting&#39;)</code></pre>
+<pre class="r"><code>summary(m4)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
-## Formula:          Het ~ d.flowers + dN1 + d.S + (1 | Rep/Flower)
+## Formula:          Het ~ d.flowers + dN1 + d.S + z + (1 | Rep/Flower)
 ## Data: counts.ag
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1368.7   1392.8   -677.3   1354.7      224 
+##       NA       NA       NA       NA      108 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups     Name        Variance  Std.Dev. 
-##  Flower:Rep (Intercept) 1.356e-08 0.0001164
-##  Rep        (Intercept) 1.852e-01 0.4303889
-## Number of obs: 231, groups:  Flower:Rep, 78; Rep, 26
+##  Flower:Rep (Intercept) 5.477e-02 2.340e-01
+##  Rep        (Intercept) 7.078e-09 8.413e-05
+## Number of obs: 116, groups:  Flower:Rep, 39; Rep, 13
 ## 
-## Overdispersion parameter for nbinom2 family (): 2.01 
+## Overdispersion parameter for nbinom2 family (): 1.74 
 ## 
 ## Conditional model:
-##               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  1.8080370  0.2068332   8.742   &lt;2e-16 ***
-## d.flowers   -0.0204246  0.0150484  -1.357   0.1747    
-## dN1         -0.0006012  0.0018279  -0.329   0.7422    
-## d.S          0.0012235  0.0005063   2.416   0.0157 *  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+##               Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  2.1011722         NA      NA       NA
+## d.flowers    0.0051848         NA      NA       NA
+## dN1          0.0008273         NA      NA       NA
+## d.S          0.0000000         NA      NA       NA
+## z           -0.0031817         NA      NA       NA</code></pre>
 <pre class="r"><code>car::Anova(m4, type = 2)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: Het
-##            Chisq Df Pr(&gt;Chisq)  
-## d.flowers 1.8422  1    0.17470  
-## dN1       0.1082  1    0.74223  
-## d.S       5.8389  1    0.01568 *
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>m5 &lt;- glmmTMB(Het ~ d.flowers + d.S + (1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)
-summary(m5)</code></pre>
+##           Chisq Df Pr(&gt;Chisq)
+## d.flowers        1           
+## dN1              1           
+## d.S              1           
+## z                1</code></pre>
+<pre class="r"><code>m5 &lt;- glmmTMB(Het ~ d.flowers + d.S + z+ (1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)</code></pre>
+<pre><code>## Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-
+## definite Hessian matrix. See vignette(&#39;troubleshooting&#39;)</code></pre>
+<pre class="r"><code>summary(m5)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
-## Formula:          Het ~ d.flowers + d.S + (1 | Rep/Flower)
+## Formula:          Het ~ d.flowers + d.S + z + (1 | Rep/Flower)
 ## Data: counts.ag
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1366.8   1387.4   -677.4   1354.8      225 
+##       NA       NA       NA       NA      109 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups     Name        Variance  Std.Dev. 
-##  Flower:Rep (Intercept) 1.063e-08 0.0001031
-##  Rep        (Intercept) 1.874e-01 0.4328477
-## Number of obs: 231, groups:  Flower:Rep, 78; Rep, 26
+##  Flower:Rep (Intercept) 5.982e-02 0.2445824
+##  Rep        (Intercept) 1.197e-08 0.0001094
+## Number of obs: 116, groups:  Flower:Rep, 39; Rep, 13
 ## 
-## Overdispersion parameter for nbinom2 family (): 2.01 
+## Overdispersion parameter for nbinom2 family (): 1.75 
 ## 
 ## Conditional model:
-##               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  1.7651369  0.1611814  10.951   &lt;2e-16 ***
-## d.flowers   -0.0212779  0.0148847  -1.430   0.1529    
-## d.S          0.0012303  0.0005079   2.422   0.0154 *  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>m6 &lt;- glmmTMB(Het ~ d.S + (1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)
-summary(m6)</code></pre>
+##              Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  2.158598         NA      NA       NA
+## d.flowers    0.005629         NA      NA       NA
+## d.S          0.000000         NA      NA       NA
+## z           -0.003179         NA      NA       NA</code></pre>
+<pre class="r"><code>m6 &lt;- glmmTMB(Het ~ d.S + z +(1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)</code></pre>
+<pre><code>## Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-
+## definite Hessian matrix. See vignette(&#39;troubleshooting&#39;)</code></pre>
+<pre class="r"><code>summary(m6)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
-## Formula:          Het ~ d.S + (1 | Rep/Flower)
+## Formula:          Het ~ d.S + z + (1 | Rep/Flower)
 ## Data: counts.ag
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1366.7   1384.0   -678.4   1356.7      226 
+##       NA       NA       NA       NA      110 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups     Name        Variance  Std.Dev. 
-##  Flower:Rep (Intercept) 9.622e-09 9.809e-05
-##  Rep        (Intercept) 2.062e-01 4.541e-01
-## Number of obs: 231, groups:  Flower:Rep, 78; Rep, 26
+##  Flower:Rep (Intercept) 5.906e-02 2.430e-01
+##  Rep        (Intercept) 8.412e-09 9.171e-05
+## Number of obs: 116, groups:  Flower:Rep, 39; Rep, 13
 ## 
-## Overdispersion parameter for nbinom2 family ():    2 
+## Overdispersion parameter for nbinom2 family (): 1.75 
+## 
+## Conditional model:
+##              Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  2.196206         NA      NA       NA
+## d.S          0.000000         NA      NA       NA
+## z           -0.003249         NA      NA       NA</code></pre>
+<pre class="r"><code>null &lt;- glmmTMB(Het ~ z+(1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)
+summary(null)</code></pre>
+<pre><code>##  Family: nbinom2  ( log )
+## Formula:          Het ~ z + (1 | Rep/Flower)
+## Data: counts.ag
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##    658.3    672.0   -324.1    648.3      111 
+## 
+## Random effects:
+## 
+## Conditional model:
+##  Groups     Name        Variance  Std.Dev. 
+##  Flower:Rep (Intercept) 5.906e-02 2.430e-01
+##  Rep        (Intercept) 8.412e-09 9.171e-05
+## Number of obs: 116, groups:  Flower:Rep, 39; Rep, 13
+## 
+## Overdispersion parameter for nbinom2 family (): 1.75 
 ## 
 ## Conditional model:
 ##              Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) 1.6426285  0.1415421  11.605   &lt;2e-16 ***
-## d.S         0.0010773  0.0005149   2.092   0.0364 *  
+## (Intercept)  2.196206   0.393752   5.578 2.44e-08 ***
+## z           -0.003249   0.002608  -1.246    0.213    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>null &lt;- glmmTMB(Het ~ (1|Rep/Flower), family = &quot;nbinom2&quot;, data = counts.ag)
-
-AIC(m4, m5, m6, null)</code></pre>
+<pre class="r"><code>AIC(m4, m5, m6, null)</code></pre>
 <pre><code>##      df      AIC
-## m4    7 1368.661
-## m5    6 1366.769
-## m6    5 1366.740
-## null  4 1368.697</code></pre>
+## m4    8       NA
+## m5    7       NA
+## m6    6       NA
+## null  5 658.2597</code></pre>
 <pre class="r"><code>anova(m4, m5, m6, null)</code></pre>
 <pre><code>## Data: counts.ag
 ## Models:
-## null: Het ~ (1 | Rep/Flower), zi=~0, disp=~1
-## m6: Het ~ d.S + (1 | Rep/Flower), zi=~0, disp=~1
-## m5: Het ~ d.flowers + d.S + (1 | Rep/Flower), zi=~0, disp=~1
-## m4: Het ~ d.flowers + dN1 + d.S + (1 | Rep/Flower), zi=~0, disp=~1
-##      Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(&gt;Chisq)  
-## null  4 1368.7 1382.5 -680.35   1360.7                           
-## m6    5 1366.7 1384.0 -678.37   1356.7 3.9573      1    0.04667 *
-## m5    6 1366.8 1387.4 -677.38   1354.8 1.9710      1    0.16034  
-## m4    7 1368.7 1392.8 -677.33   1354.7 0.1075      1    0.74301  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## null: Het ~ z + (1 | Rep/Flower), zi=~0, disp=~1
+## m6: Het ~ d.S + z + (1 | Rep/Flower), zi=~0, disp=~1
+## m5: Het ~ d.flowers + d.S + z + (1 | Rep/Flower), zi=~0, disp=~1
+## m4: Het ~ d.flowers + dN1 + d.S + z + (1 | Rep/Flower), zi=~0, disp=~1
+##      Df    AIC    BIC  logLik deviance Chisq Chi Df Pr(&gt;Chisq)
+## null  5 658.26 672.03 -324.13   648.26                        
+## m6    6                                           1           
+## m5    7                                           1           
+## m4    8                                           1</code></pre>
 <pre class="r"><code>p3 &lt;- ggplot(counts.ag, aes(d.S, Con)) + geom_point(shape = 1) + geom_smooth(colour = &quot;black&quot;, size = 0.5) + geom_jitter(shape = 1) + theme_Publication() + xlab(&quot;Distance to Larrea tridentata&quot;) + ylab(&quot;Conspecific Pollen Deposition&quot;)
 
 
@@ -3131,11 +3262,9 @@ plot_grid(p3, p4, labels = c(&quot;A&quot;, &quot;B&quot;), align = &quot;h&quot
 ## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="index_files/figure-html/pollen%20plots-1.png" width="672" /></p>
 <hr />
-</div>
-</div>
-<div id="community-level-effects" class="section level2">
-<h2>Community level effects</h2>
+<p>##Community level effects</p>
 <hr />
+</div>
 <div id="vegetation-modelling" class="section level3">
 <h3>Vegetation Modelling</h3>
 <p>GLMM for vegetation covariates to test for direct shrub facilitation/background flowering levels</p>
@@ -3997,7 +4126,7 @@ metadata$blooming &lt;- relevel(metadata$blooming, &quot;pre&quot;)
 sum(metadata$abun)</code></pre>
 <pre><code>## [1] 2144</code></pre>
 <pre class="r"><code>str(metadata)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    228 obs. of  21 variables:
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  20 variables:
 ##  $ X.1          : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ date         : Factor w/ 19 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ mean.Solar   : num  0.762 0.762 0.762 0.762 0.762 ...
@@ -4009,7 +4138,6 @@ sum(metadata$abun)</code></pre>
 ##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 1 2 1 2 1 2 1 2 1 2 ...
 ##  $ blooming     : Factor w/ 2 levels &quot;pre&quot;,&quot;post&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ percent.cover: int  10 70 2 25 15 40 3 40 2 20 ...
-##  $ rich         : int  4 3 6 6 3 1 2 3 5 4 ...
 ##  $ perennial    : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ X            : Factor w/ 2 levels &quot;&quot;,&quot;blue and white knocked over&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ uniID        : Factor w/ 228 levels &quot;4.10.2017 184 open&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
@@ -4181,7 +4309,7 @@ beetle$blooming &lt;- relevel(beetle$blooming, &quot;pre&quot;)
 sum(beetle$abun)</code></pre>
 <pre><code>## [1] 3387</code></pre>
 <pre class="r"><code>str(beetle)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    228 obs. of  21 variables:
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  20 variables:
 ##  $ X.1          : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ date         : Factor w/ 19 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ mean.Solar   : num  0.762 0.762 0.762 0.762 0.762 ...
@@ -4193,7 +4321,6 @@ sum(beetle$abun)</code></pre>
 ##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 1 2 1 2 1 2 1 2 1 2 ...
 ##  $ blooming     : Factor w/ 2 levels &quot;pre&quot;,&quot;post&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ percent.cover: int  10 70 2 25 15 40 3 40 2 20 ...
-##  $ rich         : int  4 3 6 6 3 1 2 3 5 4 ...
 ##  $ perennial    : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ X            : Factor w/ 2 levels &quot;&quot;,&quot;blue and white knocked over&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ uniID        : Factor w/ 228 levels &quot;4.10.2017 184 open&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
@@ -4349,7 +4476,7 @@ onlybeetle$blooming &lt;- relevel(onlybeetle$blooming, &quot;pre&quot;)
 sum(onlybeetle$abun)</code></pre>
 <pre><code>## [1] 1243</code></pre>
 <pre class="r"><code>str(beetle)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    228 obs. of  21 variables:
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  20 variables:
 ##  $ X.1          : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ date         : Factor w/ 19 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ mean.Solar   : num  0.762 0.762 0.762 0.762 0.762 ...
@@ -4361,7 +4488,6 @@ sum(onlybeetle$abun)</code></pre>
 ##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 1 2 1 2 1 2 1 2 1 2 ...
 ##  $ blooming     : Factor w/ 2 levels &quot;pre&quot;,&quot;post&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ percent.cover: int  10 70 2 25 15 40 3 40 2 20 ...
-##  $ rich         : int  4 3 6 6 3 1 2 3 5 4 ...
 ##  $ perennial    : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ X            : Factor w/ 2 levels &quot;&quot;,&quot;blue and white knocked over&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ uniID        : Factor w/ 228 levels &quot;4.10.2017 184 open&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
@@ -4626,14 +4752,13 @@ metadata &lt;- read.csv(&quot;Clean Data/pantraps_cov.csv&quot;, header = TRUE)
 metadata &lt;- filter(metadata, species != &quot;buckhorn&quot;)
 metadata$plant.id &lt;- as.character(metadata$plant.id)
 str(metadata)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    228 obs. of  9 variables:
+<pre><code>## &#39;data.frame&#39;:    228 obs. of  8 variables:
 ##  $ plant.id     : chr  &quot;296&quot; &quot;296&quot; &quot;189&quot; &quot;189&quot; ...
 ##  $ species      : Factor w/ 2 levels &quot;buckhorn&quot;,&quot;larrea&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ treatment    : Factor w/ 2 levels &quot;open&quot;,&quot;shrub&quot;: 2 1 2 1 2 1 2 1 2 1 ...
 ##  $ blooming     : Factor w/ 2 levels &quot;post&quot;,&quot;pre&quot;: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ date         : Factor w/ 21 levels &quot;4.10.2017&quot;,&quot;4.11.2017&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ percent.cover: int  15 3 25 2 40 15 40 3 70 10 ...
-##  $ rich         : int  3 3 6 6 1 3 3 2 3 4 ...
 ##  $ perennial    : Factor w/ 5 levels &quot;&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ X            : Factor w/ 6 levels &quot;&quot;,&quot;blue and white knocked over&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <pre class="r"><code>metadata$uniID &lt;- paste(metadata$date, metadata$plant.id, metadata$treatment)
@@ -4821,12 +4946,8 @@ car::Anova(m2, type = 2)</code></pre>
 ##            Chisq Df Pr(&gt;Chisq)
 ## treatment 0.1111  1     0.7389
 ## blooming  0.3073  1     0.5793</code></pre>
-<p>```</p>
 <p>Need to add code for bee abundance and bee diversity. Bee abundance won’t change, diversity is unlikely.</p>
-</div>
-<div id="visitation-to-l.-tridentata" class="section level3">
-<h3>Visitation to L. tridentata</h3>
-<p>In-situ observation of visitation to L. tridentata, to determine which pollinators were visiting and if visitation was related to flower number and/or height</p>
+<p>###Visitation to L. tridentata In-situ observation of visitation to L. tridentata, to determine which pollinators were visiting and if visitation was related to flower number and/or height</p>
 <pre class="r"><code>larrea &lt;- read.csv(&quot;Clean Data/larreavisits.csv&quot;)
 cov &lt;- read.csv(&quot;Clean Data/insitu_cov_larrea.csv&quot;)
 sizes &lt;- read.csv(&quot;Clean Data/video_larreadimensions.csv&quot;)
@@ -5016,14 +5137,12 @@ cor.test(lar.all$n.flowers, lar.all$height)</code></pre>
 ## sample estimates:
 ##       cor 
 ## 0.3355914</code></pre>
-<pre class="r"><code>#cor.test(repcounts.all$width, repcounts.all$height)</code></pre>
+<pre class="r"><code>#cor.test(repcounts.all$width, repcounts.all$height)
+
+mean(lar.all$height)</code></pre>
+<pre><code>## [1] NA</code></pre>
 <hr />
-</div>
-</div>
-</div>
-<div id="abiotic-effects" class="section level1">
-<h1>Abiotic effects</h1>
-<p>16 data loggers were placed in shrub/open microsites (8 and 8).</p>
+<p>#Abiotic effects 16 data loggers were placed in shrub/open microsites (8 and 8).</p>
 <pre class="r"><code>setwd(&quot;Clean Data/loggers&quot;)
 temp &lt;- list.files(pattern=&quot;*.csv&quot;)
 name &lt;- list.files(pattern=&quot;*.csv&quot;)
@@ -5226,10 +5345,7 @@ summary(m3)</code></pre>
 ## treatment 519.9  1  &lt; 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-</div>
-<div id="rii" class="section level1">
-<h1>RII</h1>
-<p>This code bootstraps 95% confidence intervals. Adapted from code written by Dr. Alex Filazzola <a href="https://github.com/afilazzola/CommEcolFunctions" class="uri">https://github.com/afilazzola/CommEcolFunctions</a></p>
+<p>#RII This code bootstraps 95% confidence intervals. Adapted from code written by Dr. Alex Filazzola <a href="https://github.com/afilazzola/CommEcolFunctions" class="uri">https://github.com/afilazzola/CommEcolFunctions</a></p>
 <pre class="r"><code>rii.m &lt;- function(x, j, var)
 {
   #parse out shrub and open
@@ -5255,7 +5371,7 @@ rii.b &lt;- function(x, j, var)
   return2[is.na(return2)] &lt;- 0
   print(return2)
 }
-
+bootmean &lt;- function(d, i) mean(d[i])
 
 byrep &lt;- read.csv(&quot;Output Data/byrep_cleaned.csv&quot;)
 metadata &lt;- read.csv(&quot;Output Data/metadata_nobeetle.csv&quot;)
@@ -5506,6 +5622,8 @@ post.visits &lt;- rii.m(post, c(1:7), 8:10)</code></pre>
 ## 113          -0.2000000     1.000000000      1.000000000
 ## 115           0.0000000    -0.063314857      0.138438182</code></pre>
 <pre class="r"><code>rii.visits &lt;- rbind(pre.visits, post.visits)
+
+
 
 #from melyridae excluded pan traps
 
@@ -6007,47 +6125,7 @@ post.beetle &lt;- rii.m(post.beetle, c(1:7), 8)</code></pre>
 ## 115 -0.33333333
 ## 117  0.14285714
 ## 119  0.00000000</code></pre>
-<pre class="r"><code>rii.beetle &lt;- rbind(pre.beetle, post.beetle)
-
-#bootstrapping
-bootmean &lt;- function(d, i) mean(d[i])
-
-flowers.rii &lt;- boot(rii.visits$flowers.per.hour, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.visits$PlantID)
-
-rich.rii &lt;- boot(rii.visits$understory.richness, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.visits$PlantID)
-abun.rii &lt;- boot(rii.pan$abun, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.pan$plant.id)
-percent.rii &lt;- boot(rii.pan$percent.cover, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.pan$plant.id)
-rich.arth.rii &lt;- boot(rii.beetle$Species, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.beetle$plant.id)
-
-ci.flowers &lt;- boot.ci(flowers.rii)
-bca.flowers &lt;- ci.flowers$bca
-
-ci.rich &lt;- boot.ci(rich.rii)
-bca.rich &lt;- ci.rich$bca
-
-ci.abun &lt;- boot.ci(abun.rii)
-bca.abun &lt;- ci.abun$bca
-
-ci.percent &lt;- boot.ci(percent.rii)
-bca.percent &lt;- ci.percent$bca
-
-ci.arth &lt;- boot.ci(rich.arth.rii)
-bca.arth &lt;- ci.arth$bca
-
-ci &lt;- rbind(bca.flowers, bca.rich, bca.abun, bca.percent, bca.arth)
-
-
-
-means &lt;- rbind(flowers.rii$t0, rich.rii$t0, abun.rii$t0, percent.rii$t0, rich.arth.rii$t0)
-colnames(means) &lt;- c(&quot;means&quot;)
-row.names(means) &lt;- c(&quot;visits&quot;, &quot;annual.richness&quot;, &quot;abundance&quot;, &quot;percent.cover&quot;, &quot;arth.rich&quot;)
-
-all.boot &lt;- cbind(means, ci )
-all.boot &lt;- as.data.frame(all.boot)
-all.boot$treatment &lt;- c(&quot;microsite&quot;)
-
-
-#blooming contrast
+<pre class="r"><code>#blooming contrast
 shrub.visits &lt;- filter(byrep, treatment == &quot;shrub&quot;)
 shrub.visits &lt;- dplyr::select(shrub.visits, Date, mean.Solar, mean.Wind, mean.Temp, PlantID, treatment, flowering, understory.richness, visits.per.hour, flowers.per.hour)
 #split into 2 dataframes, rename the visitation columns and then rbind
@@ -6292,625 +6370,125 @@ rii.shrub.visits &lt;- rii.b(shrub.visits, c(1:7), 8:10)</code></pre>
 ## 105           0.0000000      -0.6793431       -0.6793431
 ## 107          -1.0000000       0.2686780        0.2686780
 ## 109           0.5000000      -1.0000000       -1.0000000</code></pre>
-<pre class="r"><code>rii.bloom.visits &lt;- rbind(rii.shrub.visits, rii.open.visits)
+<pre class="r"><code>## calculate separate visitation pre/post by microsite bootstrapped
 
-t.test(rii.bloom.visits$flowers.per.hour ~ rii.bloom.visits$treatment)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  rii.bloom.visits$flowers.per.hour by rii.bloom.visits$treatment
-## t = 0.79629, df = 105.71, p-value = 0.4277
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -0.1502562  0.3519582
-## sample estimates:
-##  mean in group open mean in group shrub 
-##           -0.348928           -0.449779</code></pre>
-<pre class="r"><code>#from melyridae excluded pan traps
+#annuals percent cover
 
-shrub.pan &lt;- filter(metadata, treatment == &quot;shrub&quot;)
-shrub.pan$flowering &lt;- shrub.pan$blooming
-shrub.pan$flowering &lt;- gsub(&quot;post&quot;, &quot;bloom&quot;, shrub.pan$flowering)
-shrub.pan &lt;- dplyr::select(shrub.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, abun, percent.cover)
-#split into 2 dataframes, rename the visitation columns and then rbind
-#there are 2 unmatched reps
-shrub.pan &lt;- arrange(shrub.pan, plant.id)
-#at least six mismatches
-shrub.pan &lt;- filter(shrub.pan, plant.id != 104 &amp; plant.id != 114 &amp; plant.id != 182 &amp; plant.id != 261 &amp; plant.id != 263 &amp; plant.id != 284 &amp; plant.id != 285&amp; plant.id != 287&amp; plant.id != 301&amp; plant.id != 302&amp; plant.id != 303&amp; plant.id != 299)
+rii.pre.pan.dat &lt;- filter(rii.pan, blooming == &quot;pre&quot;)
+pre.percent.cover.rii &lt;- boot(rii.pre.pan.dat$percent.cover, bootmean, R=10000, stype =&quot;i&quot;)
+
+ci.pre.percent.cover &lt;- boot.ci(pre.percent.cover.rii)
+bca.pre.percent.cover &lt;- ci.pre.percent.cover$bca
+
+rii.post.pan &lt;- filter(rii.pan, blooming == &quot;post&quot;)
+post.percent.cover.rii &lt;- boot(rii.post.pan$percent.cover, bootmean, R=10000, stype = &quot;i&quot;)
+ci.post.percent.cover &lt;- boot.ci(post.percent.cover.rii)
+bca.post.percent.cover &lt;- ci.post.percent.cover$bca
 
 
+#annual species richness
+pre.ann.rich.rii &lt;- boot(pre.visits$understory.richness, bootmean, R=10000, stype = &quot;i&quot;)
+ci.ann.rich.rii &lt;- boot.ci(pre.ann.rich.rii)
+bca.pre.ann.rich.rii &lt;- ci.ann.rich.rii$bca
 
 
-open.pan &lt;- filter(metadata, treatment ==&quot;open&quot;)
-open.pan$flowering &lt;- open.pan$blooming
-open.pan$flowering &lt;- gsub(&quot;post&quot;, &quot;bloom&quot;, open.pan$flowering)
-open.pan &lt;- dplyr::select(open.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, abun, percent.cover)
-open.pan &lt;- arrange(open.pan, plant.id)
-#postpan &lt;- filter(post, PlantID != 198)
-#postpan &lt;- distinct(postpan)
-
-open.pan &lt;- filter(open.pan, plant.id != 104 &amp; plant.id != 114 &amp; plant.id != 182 &amp; plant.id != 261 &amp; plant.id != 263 &amp; plant.id != 284 &amp; plant.id != 285&amp; plant.id != 287&amp; plant.id != 301&amp; plant.id != 302&amp; plant.id != 303&amp; plant.id != 299)
+post.ann.rich.rii &lt;- boot(post.visits$understory.richness, bootmean, R=10000, stype = &quot;i&quot;)
+ci.post.ann.rich.rii &lt;- boot.ci(post.ann.rich.rii)
+bca.post.ann.rich.rii &lt;- ci.post.ann.rich.rii$bca
 
 
+#arthropod abundance
+post.abun.rii &lt;- boot(rii.post.pan$abun, bootmean, R=10000, stype = &quot;i&quot;)
+ci.post.abun &lt;- boot.ci(post.abun.rii)
+bca.post.abun &lt;- ci.post.abun$bca
 
-rii.open.pan &lt;- rii.b(open.pan, c(1:7), 8:9)</code></pre>
-<pre><code>##          date mean.Solar mean.Wind mean.Temp plant.id treatment flowering
-## 1   4.16.2017    0.73875    5.1750   18.7500      146      open       pre
-## 3   4.12.2017    0.75875    6.6625   18.6125      180      open       pre
-## 5   4.20.2017    0.79875    6.1250   17.8625      181      open       pre
-## 7   4.20.2017    0.79875    6.1250   17.8625      183      open       pre
-## 9   4.10.2017    0.76250    5.1500   18.3500      184      open       pre
-## 11  4.20.2017    0.79875    6.1250   17.8625      185      open       pre
-## 13  4.15.2017    0.76875    5.1750   18.5000      186      open       pre
-## 15  4.11.2017    0.61000    6.3250   18.5750      187      open       pre
-## 17  4.16.2017    0.73875    5.1750   18.7500      188      open       pre
-## 19  4.10.2017    0.76250    5.1500   18.3500      189      open       pre
-## 21  4.13.2017    0.76000    6.1125   18.5625      190      open       pre
-## 23  4.12.2017    0.75875    6.6625   18.6125      191      open       pre
-## 25  4.10.2017    0.76250    5.1500   18.3500      192      open       pre
-## 27  4.11.2017    0.61000    6.3250   18.5750      193      open       pre
-## 29  4.10.2017    0.76250    5.1500   18.3500      194      open       pre
-## 31  4.16.2017    0.73875    5.1750   18.7500      195      open       pre
-## 33  4.12.2017    0.75875    6.6625   18.6125      196      open       pre
-## 35  4.11.2017    0.61000    6.3250   18.5750      197      open       pre
-## 37  4.12.2017    0.75875    6.6625   18.6125      198      open       pre
-## 39  4.15.2017    0.76875    5.1750   18.5000      199      open       pre
-## 41  4.15.2017    0.76875    5.1750   18.5000      262      open       pre
-## 43  4.19.2017    0.77625    6.0250   17.9000      264      open       pre
-## 45  4.12.2017    0.75875    6.6625   18.6125      265      open       pre
-## 47  4.11.2017    0.61000    6.3250   18.5750      266      open       pre
-## 49  4.13.2017    0.76000    6.1125   18.5625      267      open       pre
-## 51  4.16.2017    0.73875    5.1750   18.7500      268      open       pre
-## 53  4.15.2017    0.76875    5.1750   18.5000      269      open       pre
-## 55  4.19.2017    0.77625    6.0250   17.9000      270      open       pre
-## 57  4.16.2017    0.73875    5.1750   18.7500      271      open       pre
-## 59  4.13.2017    0.76000    6.1125   18.5625      272      open       pre
-## 61  4.11.2017    0.61000    6.3250   18.5750      273      open       pre
-## 63  4.20.2017    0.79875    6.1250   17.8625      274      open       pre
-## 65  4.10.2017    0.76250    5.1500   18.3500      275      open       pre
-## 67  4.15.2017    0.76875    5.1750   18.5000      276      open       pre
-## 69  4.17.2017    0.57375    5.5375   18.4125      278      open       pre
-## 71  4.17.2017    0.57375    5.5375   18.4125      280      open       pre
-## 73  4.20.2017    0.79875    6.1250   17.8625      281      open       pre
-## 75  4.17.2017    0.57375    5.5375   18.4125      282      open       pre
-## 77  4.19.2017    0.77625    6.0250   17.9000      283      open       pre
-## 79  4.19.2017    0.77625    6.0250   17.9000      286      open       pre
-## 81  4.11.2017    0.61000    6.3250   18.5750      288      open       pre
-## 83  4.12.2017    0.75875    6.6625   18.6125      289      open       pre
-## 85  4.19.2017    0.77625    6.0250   17.9000      290      open       pre
-## 87  4.17.2017    0.57375    5.5375   18.4125      291      open       pre
-## 89  4.13.2017    0.76000    6.1125   18.5625      293      open       pre
-## 91  4.13.2017    0.76000    6.1125   18.5625      294      open       pre
-## 93  4.17.2017    0.57375    5.5375   18.4125      295      open       pre
-## 95  4.10.2017    0.76250    5.1500   18.3500      296      open       pre
-## 97  4.19.2017    0.77625    6.0250   17.9000      297      open       pre
-## 99  4.16.2017    0.73875    5.1750   18.7500      298      open       pre
-## 101 4.15.2017    0.76875    5.1750   18.5000      300      open       pre
-##            abun percent.cover
-## 1   -0.33333333    -0.5000000
-## 3   -0.60000000    -0.2500000
-## 5   -0.05882353     0.0000000
-## 7   -0.53846154    -0.6666667
-## 9   -1.00000000    -0.8181818
-## 11   0.52941176    -0.8181818
-## 13   0.41176471    -0.7777778
-## 15  -0.57142857    -0.3333333
-## 17  -0.14285714     0.6000000
-## 19  -0.16129032     0.3333333
-## 21  -0.31034483    -0.2500000
-## 23  -0.83333333     0.2000000
-## 25  -0.61538462    -0.8750000
-## 27   0.00000000     0.0000000
-## 29  -0.23809524    -0.5000000
-## 31  -0.50000000    -0.1111111
-## 33  -0.30000000     0.0000000
-## 35  -0.23809524    -0.6666667
-## 37   0.26315789    -0.3333333
-## 39  -0.55555556    -0.7777778
-## 41  -1.00000000    -0.3333333
-## 43   0.25000000    -0.6666667
-## 45   0.33333333    -0.3333333
-## 47  -0.42857143     0.3333333
-## 49  -0.27272727    -0.3333333
-## 51   0.05263158     0.3333333
-## 53  -0.41176471    -0.8181818
-## 55  -0.27272727     0.0000000
-## 57   0.00000000    -0.3333333
-## 59   0.33333333    -0.1111111
-## 61  -0.20000000    -0.6666667
-## 63   0.00000000    -0.6666667
-## 65   1.00000000    -0.3333333
-## 67  -0.14285714    -0.8181818
-## 69  -0.50000000    -0.8750000
-## 71   0.05882353     0.3333333
-## 73  -0.14285714    -0.3333333
-## 75  -0.30000000    -0.7857143
-## 77   0.55555556    -0.1111111
-## 79  -0.09090909     0.0000000
-## 81  -0.69230769     0.0000000
-## 83  -0.26315789     0.0000000
-## 85   0.00000000    -0.8181818
-## 87  -0.37500000     0.3333333
-## 89  -0.81818182    -0.8181818
-## 91  -0.71428571    -0.3333333
-## 93  -0.16666667    -0.6666667
-## 95  -0.92000000     0.0000000
-## 97  -1.00000000    -0.3333333
-## 99   0.33333333    -0.1111111
-## 101 -0.28571429     0.3333333</code></pre>
-<pre class="r"><code>rii.shrub.pan &lt;- rii.b(shrub.pan, c(1:7), 8:9)</code></pre>
-<pre><code>##          date mean.Solar mean.Wind mean.Temp plant.id treatment flowering
-## 1   4.16.2017    0.73875    5.1750   18.7500      146     shrub       pre
-## 3   4.12.2017    0.75875    6.6625   18.6125      180     shrub       pre
-## 5   4.20.2017    0.79875    6.1250   17.8625      181     shrub       pre
-## 7   4.20.2017    0.79875    6.1250   17.8625      183     shrub       pre
-## 9   4.10.2017    0.76250    5.1500   18.3500      184     shrub       pre
-## 11  4.20.2017    0.79875    6.1250   17.8625      185     shrub       pre
-## 13  4.15.2017    0.76875    5.1750   18.5000      186     shrub       pre
-## 15  4.11.2017    0.61000    6.3250   18.5750      187     shrub       pre
-## 17  4.16.2017    0.73875    5.1750   18.7500      188     shrub       pre
-## 19  4.10.2017    0.76250    5.1500   18.3500      189     shrub       pre
-## 21  4.13.2017    0.76000    6.1125   18.5625      190     shrub       pre
-## 23  4.12.2017    0.75875    6.6625   18.6125      191     shrub       pre
-## 25  4.10.2017    0.76250    5.1500   18.3500      192     shrub       pre
-## 27  4.11.2017    0.61000    6.3250   18.5750      193     shrub       pre
-## 29  4.10.2017    0.76250    5.1500   18.3500      194     shrub       pre
-## 31  4.16.2017    0.73875    5.1750   18.7500      195     shrub       pre
-## 33  4.12.2017    0.75875    6.6625   18.6125      196     shrub       pre
-## 35  4.11.2017    0.61000    6.3250   18.5750      197     shrub       pre
-## 37  4.12.2017    0.75875    6.6625   18.6125      198     shrub       pre
-## 39  4.15.2017    0.76875    5.1750   18.5000      199     shrub       pre
-## 41  4.15.2017    0.76875    5.1750   18.5000      262     shrub       pre
-## 43  4.19.2017    0.77625    6.0250   17.9000      264     shrub       pre
-## 45  4.12.2017    0.75875    6.6625   18.6125      265     shrub       pre
-## 47  4.11.2017    0.61000    6.3250   18.5750      266     shrub       pre
-## 49  4.13.2017    0.76000    6.1125   18.5625      267     shrub       pre
-## 51  4.16.2017    0.73875    5.1750   18.7500      268     shrub       pre
-## 53  4.15.2017    0.76875    5.1750   18.5000      269     shrub       pre
-## 55  4.19.2017    0.77625    6.0250   17.9000      270     shrub       pre
-## 57  4.16.2017    0.73875    5.1750   18.7500      271     shrub       pre
-## 59  4.13.2017    0.76000    6.1125   18.5625      272     shrub       pre
-## 61  4.11.2017    0.61000    6.3250   18.5750      273     shrub       pre
-## 63  4.20.2017    0.79875    6.1250   17.8625      274     shrub       pre
-## 65  4.10.2017    0.76250    5.1500   18.3500      275     shrub       pre
-## 67  4.15.2017    0.76875    5.1750   18.5000      276     shrub       pre
-## 69  4.17.2017    0.57375    5.5375   18.4125      278     shrub       pre
-## 71  4.17.2017    0.57375    5.5375   18.4125      280     shrub       pre
-## 73  4.20.2017    0.79875    6.1250   17.8625      281     shrub       pre
-## 75  4.17.2017    0.57375    5.5375   18.4125      282     shrub       pre
-## 77  4.19.2017    0.77625    6.0250   17.9000      283     shrub       pre
-## 79  4.19.2017    0.77625    6.0250   17.9000      286     shrub       pre
-## 81  4.11.2017    0.61000    6.3250   18.5750      288     shrub       pre
-## 83  4.12.2017    0.75875    6.6625   18.6125      289     shrub       pre
-## 85  4.19.2017    0.77625    6.0250   17.9000      290     shrub       pre
-## 87  4.17.2017    0.57375    5.5375   18.4125      291     shrub       pre
-## 89  4.13.2017    0.76000    6.1125   18.5625      293     shrub       pre
-## 91  4.13.2017    0.76000    6.1125   18.5625      294     shrub       pre
-## 93  4.17.2017    0.57375    5.5375   18.4125      295     shrub       pre
-## 95  4.10.2017    0.76250    5.1500   18.3500      296     shrub       pre
-## 97  4.19.2017    0.77625    6.0250   17.9000      297     shrub       pre
-## 99  4.16.2017    0.73875    5.1750   18.7500      298     shrub       pre
-## 101 4.15.2017    0.76875    5.1750   18.5000      300     shrub       pre
-##            abun percent.cover
-## 1    0.07692308    0.38461538
-## 3   -0.17241379    0.42857143
-## 5    0.61904762    0.17647059
-## 7   -0.69230769   -0.75000000
-## 9   -0.75000000   -0.47368421
-## 11   0.00000000    0.07142857
-## 13  -0.62162162   -0.60000000
-## 15  -0.09090909    0.42857143
-## 17   0.09090909   -0.07692308
-## 19  -0.10344828    0.37500000
-## 21  -0.06666667   -0.33333333
-## 23  -0.75000000    0.11111111
-## 25  -0.46341463    0.23809524
-## 27  -0.29032258    0.17647059
-## 29  -0.37500000    0.33333333
-## 31  -0.37500000    0.00000000
-## 33  -0.15789474    0.14285714
-## 35  -0.60000000    0.20000000
-## 37  -0.42857143    0.38461538
-## 39  -1.00000000   -0.29411765
-## 41  -0.70588235    0.06666667
-## 43  -0.23809524    0.28000000
-## 45  -0.33333333    0.20000000
-## 47  -0.52380952    0.45454545
-## 49  -0.55555556   -0.06666667
-## 51  -0.10000000    0.09090909
-## 53  -0.25000000   -0.46666667
-## 55  -0.17647059    0.00000000
-## 57  -0.57894737   -0.33333333
-## 59  -0.57142857   -0.25000000
-## 61  -0.30434783    0.00000000
-## 63  -0.61290323   -0.23076923
-## 65  -0.50000000    0.52941176
-## 67  -0.07142857   -0.11111111
-## 69  -1.00000000   -0.66666667
-## 71  -0.37500000   -0.16666667
-## 73   0.50000000    0.20000000
-## 75  -0.52941176    0.00000000
-## 77   0.44444444   -0.20000000
-## 79  -0.11111111    0.00000000
-## 81  -0.28571429   -0.11111111
-## 83  -0.23809524    0.28571429
-## 85  -0.69230769   -0.33333333
-## 87  -0.17241379    0.06666667
-## 89  -0.82608696   -0.66666667
-## 91  -0.70000000   -0.42857143
-## 93  -0.13043478    0.05882353
-## 95  -1.00000000    0.00000000
-## 97  -0.55555556   -0.16666667
-## 99   0.00000000    0.00000000
-## 101 -0.42857143   -0.25000000</code></pre>
-<pre class="r"><code>rii.bloom.pan &lt;- rbind(rii.open.pan, rii.shrub.pan)
-
-#species richness
-shrub.beet.pan &lt;- filter(yesbeetle, treatment == &quot;shrub&quot;)
-shrub.beet.pan$flowering &lt;- shrub.beet.pan$blooming
-shrub.beet.pan$flowering &lt;- gsub(&quot;post&quot;, &quot;bloom&quot;, shrub.beet.pan$flowering)
-shrub.beet.pan &lt;- dplyr::select(shrub.beet.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, Species)
-#split into 2 dataframes, rename the visitation columns and then rbind
-#there are 2 unmatched reps
-shrub.beet.pan &lt;- arrange(shrub.beet.pan, plant.id)
-#at least six mismatches
-shrub.beet.pan &lt;- filter(shrub.beet.pan, plant.id != 104 &amp; plant.id != 114 &amp; plant.id != 182 &amp; plant.id != 261 &amp; plant.id != 263 &amp; plant.id != 284 &amp; plant.id != 285&amp; plant.id != 287&amp; plant.id != 301&amp; plant.id != 302&amp; plant.id != 303&amp; plant.id != 299)
+pre.abun.rii &lt;- boot(rii.pre.pan.dat$abun, bootmean, R=10000, stype = &quot;i&quot;)
+ci.pre.abun &lt;- boot.ci(pre.abun.rii)
+bca.pre.abun &lt;- ci.pre.abun$bca
 
 
-open.beet.pan &lt;- filter(yesbeetle, treatment ==&quot;open&quot;)
-open.beet.pan$flowering &lt;- open.beet.pan$blooming
-open.beet.pan$flowering &lt;- gsub(&quot;post&quot;, &quot;bloom&quot;, open.beet.pan$flowering)
-open.beet.pan &lt;- dplyr::select(open.beet.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, Species)
-open.beet.pan &lt;- arrange(open.beet.pan, plant.id)
-#postpan &lt;- filter(post, PlantID != 198)
-#postpan &lt;- distinct(postpan)
+#arthropod richness
 
-open.beet.pan &lt;- filter(open.beet.pan, plant.id != 104 &amp; plant.id != 114 &amp; plant.id != 182 &amp; plant.id != 261 &amp; plant.id != 263 &amp; plant.id != 284 &amp; plant.id != 285&amp; plant.id != 287&amp; plant.id != 301&amp; plant.id != 302&amp; plant.id != 303&amp; plant.id != 299)
+#pre.beetle &lt;- filter(rii.beetle, blooming == &quot;pre&quot;)
+#post.beetle &lt;- filter(rii.beetle, blooming ==&quot;post&quot;)
 
-rii.open.beet.pan &lt;- rii.b(open.beet.pan, c(1:7), 8)</code></pre>
-<pre><code>##          date mean.Solar mean.Wind mean.Temp plant.id treatment flowering
-## 1   4.16.2017    0.73875    5.1750   18.7500      146      open       pre
-## 3   4.12.2017    0.75875    6.6625   18.6125      180      open       pre
-## 5   4.20.2017    0.79875    6.1250   17.8625      181      open       pre
-## 7   4.20.2017    0.79875    6.1250   17.8625      183      open       pre
-## 9   4.10.2017    0.76250    5.1500   18.3500      184      open       pre
-## 11  4.20.2017    0.79875    6.1250   17.8625      185      open       pre
-## 13  4.15.2017    0.76875    5.1750   18.5000      186      open       pre
-## 15  4.11.2017    0.61000    6.3250   18.5750      187      open       pre
-## 17  4.16.2017    0.73875    5.1750   18.7500      188      open       pre
-## 19  4.10.2017    0.76250    5.1500   18.3500      189      open       pre
-## 21  4.13.2017    0.76000    6.1125   18.5625      190      open       pre
-## 23  4.12.2017    0.75875    6.6625   18.6125      191      open       pre
-## 25  4.10.2017    0.76250    5.1500   18.3500      192      open       pre
-## 27  4.11.2017    0.61000    6.3250   18.5750      193      open       pre
-## 29  4.10.2017    0.76250    5.1500   18.3500      194      open       pre
-## 31  4.16.2017    0.73875    5.1750   18.7500      195      open       pre
-## 33  4.12.2017    0.75875    6.6625   18.6125      196      open       pre
-## 35  4.11.2017    0.61000    6.3250   18.5750      197      open       pre
-## 37  4.12.2017    0.75875    6.6625   18.6125      198      open       pre
-## 39  4.15.2017    0.76875    5.1750   18.5000      199      open       pre
-## 41  4.15.2017    0.76875    5.1750   18.5000      262      open       pre
-## 43  4.19.2017    0.77625    6.0250   17.9000      264      open       pre
-## 45  4.12.2017    0.75875    6.6625   18.6125      265      open       pre
-## 47  4.11.2017    0.61000    6.3250   18.5750      266      open       pre
-## 49  4.13.2017    0.76000    6.1125   18.5625      267      open       pre
-## 51  4.16.2017    0.73875    5.1750   18.7500      268      open       pre
-## 53  4.15.2017    0.76875    5.1750   18.5000      269      open       pre
-## 55  4.19.2017    0.77625    6.0250   17.9000      270      open       pre
-## 57  4.16.2017    0.73875    5.1750   18.7500      271      open       pre
-## 59  4.13.2017    0.76000    6.1125   18.5625      272      open       pre
-## 61  4.11.2017    0.61000    6.3250   18.5750      273      open       pre
-## 63  4.20.2017    0.79875    6.1250   17.8625      274      open       pre
-## 65  4.10.2017    0.76250    5.1500   18.3500      275      open       pre
-## 67  4.15.2017    0.76875    5.1750   18.5000      276      open       pre
-## 69  4.17.2017    0.57375    5.5375   18.4125      278      open       pre
-## 71  4.17.2017    0.57375    5.5375   18.4125      280      open       pre
-## 73  4.20.2017    0.79875    6.1250   17.8625      281      open       pre
-## 75  4.17.2017    0.57375    5.5375   18.4125      282      open       pre
-## 77  4.19.2017    0.77625    6.0250   17.9000      283      open       pre
-## 79  4.19.2017    0.77625    6.0250   17.9000      286      open       pre
-## 81  4.11.2017    0.61000    6.3250   18.5750      288      open       pre
-## 83  4.12.2017    0.75875    6.6625   18.6125      289      open       pre
-## 85  4.19.2017    0.77625    6.0250   17.9000      290      open       pre
-## 87  4.17.2017    0.57375    5.5375   18.4125      291      open       pre
-## 89  4.13.2017    0.76000    6.1125   18.5625      293      open       pre
-## 91  4.13.2017    0.76000    6.1125   18.5625      294      open       pre
-## 93  4.17.2017    0.57375    5.5375   18.4125      295      open       pre
-## 95  4.10.2017    0.76250    5.1500   18.3500      296      open       pre
-## 97  4.19.2017    0.77625    6.0250   17.9000      297      open       pre
-## 99  4.16.2017    0.73875    5.1750   18.7500      298      open       pre
-## 101 4.15.2017    0.76875    5.1750   18.5000      300      open       pre
-##         Species
-## 1   -0.11111111
-## 3   -0.29411765
-## 5   -0.17647059
-## 7   -0.42857143
-## 9   -0.71428571
-## 11   0.44444444
-## 13   0.27272727
-## 15  -0.33333333
-## 17  -0.14285714
-## 19  -0.27272727
-## 21  -0.10000000
-## 23  -0.66666667
-## 25  -0.23076923
-## 27   0.22222222
-## 29  -0.07692308
-## 31  -0.38461538
-## 33  -0.11111111
-## 35  -0.07692308
-## 37   0.06666667
-## 39  -0.20000000
-## 41  -0.71428571
-## 43   0.28571429
-## 45   0.14285714
-## 47  -0.17647059
-## 49  -0.09090909
-## 51   0.00000000
-## 53  -0.33333333
-## 55  -0.16666667
-## 57   0.00000000
-## 59   0.23076923
-## 61   0.00000000
-## 63   0.05263158
-## 65   1.00000000
-## 67   0.06666667
-## 69  -0.20000000
-## 71   0.00000000
-## 73  -0.25000000
-## 75   0.00000000
-## 77   0.33333333
-## 79  -0.16666667
-## 81  -0.66666667
-## 83  -0.14285714
-## 85   0.09090909
-## 87  -0.33333333
-## 89  -0.42857143
-## 91  -0.66666667
-## 93  -0.09090909
-## 95  -0.73333333
-## 97  -1.00000000
-## 99   0.20000000
-## 101 -0.20000000</code></pre>
-<pre class="r"><code>rii.shrub.beet.pan &lt;- rii.b(shrub.beet.pan, c(1:7), 8)</code></pre>
-<pre><code>##          date mean.Solar mean.Wind mean.Temp plant.id treatment flowering
-## 1   4.16.2017    0.73875    5.1750   18.7500      146     shrub       pre
-## 3   4.12.2017    0.75875    6.6625   18.6125      180     shrub       pre
-## 5   4.20.2017    0.79875    6.1250   17.8625      181     shrub       pre
-## 7   4.20.2017    0.79875    6.1250   17.8625      183     shrub       pre
-## 9   4.10.2017    0.76250    5.1500   18.3500      184     shrub       pre
-## 11  4.20.2017    0.79875    6.1250   17.8625      185     shrub       pre
-## 13  4.15.2017    0.76875    5.1750   18.5000      186     shrub       pre
-## 15  4.11.2017    0.61000    6.3250   18.5750      187     shrub       pre
-## 17  4.16.2017    0.73875    5.1750   18.7500      188     shrub       pre
-## 19  4.10.2017    0.76250    5.1500   18.3500      189     shrub       pre
-## 21  4.13.2017    0.76000    6.1125   18.5625      190     shrub       pre
-## 23  4.12.2017    0.75875    6.6625   18.6125      191     shrub       pre
-## 25  4.10.2017    0.76250    5.1500   18.3500      192     shrub       pre
-## 27  4.11.2017    0.61000    6.3250   18.5750      193     shrub       pre
-## 29  4.10.2017    0.76250    5.1500   18.3500      194     shrub       pre
-## 31  4.16.2017    0.73875    5.1750   18.7500      195     shrub       pre
-## 33  4.12.2017    0.75875    6.6625   18.6125      196     shrub       pre
-## 35  4.11.2017    0.61000    6.3250   18.5750      197     shrub       pre
-## 37  4.12.2017    0.75875    6.6625   18.6125      198     shrub       pre
-## 39  4.15.2017    0.76875    5.1750   18.5000      199     shrub       pre
-## 41  4.15.2017    0.76875    5.1750   18.5000      262     shrub       pre
-## 43  4.19.2017    0.77625    6.0250   17.9000      264     shrub       pre
-## 45  4.12.2017    0.75875    6.6625   18.6125      265     shrub       pre
-## 47  4.11.2017    0.61000    6.3250   18.5750      266     shrub       pre
-## 49  4.13.2017    0.76000    6.1125   18.5625      267     shrub       pre
-## 51  4.16.2017    0.73875    5.1750   18.7500      268     shrub       pre
-## 53  4.15.2017    0.76875    5.1750   18.5000      269     shrub       pre
-## 55  4.19.2017    0.77625    6.0250   17.9000      270     shrub       pre
-## 57  4.16.2017    0.73875    5.1750   18.7500      271     shrub       pre
-## 59  4.13.2017    0.76000    6.1125   18.5625      272     shrub       pre
-## 61  4.11.2017    0.61000    6.3250   18.5750      273     shrub       pre
-## 63  4.20.2017    0.79875    6.1250   17.8625      274     shrub       pre
-## 65  4.10.2017    0.76250    5.1500   18.3500      275     shrub       pre
-## 67  4.15.2017    0.76875    5.1750   18.5000      276     shrub       pre
-## 69  4.17.2017    0.57375    5.5375   18.4125      278     shrub       pre
-## 71  4.17.2017    0.57375    5.5375   18.4125      280     shrub       pre
-## 73  4.20.2017    0.79875    6.1250   17.8625      281     shrub       pre
-## 75  4.17.2017    0.57375    5.5375   18.4125      282     shrub       pre
-## 77  4.19.2017    0.77625    6.0250   17.9000      283     shrub       pre
-## 79  4.19.2017    0.77625    6.0250   17.9000      286     shrub       pre
-## 81  4.11.2017    0.61000    6.3250   18.5750      288     shrub       pre
-## 83  4.12.2017    0.75875    6.6625   18.6125      289     shrub       pre
-## 85  4.19.2017    0.77625    6.0250   17.9000      290     shrub       pre
-## 87  4.17.2017    0.57375    5.5375   18.4125      291     shrub       pre
-## 89  4.13.2017    0.76000    6.1125   18.5625      293     shrub       pre
-## 91  4.13.2017    0.76000    6.1125   18.5625      294     shrub       pre
-## 93  4.17.2017    0.57375    5.5375   18.4125      295     shrub       pre
-## 95  4.10.2017    0.76250    5.1500   18.3500      296     shrub       pre
-## 97  4.19.2017    0.77625    6.0250   17.9000      297     shrub       pre
-## 99  4.16.2017    0.73875    5.1750   18.7500      298     shrub       pre
-## 101 4.15.2017    0.76875    5.1750   18.5000      300     shrub       pre
-##         Species
-## 1    0.07692308
-## 3    0.04761905
-## 5    0.20000000
-## 7   -0.40000000
-## 9   -0.33333333
-## 11   0.07692308
-## 13  -0.12500000
-## 15   0.23076923
-## 17  -0.50000000
-## 19   0.18181818
-## 21   0.04347826
-## 23  -0.53846154
-## 25  -0.20000000
-## 27  -0.04761905
-## 29  -0.33333333
-## 31  -0.23076923
-## 33   0.07692308
-## 35  -0.45454545
-## 37  -0.22222222
-## 39  -0.80000000
-## 41  -0.57142857
-## 43   0.12500000
-## 45  -0.06666667
-## 47  -0.25000000
-## 49  -0.42857143
-## 51  -0.05263158
-## 53  -0.08333333
-## 55  -0.06666667
-## 57  -0.38461538
-## 59  -0.33333333
-## 61  -0.10000000
-## 63  -0.45454545
-## 65  -0.29411765
-## 67   0.10000000
-## 69  -0.86666667
-## 71  -0.08333333
-## 73   0.50000000
-## 75  -0.27272727
-## 77   0.42857143
-## 79  -0.14285714
-## 81  -0.11111111
-## 83  -0.22222222
-## 85  -0.66666667
-## 87   0.05882353
-## 89  -0.53846154
-## 91  -0.38461538
-## 93  -0.06666667
-## 95  -0.84615385
-## 97  -0.50000000
-## 99  -0.06666667
-## 101 -0.38461538</code></pre>
-<pre class="r"><code>rii.bloom.species &lt;- rbind(rii.open.beet.pan, rii.shrub.beet.pan)
+pre.rich.rii &lt;- boot(pre.beetle$Species, bootmean, R=10000, stype = &quot;i&quot;)
+ci.pre.rich.rii &lt;- boot.ci(pre.rich.rii)
+bca.pre.rich &lt;- ci.pre.rich.rii$bca
 
 
-#flowers.rii &lt;- boot(rii.bloom.visits$flowers.per.hour, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.bloom.visits$PlantID)
-
-#rich.rii &lt;- boot(rii.bloom.visits$understory.richness, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.bloom.visits$PlantID)
-#abun.rii &lt;- boot(rii.bloom.pan$abun, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.bloom.pan$plant.id)
-#percent.rii &lt;- boot(rii.bloom.pan$percent.cover, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.bloom.pan$plant.id)
-#rich.arth.rii &lt;- boot(rii.bloom.species$Species, bootmean, R=1000, stype=&quot;i&quot;, strata = rii.bloom.species$plant.id)
-
-#ci.flowers &lt;- boot.ci(flowers.rii)
-#bca.flowers &lt;- ci.flowers$bca
-
-#ci.rich &lt;- boot.ci(rich.rii)
-#bca.rich &lt;- ci.rich$bca
-
-#ci.abun &lt;- boot.ci(abun.rii)
-#bca.abun &lt;- ci.abun$bca
-
-#ci.percent &lt;- boot.ci(percent.rii)
-#bca.percent &lt;- ci.percent$bca
-#ci.arth &lt;- boot.ci(rich.arth.rii)
-#bca.arth &lt;- ci.arth$bca
-
-#ci &lt;- rbind(bca.flowers, bca.rich, bca.abun, bca.percent, bca.arth)
+post.rich.rii &lt;- boot(post.beetle$Species, bootmean, R=10000, stype = &quot;i&quot;)
+ci.post.rich.rii &lt;- boot.ci(post.rich.rii)
+bca.post.rich &lt;- ci.post.rich.rii$bca
 
 
 
-#means.bloom &lt;- rbind(flowers.rii$t0, rich.rii$t0, abun.rii$t0, percent.rii$t0, rich.arth.rii$t0)
-#colnames(means.bloom) &lt;- c(&quot;means&quot;)
-#row.names(means.bloom) &lt;- c(&quot;visits&quot;, &quot;annual.richness&quot;, &quot;abundance&quot;, &quot;percent.cover&quot;, &quot;arth.rich&quot;)
 
-#all.boot.bloom &lt;- cbind(means.bloom, ci )
-#all.boot.bloom &lt;- as.data.frame(all.boot.bloom)
-#all.boot.bloom$treatment &lt;- c(&quot;bloom&quot;)
-
-#all.boot &lt;- rbind(all.boot, all.boot.bloom)
-
-all.boot$metric &lt;- c(&quot;visits&quot;, &quot;annual.richness&quot;, &quot;abundance&quot;, &quot;percent.cover&quot;, &quot;arth.rich&quot;)# &quot;visits&quot;, &quot;annual.richness&quot;, &quot;abundance&quot;, &quot;percent.cover&quot;, &quot;arth.rich&quot;)
-
-#all.boot$treatment &lt;- as.factor(all.boot$treatment)
-#all.boot$treatment &lt;- relevel(all.boot$treatment, &quot;microsite&quot;, &quot;bloom&quot;)
-
-all.boot$metric &lt;- as.factor(all.boot$metric)
-all.boot$metric &lt;- relevel(all.boot$metric, &quot;visits&quot;, &quot;abundance&quot;, &quot;arth.rich&quot;, &quot;percent.cover&quot;, &quot;annual.richness&quot;)
-
-#labels
-metrics &lt;- c(&quot;Floral Visits \n per Hour&quot;, &quot;Arthropod \n Abundance&quot;, &quot;Arthropod \n Richness&quot;, &quot;Percent\n Annual Cover&quot;, &quot;Annual Species \n Richness&quot;)
-labels &lt;- c(&quot;microsite&quot; = &quot;Microsite&quot;,&quot;bloom&quot; =&quot;Blooming&quot;)
+means.all &lt;- rbind(pre.percent.cover.rii$t0, post.percent.cover.rii$t0, pre.ann.rich.rii$t0, post.ann.rich.rii$t0, pre.abun.rii$t0, post.abun.rii$t0, pre.rich.rii$t0, post.rich.rii$t0)
 
 
-
-## calculate separate visitation pre/post by microsite bootstrapped
-
-
-shrub.visits.rii &lt;- boot(rii.shrub.visits$flowers.per.hour, bootmean, R=10000, stype=&quot;i&quot;)
-open.visits.rii &lt;- boot(rii.open.visits$flowers.per.hour, bootmean, R=10000, stype=&quot;i&quot;)
-
-
-shrub.cover.rii &lt;- boot(rii.shrub.pan$percent.cover, bootmean, R=10000, stype=&quot;i&quot;)
-open.cover.rii &lt;- boot(rii.open.pan$percent.cover, bootmean, R=10000, stype=&quot;i&quot;)
-
-shrub.rich.rii &lt;- boot(rii.shrub.visits$understory.richness, bootmean, R=10000, stype=&quot;i&quot;)
-open.rich.rii &lt;- boot(rii.open.visits$understory.richness, bootmean, R=10000, stype=&quot;i&quot;)
-
-shrub.abun.rii &lt;- boot(rii.shrub.pan$abun, bootmean, R=10000, stype=&quot;i&quot;)
-open.abun.rii &lt;- boot(rii.open.pan$abun, bootmean, R=10000, stype=&quot;i&quot;)
-
-shrub.arth.rich.rii &lt;- boot(rii.shrub.beet.pan$Species, bootmean, R=10000, stype=&quot;i&quot;)
-open.arth.rich.rii &lt;- boot(rii.open.beet.pan$Species, bootmean, R=10000, stype=&quot;i&quot;)
-
-
-ci.shrub.visits &lt;- boot.ci(shrub.visits.rii)
-bca.shrub.visits &lt;- ci.shrub.visits$bca
-
-ci.open.visits &lt;- boot.ci(open.visits.rii)
-bca.open.visits &lt;- ci.open.visits$bca
-
-ci.shrub.cover &lt;- boot.ci(shrub.cover.rii)
-bca.shrub.cover &lt;- ci.shrub.cover$bca
-ci.open.cover &lt;- boot.ci(open.cover.rii)
-bca.open.cover &lt;- ci.open.cover$bca
-
-ci.shrub.rich &lt;- boot.ci(shrub.rich.rii)
-bca.shrub.rich &lt;- ci.shrub.rich$bca
-ci.open.rich &lt;- boot.ci(open.rich.rii)
-bca.open.rich &lt;- ci.open.rich$bca
-
-ci.shrub.abun &lt;- boot.ci(shrub.abun.rii)
-bca.shrub.abun &lt;- ci.shrub.abun$bca
-ci.open.abun &lt;- boot.ci(open.abun.rii)
-bca.open.abun &lt;- ci.open.abun$bca
-
-ci.shrub.arth.rich &lt;- boot.ci(shrub.arth.rich.rii)
-bca.shrub.arth.rich &lt;- ci.shrub.arth.rich$bca
-ci.open.arth.rich &lt;- boot.ci(open.arth.rich.rii)
-bca.open.arth.rich &lt;- ci.open.arth.rich$bca
-
-
-means.all &lt;- rbind(shrub.visits.rii$t0, open.visits.rii$t0,shrub.cover.rii$t0, open.cover.rii$t0, shrub.rich.rii$t0, open.rich.rii$t0, shrub.abun.rii$t0, open.abun.rii$t0, shrub.arth.rich.rii$t0, open.arth.rich.rii$t0)
 colnames(means.all) &lt;- c(&quot;means&quot;)
-ci.all &lt;- rbind(bca.shrub.visits, bca.open.visits, bca.shrub.cover, bca.open.cover, bca.shrub.rich, bca.open.rich, bca.shrub.abun, bca.open.abun, bca.shrub.arth.rich, bca.open.arth.rich)
+
+ci.all &lt;- rbind(bca.pre.percent.cover, bca.post.percent.cover, bca.pre.ann.rich.rii, bca.post.ann.rich.rii, bca.pre.abun, bca.post.abun, bca.pre.rich, bca.post.rich)
+
 
 
 all.new &lt;- cbind(means.all, ci.all)
 all.new &lt;- as.data.frame(all.new)
 
-all.new$Microsite &lt;- c(&quot;shrub&quot;, &quot;open&quot;, &quot;shrub&quot;, &quot;open&quot;,&quot;shrub&quot;, &quot;open&quot;,&quot;shrub&quot;, &quot;open&quot;,&quot;shrub&quot;, &quot;open&quot;)
-all.new$metric &lt;- c(&quot;visits&quot;, &quot;visits&quot;, &quot;percent.cover&quot;, &quot;percent.cover&quot;, &quot;annual.richness&quot;, &quot;annual.richness&quot;, &quot;arth.abundance&quot;, &quot;arth.abundance&quot;, &quot;arth.richness&quot;, &quot;arth.richness&quot;)
+all.new$bloom &lt;- c(&quot;pre&quot;, &quot;post&quot;, &quot;pre&quot;, &quot;post&quot;,&quot;pre&quot;, &quot;post&quot;,&quot;pre&quot;, &quot;post&quot;)
+all.new$metric &lt;- c(&quot;percent.cover&quot;, &quot;percent.cover&quot;, &quot;annual.richness&quot;, &quot;annual.richness&quot;, &quot;arth.abundance&quot;, &quot;arth.abundance&quot;, &quot;arth.richness&quot;, &quot;arth.richness&quot;)
 
 
 all.new$metric &lt;- as.factor(all.new$metric)
-all.new$metric &lt;- relevel(all.new$metric, &quot;visits&quot;, &quot;arth.abundance&quot;, &quot;arth.richness&quot;, &quot;percent.cover&quot;, &quot;annual.richness&quot;)
+all.new$bloom &lt;- as.factor(all.new$bloom)
 
-metrics &lt;- c(&quot;Floral Visits \n per Hour&quot;, &quot;Arthropod \n Abundance&quot;, &quot;Arthropod \n Richness&quot;, &quot;Annual Cover&quot;, &quot;Annual Species \n Richness&quot;)
-
-#summary(a1)
-#plot this
-library(cowplot)
-p1 &lt;- ggplot(all.boot, aes(x=metric, y=means)) + 
-  geom_errorbar(aes(ymin=V5, ymax=V6), width=.1) +
-  geom_line() +
-  geom_point() + scale_x_discrete(limits=c(&quot;visits&quot;, &quot;abundance&quot;, &quot;arth.rich&quot;, &quot;percent.cover&quot;, &quot;annual.richness&quot;), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab(&quot;Relative Interation Index&quot;) + xlab(&quot;&quot;) + geom_hline(aes(yintercept=0))
+all.new$bloom &lt;- relevel(all.new$bloom, &quot;post&quot;, &quot;pre&quot;)
+all.new$metric &lt;- factor(all.new$metric, levels = c(&quot;arth.richness&quot;, &quot;arth.abundance&quot;, &quot;annual.richness&quot;, &quot;percent.cover&quot;))
+                         
 
 
+str(all.new)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    8 obs. of  8 variables:
+##  $ means : num  0.6984 0.7961 0.0432 0.0299 0.1934 ...
+##  $ conf  : num  0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95
+##  $ V3    : num  121.9 88.1 237.6 202 260.1 ...
+##  $ V4    : num  9564 9487 9738 9695 9761 ...
+##  $ V5    : num  0.6133 0.7184 -0.0167 -0.0305 0.1197 ...
+##  $ V6    : num  0.7558 0.8406 0.1013 0.0862 0.2716 ...
+##  $ bloom : Factor w/ 2 levels &quot;post&quot;,&quot;pre&quot;: 2 1 2 1 2 1 2 1
+##  $ metric: Factor w/ 4 levels &quot;arth.richness&quot;,..: 4 4 3 3 2 2 1 1</code></pre>
+<pre class="r"><code>all.new$metric</code></pre>
+<pre><code>## [1] percent.cover   percent.cover   annual.richness annual.richness
+## [5] arth.abundance  arth.abundance  arth.richness   arth.richness  
+## Levels: arth.richness arth.abundance annual.richness percent.cover</code></pre>
+<pre class="r"><code>metrics &lt;- c(&quot;Arthropod \n Richness&quot;, &quot;Arthropod \n Abundance&quot;, &quot;Annual Species \n Richness&quot;, &quot;Annual Percent Cover&quot;)
 
-p2 &lt;- ggplot(all.new, aes(x=metric, y=means, linetype = Microsite)) + geom_errorbar(aes(ymin=V5, ymax=V6), width=.1, position=position_dodge(width=0.3)) + geom_line(position=position_dodge(width=0.3)) + geom_point(position=position_dodge(width=0.3)) + scale_linetype_manual(values=c(&quot;twodash&quot;, &quot;solid&quot;)) + scale_x_discrete(limits=c(&quot;visits&quot;, &quot;arth.abundance&quot;, &quot;arth.richness&quot;, &quot;percent.cover&quot;, &quot;annual.richness&quot;), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab(&quot;&quot;) + xlab(&quot;&quot;) + geom_hline(aes(yintercept=0)) + scale_color_manual(values = c(&quot;black&quot;, &quot;gray&quot;)) + theme(legend.position = c(0.8, 0.05))
+#write.csv(all.boot, &quot;Output Data/allboot.csv&quot;)
+#write.csv(all.new, &quot;Output Data/allnewboot.csv&quot;)
 
-plot_grid(p1, p2, labels = c(&quot;A&quot;, &quot;B&quot;), align = &quot;h&quot;)</code></pre>
+ggplot(all.new, aes(x=metric, y=means)) + geom_errorbar(aes(ymin=V5, ymax=V6, fill = bloom), width=.1, position=position_dodge(width=0.5)) + geom_line(aes(fill = bloom),position=position_dodge(width=0.5)) + geom_point(aes(fill = bloom), position=position_dodge(width=0.5), colour=&quot;black&quot;,pch=21, size=5) + ylim(-1, 1) +  theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab(&quot;&quot;) + xlab(&quot;&quot;) + geom_hline(aes(yintercept=0)) + scale_x_discrete(limits=levels(all.new$metric), labels = metrics)+ scale_fill_manual(&quot;&quot;,values = c(&quot;black&quot;, &quot;lightgray&quot;), labels = c(&quot;Bloom period&quot;, &quot;Pre-bloom period&quot;))  + theme(legend.position = c(0.8, 0.05)) + coord_flip() + ylab(&quot;RII Microsite&quot;) + theme(axis.title.x = element_text(size =11)) + guides(fill = guide_legend(nrow = 2, byrow = TRUE)) </code></pre>
 <pre><code>## geom_path: Each group consists of only one observation. Do you need to
-## adjust the group aesthetic?
-## geom_path: Each group consists of only one observation. Do you need to
 ## adjust the group aesthetic?</code></pre>
 <p><img src="index_files/figure-html/rii-1.png" width="672" /></p>
+<pre class="r"><code>sizes &lt;- read.csv(&quot;Clean Data/video_larreadimensions.csv&quot;)
+sizes$PlantID &lt;- sizes$plant.id
+mean(sizes$width)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>h &lt;- left_join(byrep, sizes, by = &quot;PlantID&quot;)</code></pre>
+<pre><code>## Warning: Column `PlantID` joining factors with different levels, coercing
+## to character vector</code></pre>
+<pre class="r"><code>h &lt;- filter(h, treatment == &quot;shrub&quot; &amp; flowering == &quot;pre&quot;)
+mean(h$width, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 342.5965</code></pre>
+<pre class="r"><code>sd(h$width, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 103.9497</code></pre>
+<pre class="r"><code>mean(h$height, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 211.7895</code></pre>
+<pre class="r"><code>sd(h$height, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 46.2388</code></pre>
+</div>
+</div>
 </div>
 
 

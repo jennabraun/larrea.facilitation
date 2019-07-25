@@ -462,17 +462,9 @@ Flower visits
 ```{r, visitation models base}
 #base hypothesis testing model
 #additive
-m1 <- glmmTMB(total.flowers ~ treatment+mean.Temp + flowering + flowers.pot + het.annual.floral.density +  offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+m1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot +  offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
 summary(m1)
-
-a1 <-aov(byrep$mean.Temp~byrep$day)
-summary(a1)
-cor.test(byrep$mean.Temp, byrep$day)
-ggplot(byrep, aes(day, mean.Temp)) + geom_smooth()
-
-
-plot(residuals(m1)~predict(m1))
-car::Anova(m1, type = 3)
+car::Anova(m1, type = 2)
 
 #interactive model
 
@@ -490,7 +482,7 @@ car::Anova(m2, type = 3)
 #model 1 is best fit
 ```
 
-Foraging instances
+Foraging bouts
 ```{r, visitation models (foraging)}
 #base additive model foraging instances
 m3 <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
@@ -526,11 +518,12 @@ summary(c1.1)
 AIC(c1, c1.1)
 #nbinom2 is better
 ```
+
 Annual floral density
 ```{r}
-c2 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+c2 <- glmmTMB(total.visits ~ treatment * flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2)
-car::Anova(c2, type = 2)
+car::Anova(c2, type = 3)
 
 c2.nest <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
 
@@ -545,9 +538,19 @@ q <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.flo
 car::Anova(q, type = 2)
 AIC(c2.v, q)
 
+#nbinom2 better
+
 c2.vnest <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2.vnest)
 
+
+#checking interactions
+c2.i <- glmmTMB(total.visits ~ treatment * flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+summary(c2.i)
+car::Anova(c2.i, type = 3)
+
+c2.f <- glmmTMB(total.flowers ~ treatment * flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+summary(c2.f)
 ```
 Number of blooming shrub neighbours
 ```{r}
@@ -595,49 +598,14 @@ summary(mPt)
 car::Anova(mPt, type = 3)
 lsmeans(mPt, pairwise~flowering|rtu)
 
-byrtu$Date
-dates$Date <- as.factor(dates$Date)
-dates$day
 
-dates <- read.csv("Clean Data/dates.csv")
-byrtu <- left_join(byrtu, dates, by = "Date")
-
-sbees <- filter(byrtu, rtu == "syrphid")
-
-m1 <- glmmTMB(total.visits ~ flowering + treatment + flowers.pot + het.annual.floral.density +  offset(log(dec.Length)) + (1|repID), family="poisson", data = sbees)
-summary(m1)
-
-m2 <- glmmTMB(total.visits ~ day +flowering + treatment + flowers.pot + het.annual.floral.density +  offset(log(dec.Length)) + (1|repID), family="nbinom2", data = sbees)
-summary(m2)
-
-AIC(m1, m2)
-
-m2 <- glmmTMB(total.visits ~ flowering  +  treatment + flowers.pot + het.annual.floral.density + day + offset(log(dec.Length)) + (1|repID), family="nbinom1", data = sbees)
-
-m3 <- glmmTMB(total.visits ~ flowering  +  treatment + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), ziformula = ~1, family="poisson", data = sbees)
-
-AIC(m1, m2, m3)
-
-summary(m3)
-car::Anova(m3)
-
-library(DHARMa)
-r1 <- simulateResiduals(m1)
-testZeroInflation(r1)
-testDispersion(r1, alternative = "greater")
-
-
-
-library(sjstats)
-overdisp(m2)
-overdisp(m1)
-
-
-car::Anova(m3)
 #full model flower visits
 mFullPQv <- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
 summary(mFullPQv)
 car::Anova(mFullPQv, type = 3)
+
+m <- MASS::glmmPQL(total.flowers~flowering * rtu + treatment*flowering + flowers.pot +offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+car::Anova(m, type = 3)
 
 mQ <- MASS::glmmPQL(total.flowers~flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
 summary(mQ)
@@ -655,6 +623,7 @@ summary(mQt)
 #treatment not significant, pairwaise constrast for syrphids is
 
 ```
+
 ```{r, rtu plots, warning = F}
 str(byrtu)
 p <- byrtu %>% group_by(treatment, flowering, rtu) %>% dplyr::summarise(visits = sum(flowers.per.hour))
@@ -721,18 +690,25 @@ rtu.data <- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()
 
 source(system.file("other_methods","lsmeans_methods.R",package="glmmTMB"))
-m1 <- glmmTMB(prop.visited ~ flowering * microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+
+
+
+#proportions should use logistic model
+
+m1 <- glmmTMB(cbind(unique.fl.visited,flower.fov) ~ flowering * flowers.pot + microsite  + (1|repID), family = binomial, data = rtu.data)
+
 summary(m1)
+
 car::Anova(m1, type = 3)
 lsmeans(m1, pairwise~flowering*microsite)
 
-m2 <- glmmTMB(prop.visited ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+m2 <- glmmTMB(cbind(unique.fl.visited,flower.fov) ~ flowering + microsite + flowers.pot + (1|repID), family = binomial, data = rtu.data)
 summary(m2)
 car::Anova(m2, type = 3)
 
 m2null <- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = "log"), data = rtu.data)
 
-anova(m1, m2, m2null)
+anova(m2null, m1, m2)
 AIC(m1, m2, m2null)
 
 ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)
@@ -772,7 +748,7 @@ counts.fl <- right_join(count.fl, cov, by = "Rep")
 
 ggplot(data =counts.ag,(aes(microsite.x, Con))) + geom_boxplot()
 ggplot(data =counts.ag,(aes(microsite.x, Het))) + geom_boxplot()
-t.test(counts.ag$Con ~ counts.ag$microsite.x)
+
 
 ggplot(data = counts.ag, (aes(Con))) + geom_freqpoly()
 shapiro.test(counts.ag$Con)
@@ -780,7 +756,7 @@ shapiro.test(counts.ag$Con)
 counts.ag$Flower <- paste(counts.ag$Rep, counts.ag$Flower)
 counts.ag$Sample <- paste(counts.ag$Slide, counts.ag$Rep)
 counts.ag$d.S <- counts.ag$d.S %>% replace(is.na(.), 0)
-
+counts.ag <- counts.ag %>% mutate(., all = Con + Het)
 cor.test(counts.ag$Con, counts.ag$Het)
 
 mean(counts.ag$d.S)
@@ -790,6 +766,7 @@ mean(counts.ag$d.flowers)
 m1 <- glmmTMB(Con ~ d.flowers + dN1 + d.S + (1|Rep/Flower), family = "nbinom2", data = counts.ag)
 summary(m1)
 car::Anova(m1, type = 2)
+
 #try microsites instead
 
 m2 <- glmmTMB(Con ~ d.flowers + dN1 + (1|Rep/Flower), family = "nbinom2", data = counts.ag)
@@ -799,22 +776,24 @@ m3 <- glmmTMB(Con ~ dN1 + (1|Rep/Flower), family = "nbinom2", data = counts.ag)
 summary(m3)
 
 null <- glmmTMB(Con ~ (1|Rep/Flower), family = "nbinom2", data = counts.ag)
+summary(null)
 
 AIC(m1, m2, m3, null)
 anova(m1, m2, m3, null)
 
-m4 <- glmmTMB(Het ~ d.flowers + dN1 + d.S + (1|Rep/Flower), family = "nbinom2", data = counts.ag)
+m4 <- glmmTMB(Het ~ d.flowers + dN1 + d.S + z +(1|Rep/Flower), family = "nbinom2", data = counts.ag)
 summary(m4)
 car::Anova(m4, type = 2)
 
-m5 <- glmmTMB(Het ~ d.flowers + d.S + (1|Rep/Flower), family = "nbinom2", data = counts.ag)
+m5 <- glmmTMB(Het ~ d.flowers + d.S + z+ (1|Rep/Flower), family = "nbinom2", data = counts.ag)
 summary(m5)
 
 
-m6 <- glmmTMB(Het ~ d.S + (1|Rep/Flower), family = "nbinom2", data = counts.ag)
+m6 <- glmmTMB(Het ~ d.S + z +(1|Rep/Flower), family = "nbinom2", data = counts.ag)
 summary(m6)
 
-null <- glmmTMB(Het ~ (1|Rep/Flower), family = "nbinom2", data = counts.ag)
+null <- glmmTMB(Het ~ z+(1|Rep/Flower), family = "nbinom2", data = counts.ag)
+summary(null)
 
 AIC(m4, m5, m6, null)
 anova(m4, m5, m6, null)
@@ -1160,6 +1139,8 @@ insects <- read.csv("Output Data/wide_yesbeetle.csv")
 row.names(insects) <- insects$X
 insects <- select(insects, -X)
 plot(specaccum(insects), xlab = "# of samples", ylab = "# of species")
+```
+
 ```{r, bees only}
 
 insects <- read.csv("Output Data/wide_yesbeetle.csv")
@@ -1226,9 +1207,6 @@ null <- glmmTMB(abun ~  (1|plant.id), family = "poisson", beemeta)
 AIC(m1, m2, m3, null)
 #null model has lowest AIC
 car::Anova(m2, type = 2)
-
-```
-
 ```
 
 Need to add code for bee abundance and bee diversity. Bee abundance won't change, diversity is unlikely.
@@ -1300,6 +1278,8 @@ ggplot(cov, aes(n.flowers, n)) + geom_point(shape = 1) + geom_smooth(color = "bl
 #cor.test(repcounts.all$n.flowers, repcounts.all$width)
 cor.test(lar.all$n.flowers, lar.all$height)
 #cor.test(repcounts.all$width, repcounts.all$height)
+
+mean(lar.all$height)
 ```
 ***
 
@@ -1434,7 +1414,7 @@ rii.b <- function(x, j, var)
   return2[is.na(return2)] <- 0
   print(return2)
 }
-
+bootmean <- function(d, i) mean(d[i])
 
 byrep <- read.csv("Output Data/byrep_cleaned.csv")
 metadata <- read.csv("Output Data/metadata_nobeetle.csv")
@@ -1456,6 +1436,8 @@ post <- distinct(post)
 post.visits <- rii.m(post, c(1:7), 8:10)
 
 rii.visits <- rbind(pre.visits, post.visits)
+
+
 
 #from melyridae excluded pan traps
 
@@ -1497,44 +1479,9 @@ post.beetle <- arrange(post.beetle, plant.id)
 #prepan <- filter(prepan, plant.id != 266 & plant.id != 275 & plant.id != 276 & plant.id != 196)
 post.beetle <- rii.m(post.beetle, c(1:7), 8)
 
-rii.beetle <- rbind(pre.beetle, post.beetle)
-
-#bootstrapping
-bootmean <- function(d, i) mean(d[i])
-
-flowers.rii <- boot(rii.visits$flowers.per.hour, bootmean, R=1000, stype="i", strata = rii.visits$PlantID)
-
-rich.rii <- boot(rii.visits$understory.richness, bootmean, R=1000, stype="i", strata = rii.visits$PlantID)
-abun.rii <- boot(rii.pan$abun, bootmean, R=1000, stype="i", strata = rii.pan$plant.id)
-percent.rii <- boot(rii.pan$percent.cover, bootmean, R=1000, stype="i", strata = rii.pan$plant.id)
-rich.arth.rii <- boot(rii.beetle$Species, bootmean, R=1000, stype="i", strata = rii.beetle$plant.id)
-
-ci.flowers <- boot.ci(flowers.rii)
-bca.flowers <- ci.flowers$bca
-
-ci.rich <- boot.ci(rich.rii)
-bca.rich <- ci.rich$bca
-
-ci.abun <- boot.ci(abun.rii)
-bca.abun <- ci.abun$bca
-
-ci.percent <- boot.ci(percent.rii)
-bca.percent <- ci.percent$bca
-
-ci.arth <- boot.ci(rich.arth.rii)
-bca.arth <- ci.arth$bca
-
-ci <- rbind(bca.flowers, bca.rich, bca.abun, bca.percent, bca.arth)
 
 
 
-means <- rbind(flowers.rii$t0, rich.rii$t0, abun.rii$t0, percent.rii$t0, rich.arth.rii$t0)
-colnames(means) <- c("means")
-row.names(means) <- c("visits", "annual.richness", "abundance", "percent.cover", "arth.rich")
-
-all.boot <- cbind(means, ci )
-all.boot <- as.data.frame(all.boot)
-all.boot$treatment <- c("microsite")
 
 
 #blooming contrast
@@ -1555,199 +1502,116 @@ open.visits <- filter(open.visits, PlantID != 266 & PlantID != "new1" & PlantID 
 rii.shrub.visits <- rii.b(shrub.visits, c(1:7), 8:10)
 rii.open.visits <- rii.b(open.visits, c(1:7), 8:10)
 
-rii.bloom.visits <- rbind(rii.shrub.visits, rii.open.visits)
-
-t.test(rii.bloom.visits$flowers.per.hour ~ rii.bloom.visits$treatment)
-
-
-#from melyridae excluded pan traps
-
-shrub.pan <- filter(metadata, treatment == "shrub")
-shrub.pan$flowering <- shrub.pan$blooming
-shrub.pan$flowering <- gsub("post", "bloom", shrub.pan$flowering)
-shrub.pan <- dplyr::select(shrub.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, abun, percent.cover)
-#split into 2 dataframes, rename the visitation columns and then rbind
-#there are 2 unmatched reps
-shrub.pan <- arrange(shrub.pan, plant.id)
-#at least six mismatches
-shrub.pan <- filter(shrub.pan, plant.id != 104 & plant.id != 114 & plant.id != 182 & plant.id != 261 & plant.id != 263 & plant.id != 284 & plant.id != 285& plant.id != 287& plant.id != 301& plant.id != 302& plant.id != 303& plant.id != 299)
-
-
-
-
-open.pan <- filter(metadata, treatment =="open")
-open.pan$flowering <- open.pan$blooming
-open.pan$flowering <- gsub("post", "bloom", open.pan$flowering)
-open.pan <- dplyr::select(open.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, abun, percent.cover)
-open.pan <- arrange(open.pan, plant.id)
-#postpan <- filter(post, PlantID != 198)
-#postpan <- distinct(postpan)
-
-open.pan <- filter(open.pan, plant.id != 104 & plant.id != 114 & plant.id != 182 & plant.id != 261 & plant.id != 263 & plant.id != 284 & plant.id != 285& plant.id != 287& plant.id != 301& plant.id != 302& plant.id != 303& plant.id != 299)
-
-
-
-rii.open.pan <- rii.b(open.pan, c(1:7), 8:9)
-rii.shrub.pan <- rii.b(shrub.pan, c(1:7), 8:9)
-
-rii.bloom.pan <- rbind(rii.open.pan, rii.shrub.pan)
-
-#species richness
-shrub.beet.pan <- filter(yesbeetle, treatment == "shrub")
-shrub.beet.pan$flowering <- shrub.beet.pan$blooming
-shrub.beet.pan$flowering <- gsub("post", "bloom", shrub.beet.pan$flowering)
-shrub.beet.pan <- dplyr::select(shrub.beet.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, Species)
-#split into 2 dataframes, rename the visitation columns and then rbind
-#there are 2 unmatched reps
-shrub.beet.pan <- arrange(shrub.beet.pan, plant.id)
-#at least six mismatches
-shrub.beet.pan <- filter(shrub.beet.pan, plant.id != 104 & plant.id != 114 & plant.id != 182 & plant.id != 261 & plant.id != 263 & plant.id != 284 & plant.id != 285& plant.id != 287& plant.id != 301& plant.id != 302& plant.id != 303& plant.id != 299)
-
-
-open.beet.pan <- filter(yesbeetle, treatment =="open")
-open.beet.pan$flowering <- open.beet.pan$blooming
-open.beet.pan$flowering <- gsub("post", "bloom", open.beet.pan$flowering)
-open.beet.pan <- dplyr::select(open.beet.pan, date, mean.Solar, mean.Wind, mean.Temp, plant.id, treatment, flowering, Species)
-open.beet.pan <- arrange(open.beet.pan, plant.id)
-#postpan <- filter(post, PlantID != 198)
-#postpan <- distinct(postpan)
-
-open.beet.pan <- filter(open.beet.pan, plant.id != 104 & plant.id != 114 & plant.id != 182 & plant.id != 261 & plant.id != 263 & plant.id != 284 & plant.id != 285& plant.id != 287& plant.id != 301& plant.id != 302& plant.id != 303& plant.id != 299)
-
-rii.open.beet.pan <- rii.b(open.beet.pan, c(1:7), 8)
-rii.shrub.beet.pan <- rii.b(shrub.beet.pan, c(1:7), 8)
-
-rii.bloom.species <- rbind(rii.open.beet.pan, rii.shrub.beet.pan)
-
-
-#flowers.rii <- boot(rii.bloom.visits$flowers.per.hour, bootmean, R=1000, stype="i", strata = rii.bloom.visits$PlantID)
-
-#rich.rii <- boot(rii.bloom.visits$understory.richness, bootmean, R=1000, stype="i", strata = rii.bloom.visits$PlantID)
-#abun.rii <- boot(rii.bloom.pan$abun, bootmean, R=1000, stype="i", strata = rii.bloom.pan$plant.id)
-#percent.rii <- boot(rii.bloom.pan$percent.cover, bootmean, R=1000, stype="i", strata = rii.bloom.pan$plant.id)
-#rich.arth.rii <- boot(rii.bloom.species$Species, bootmean, R=1000, stype="i", strata = rii.bloom.species$plant.id)
-
-#ci.flowers <- boot.ci(flowers.rii)
-#bca.flowers <- ci.flowers$bca
-
-#ci.rich <- boot.ci(rich.rii)
-#bca.rich <- ci.rich$bca
-
-#ci.abun <- boot.ci(abun.rii)
-#bca.abun <- ci.abun$bca
-
-#ci.percent <- boot.ci(percent.rii)
-#bca.percent <- ci.percent$bca
-#ci.arth <- boot.ci(rich.arth.rii)
-#bca.arth <- ci.arth$bca
-
-#ci <- rbind(bca.flowers, bca.rich, bca.abun, bca.percent, bca.arth)
-
-
-
-#means.bloom <- rbind(flowers.rii$t0, rich.rii$t0, abun.rii$t0, percent.rii$t0, rich.arth.rii$t0)
-#colnames(means.bloom) <- c("means")
-#row.names(means.bloom) <- c("visits", "annual.richness", "abundance", "percent.cover", "arth.rich")
-
-#all.boot.bloom <- cbind(means.bloom, ci )
-#all.boot.bloom <- as.data.frame(all.boot.bloom)
-#all.boot.bloom$treatment <- c("bloom")
-
-#all.boot <- rbind(all.boot, all.boot.bloom)
-
-all.boot$metric <- c("visits", "annual.richness", "abundance", "percent.cover", "arth.rich")# "visits", "annual.richness", "abundance", "percent.cover", "arth.rich")
-
-#all.boot$treatment <- as.factor(all.boot$treatment)
-#all.boot$treatment <- relevel(all.boot$treatment, "microsite", "bloom")
-
-all.boot$metric <- as.factor(all.boot$metric)
-all.boot$metric <- relevel(all.boot$metric, "visits", "abundance", "arth.rich", "percent.cover", "annual.richness")
-
-#labels
-metrics <- c("Floral Visits \n per Hour", "Arthropod \n Abundance", "Arthropod \n Richness", "Percent\n Annual Cover", "Annual Species \n Richness")
-labels <- c("microsite" = "Microsite","bloom" ="Blooming")
-
 
 
 ## calculate separate visitation pre/post by microsite bootstrapped
 
+#annuals percent cover
 
-shrub.visits.rii <- boot(rii.shrub.visits$flowers.per.hour, bootmean, R=10000, stype="i")
-open.visits.rii <- boot(rii.open.visits$flowers.per.hour, bootmean, R=10000, stype="i")
+rii.pre.pan.dat <- filter(rii.pan, blooming == "pre")
+pre.percent.cover.rii <- boot(rii.pre.pan.dat$percent.cover, bootmean, R=10000, stype ="i")
 
+ci.pre.percent.cover <- boot.ci(pre.percent.cover.rii)
+bca.pre.percent.cover <- ci.pre.percent.cover$bca
 
-shrub.cover.rii <- boot(rii.shrub.pan$percent.cover, bootmean, R=10000, stype="i")
-open.cover.rii <- boot(rii.open.pan$percent.cover, bootmean, R=10000, stype="i")
+rii.post.pan <- filter(rii.pan, blooming == "post")
+post.percent.cover.rii <- boot(rii.post.pan$percent.cover, bootmean, R=10000, stype = "i")
+ci.post.percent.cover <- boot.ci(post.percent.cover.rii)
+bca.post.percent.cover <- ci.post.percent.cover$bca
 
-shrub.rich.rii <- boot(rii.shrub.visits$understory.richness, bootmean, R=10000, stype="i")
-open.rich.rii <- boot(rii.open.visits$understory.richness, bootmean, R=10000, stype="i")
-
-shrub.abun.rii <- boot(rii.shrub.pan$abun, bootmean, R=10000, stype="i")
-open.abun.rii <- boot(rii.open.pan$abun, bootmean, R=10000, stype="i")
-
-shrub.arth.rich.rii <- boot(rii.shrub.beet.pan$Species, bootmean, R=10000, stype="i")
-open.arth.rich.rii <- boot(rii.open.beet.pan$Species, bootmean, R=10000, stype="i")
+t.test(rii.pan$percent.cover ~ rii.pan$blooming)
 
 
-ci.shrub.visits <- boot.ci(shrub.visits.rii)
-bca.shrub.visits <- ci.shrub.visits$bca
-
-ci.open.visits <- boot.ci(open.visits.rii)
-bca.open.visits <- ci.open.visits$bca
-
-ci.shrub.cover <- boot.ci(shrub.cover.rii)
-bca.shrub.cover <- ci.shrub.cover$bca
-ci.open.cover <- boot.ci(open.cover.rii)
-bca.open.cover <- ci.open.cover$bca
-
-ci.shrub.rich <- boot.ci(shrub.rich.rii)
-bca.shrub.rich <- ci.shrub.rich$bca
-ci.open.rich <- boot.ci(open.rich.rii)
-bca.open.rich <- ci.open.rich$bca
-
-ci.shrub.abun <- boot.ci(shrub.abun.rii)
-bca.shrub.abun <- ci.shrub.abun$bca
-ci.open.abun <- boot.ci(open.abun.rii)
-bca.open.abun <- ci.open.abun$bca
-
-ci.shrub.arth.rich <- boot.ci(shrub.arth.rich.rii)
-bca.shrub.arth.rich <- ci.shrub.arth.rich$bca
-ci.open.arth.rich <- boot.ci(open.arth.rich.rii)
-bca.open.arth.rich <- ci.open.arth.rich$bca
+#annual species richness
+pre.ann.rich.rii <- boot(pre.visits$understory.richness, bootmean, R=10000, stype = "i")
+ci.ann.rich.rii <- boot.ci(pre.ann.rich.rii)
+bca.pre.ann.rich.rii <- ci.ann.rich.rii$bca
 
 
-means.all <- rbind(shrub.visits.rii$t0, open.visits.rii$t0,shrub.cover.rii$t0, open.cover.rii$t0, shrub.rich.rii$t0, open.rich.rii$t0, shrub.abun.rii$t0, open.abun.rii$t0, shrub.arth.rich.rii$t0, open.arth.rich.rii$t0)
+post.ann.rich.rii <- boot(post.visits$understory.richness, bootmean, R=10000, stype = "i")
+ci.post.ann.rich.rii <- boot.ci(post.ann.rich.rii)
+bca.post.ann.rich.rii <- ci.post.ann.rich.rii$bca
+
+
+#arthropod abundance
+post.abun.rii <- boot(rii.post.pan$abun, bootmean, R=10000, stype = "i")
+ci.post.abun <- boot.ci(post.abun.rii)
+bca.post.abun <- ci.post.abun$bca
+
+pre.abun.rii <- boot(rii.pre.pan.dat$abun, bootmean, R=10000, stype = "i")
+ci.pre.abun <- boot.ci(pre.abun.rii)
+bca.pre.abun <- ci.pre.abun$bca
+
+
+#arthropod richness
+
+#pre.beetle <- filter(rii.beetle, blooming == "pre")
+#post.beetle <- filter(rii.beetle, blooming =="post")
+
+pre.rich.rii <- boot(pre.beetle$Species, bootmean, R=10000, stype = "i")
+ci.pre.rich.rii <- boot.ci(pre.rich.rii)
+bca.pre.rich <- ci.pre.rich.rii$bca
+
+
+post.rich.rii <- boot(post.beetle$Species, bootmean, R=10000, stype = "i")
+ci.post.rich.rii <- boot.ci(post.rich.rii)
+bca.post.rich <- ci.post.rich.rii$bca
+
+
+
+
+means.all <- rbind(pre.percent.cover.rii$t0, post.percent.cover.rii$t0, pre.ann.rich.rii$t0, post.ann.rich.rii$t0, pre.abun.rii$t0, post.abun.rii$t0, pre.rich.rii$t0, post.rich.rii$t0)
+
+
 colnames(means.all) <- c("means")
-ci.all <- rbind(bca.shrub.visits, bca.open.visits, bca.shrub.cover, bca.open.cover, bca.shrub.rich, bca.open.rich, bca.shrub.abun, bca.open.abun, bca.shrub.arth.rich, bca.open.arth.rich)
+
+ci.all <- rbind(bca.pre.percent.cover, bca.post.percent.cover, bca.pre.ann.rich.rii, bca.post.ann.rich.rii, bca.pre.abun, bca.post.abun, bca.pre.rich, bca.post.rich)
+
 
 
 all.new <- cbind(means.all, ci.all)
 all.new <- as.data.frame(all.new)
 
-all.new$Microsite <- c("shrub", "open", "shrub", "open","shrub", "open","shrub", "open","shrub", "open")
-all.new$metric <- c("visits", "visits", "percent.cover", "percent.cover", "annual.richness", "annual.richness", "arth.abundance", "arth.abundance", "arth.richness", "arth.richness")
+all.new$bloom <- c("pre", "post", "pre", "post","pre", "post","pre", "post")
+all.new$metric <- c("percent.cover", "percent.cover", "annual.richness", "annual.richness", "arth.abundance", "arth.abundance", "arth.richness", "arth.richness")
 
 
 all.new$metric <- as.factor(all.new$metric)
-all.new$metric <- relevel(all.new$metric, "visits", "arth.abundance", "arth.richness", "percent.cover", "annual.richness")
+all.new$bloom <- as.factor(all.new$bloom)
 
-metrics <- c("Floral Visits \n per Hour", "Arthropod \n Abundance", "Arthropod \n Richness", "Annual Cover", "Annual Species \n Richness")
-
-write.csv(all.boot, "Output Data/allboot.csv")
-write.csv(all.new, "Output Data/allnewboot.csv")
-#summary(a1)
-#plot this
-library(cowplot)
-p1 <- ggplot(all.boot, aes(x=metric, y=means)) + 
-  geom_errorbar(aes(ymin=V5, ymax=V6), width=.1) +
-  geom_line() +
-  geom_point() + scale_x_discrete(limits=c("visits", "abundance", "arth.rich", "percent.cover", "annual.richness"), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("Relative Interation Index") + xlab("") + geom_hline(aes(yintercept=0))
+all.new$bloom <- relevel(all.new$bloom, "post", "pre")
+all.new$metric <- factor(all.new$metric, levels = c("arth.richness", "arth.abundance", "annual.richness", "percent.cover"))
+                         
 
 
+str(all.new)
+all.new$metric
 
-p2 <- ggplot(all.new, aes(x=metric, y=means, linetype = Microsite)) + geom_errorbar(aes(ymin=V5, ymax=V6), width=.1, position=position_dodge(width=0.3)) + geom_line(position=position_dodge(width=0.3)) + geom_point(position=position_dodge(width=0.3)) + scale_linetype_manual(values=c("twodash", "solid")) + scale_x_discrete(limits=c("visits", "arth.abundance", "arth.richness", "percent.cover", "annual.richness"), labels = metrics) + theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("") + xlab("") + geom_hline(aes(yintercept=0)) + scale_color_manual(values = c("black", "gray")) + theme(legend.position = c(0.8, 0.05))
+metrics <- c("Arthropod \n Richness", "Arthropod \n Abundance", "Annual Species \n Richness", "Annual Percent Cover")
 
-plot_grid(p1, p2, labels = c("A", "B"), align = "h")
+#write.csv(all.boot, "Output Data/allboot.csv")
+#write.csv(all.new, "Output Data/allnewboot.csv")
+
+ggplot(all.new, aes(x=metric, y=means)) + geom_errorbar(aes(ymin=V5, ymax=V6, fill = bloom), width=.1, position=position_dodge(width=0.5)) + geom_line(aes(fill = bloom),position=position_dodge(width=0.5)) + geom_point(aes(fill = bloom), position=position_dodge(width=0.5), colour="black",pch=21, size=5) + ylim(-1, 1) +  theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab("") + xlab("") + geom_hline(aes(yintercept=0)) + scale_x_discrete(limits=levels(all.new$metric), labels = metrics)+ scale_fill_manual("",values = c("black", "lightgray"), labels = c("Full bloom", "Pre-bloom"))  + theme(legend.position = c(0.8, 0.1)) + coord_flip() + ylab("RII Microsite") + theme(axis.title.x = element_text(size =11)) + guides(fill = guide_legend(nrow = 2, byrow = TRUE)) 
+
+
+```
+
+
+
+```{r, calcs}
+sizes <- read.csv("Clean Data/video_larreadimensions.csv")
+sizes$PlantID <- sizes$plant.id
+mean(sizes$width)
+
+h <- left_join(byrep, sizes, by = "PlantID")
+h <- filter(h, treatment == "shrub" & flowering == "pre")
+mean(h$width, na.rm = TRUE)
+sd(h$width, na.rm = TRUE)
+
+mean(h$height, na.rm = TRUE)
+sd(h$height, na.rm = TRUE)
+
 ```
 
 
