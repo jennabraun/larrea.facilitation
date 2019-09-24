@@ -19,7 +19,7 @@ overdisp_fun <- function(model) {
 
 
 
-theme_Publication <- function(base_size=14, base_family="helvetica") {
+theme_Publication <- function(base_size=14, base_family="arial") {
   library(grid)
   library(ggthemes)
   (theme_foundation(base_size=base_size, base_family=base_family)

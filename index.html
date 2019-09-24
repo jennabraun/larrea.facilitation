@@ -299,7 +299,8 @@ div.tocify {
 </div>
 
 
-<p>#Disentangling the drivers and trade-offs of pollinator-mediated interactions between the foundation shrub Creosote bush (Larrea tridentata) and the annual desert dandelion (Malacothrix glabrata)</p>
+<div id="disentangling-the-drivers-and-trade-offs-of-pollinator-mediated-interactions-between-the-foundation-shrub-creosote-bush-larrea-tridentata-and-the-annual-desert-dandelion-malacothrix-glabrata" class="section level1">
+<h1>Disentangling the drivers and trade-offs of pollinator-mediated interactions between the foundation shrub Creosote bush (Larrea tridentata) and the annual desert dandelion (Malacothrix glabrata)</h1>
 
 <hr />
 
@@ -309,7 +310,8 @@ div.tocify {
 
 <hr />
 
-<p><img src="./Images/site.jpg" /><!-- --></p>
+<p><img src="Images/site.jpg" width="1000" /></p>
+</div>
 </div>
 <div id="data-wrangling-and-clean-up" class="section level1">
 <h1>Data wrangling and clean up</h1>
@@ -1379,44 +1381,50 @@ summary(c1.1)</code></pre>
 ## c1.1  7 1098.089</code></pre>
 <pre class="r"><code>#nbinom2 is better</code></pre>
 <p>Annual floral density</p>
-<pre class="r"><code>c2 &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
+<pre class="r"><code>c2 &lt;- glmmTMB(total.visits ~ treatment * flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
 summary(c2)</code></pre>
 <pre><code>##  Family: nbinom2  ( log )
 ## Formula:          
-## total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density +  
-##     offset(log(dec.Length)) + (1 | repID)
+## total.visits ~ treatment * flowering + flowers.pot + het.annual.floral.density +  
+##     het.shrub.blooming.neighbours + offset(log(dec.Length)) +  
+##     (1 | repID)
 ## Data: byrep
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##   1093.7   1117.8   -539.9   1079.7      224 
+##    985.7   1016.7   -483.8    967.7      222 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups Name        Variance Std.Dev.
-##  repID  (Intercept) 0.1308   0.3616  
+##  repID  (Intercept) 0.06137  0.2477  
 ## Number of obs: 231, groups:  repID, 122
 ## 
-## Overdispersion parameter for nbinom2 family (): 1.09 
+## Overdispersion parameter for nbinom2 family (): 1.62 
 ## 
 ## Conditional model:
-##                           Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                0.82562    0.29777   2.773  0.00556 ** 
-## treatmentshrub            -0.37743    0.16820  -2.244  0.02484 *  
-## floweringbloom            -1.22703    0.16269  -7.542 4.62e-14 ***
-## flowers.pot                0.08029    0.02705   2.969  0.00299 ** 
-## het.annual.floral.density  0.03988    0.02334   1.709  0.08749 .  
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                    0.80009    0.26893   2.975  0.00293 ** 
+## treatmentshrub                -0.35518    0.18617  -1.908  0.05642 .  
+## floweringbloom                -1.18645    0.20476  -5.794 6.86e-09 ***
+## flowers.pot                    0.05949    0.02371   2.509  0.01210 *  
+## het.annual.floral.density      0.04133    0.01983   2.084  0.03712 *  
+## het.shrub.blooming.neighbours -0.03577    0.03767  -0.950  0.34234    
+## treatmentshrub:floweringbloom  0.08069    0.28404   0.284  0.77634    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>car::Anova(c2, type = 2)</code></pre>
-<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+<pre class="r"><code>car::Anova(c2, type = 3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
-## Response: total.flowers
-##                             Chisq Df Pr(&gt;Chisq)    
-## treatment                  5.0352  1   0.024838 *  
-## flowering                 56.8850  1  4.621e-14 ***
-## flowers.pot                8.8120  1   0.002993 ** 
-## het.annual.floral.density  2.9200  1   0.087488 .  
+## Response: total.visits
+##                                 Chisq Df Pr(&gt;Chisq)    
+## (Intercept)                    8.8511  1   0.002929 ** 
+## treatment                      3.6396  1   0.056420 .  
+## flowering                     33.5751  1  6.857e-09 ***
+## flowers.pot                    6.2963  1   0.012099 *  
+## het.annual.floral.density      4.3447  1   0.037124 *  
+## het.shrub.blooming.neighbours  0.9016  1   0.342344    
+## treatment:flowering            0.0807  1   0.776343    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>c2.nest &lt;- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = &quot;log&quot;), data = byrep)
@@ -2369,6 +2377,31 @@ mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers
 ## flowering:rtu:treatment         8.0131  5  0.1555130    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>m &lt;- MASS::glmmPQL(total.flowers~flowering * rtu + treatment*flowering + flowers.pot +offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
+<pre><code>## iteration 1</code></pre>
+<pre><code>## iteration 2</code></pre>
+<pre><code>## iteration 3</code></pre>
+<pre><code>## iteration 4</code></pre>
+<pre><code>## iteration 5</code></pre>
+<pre><code>## iteration 6</code></pre>
+<pre><code>## iteration 7</code></pre>
+<pre><code>## iteration 8</code></pre>
+<pre><code>## iteration 9</code></pre>
+<pre><code>## iteration 10</code></pre>
+<pre class="r"><code>car::Anova(m, type = 3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type III tests)
+## 
+## Response: total.flowers
+##                        Chisq Df Pr(&gt;Chisq)    
+## (Intercept)          11.4456  1  0.0007166 ***
+## flowering            14.9686  1  0.0001093 ***
+## rtu                 196.5358  5  &lt; 2.2e-16 ***
+## treatment             3.8220  1  0.0505847 .  
+## flowers.pot           7.8836  1  0.0049885 ** 
+## flowering:rtu        69.8368  5  1.108e-13 ***
+## flowering:treatment   0.0615  1  0.8041713    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>mQ &lt;- MASS::glmmPQL(total.flowers~flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family=&quot;quasipoisson&quot;, data = byrtu)</code></pre>
 <pre><code>## iteration 1</code></pre>
 <pre><code>## iteration 2</code></pre>
@@ -2652,7 +2685,7 @@ mFullPQv &lt;- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers
 ##  $ total.visits                  : int  18 2 0 0 0 0 6 1 0 0 ...
 ##  $ total.flowers                 : int  35 5 0 0 0 0 8 2 0 0 ...
 ##  $ Length                        : Factor w/ 225 levels &quot;0:31:34&quot;,&quot;0:32:53&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
-##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-07-22 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
+##  $ pos.Length                    : Factor w/ 225 levels &quot;2019-09-24 00:31:34&quot;,..: 120 120 120 120 120 120 185 185 185 185 ...
 ##  $ dec.Length                    : num  1.38 1.38 1.38 1.38 1.38 ...
 ##  $ visits.per.hour               : num  13.04 1.45 0 0 0 ...
 ##  $ flowers.per.hour              : num  25.35 3.62 0 0 0 ...
@@ -6385,8 +6418,19 @@ post.percent.cover.rii &lt;- boot(rii.post.pan$percent.cover, bootmean, R=10000,
 ci.post.percent.cover &lt;- boot.ci(post.percent.cover.rii)
 bca.post.percent.cover &lt;- ci.post.percent.cover$bca
 
-
-#annual species richness
+t.test(rii.pan$percent.cover ~ rii.pan$blooming)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  rii.pan$percent.cover by rii.pan$blooming
+## t = 2.108, df = 106.01, p-value = 0.03739
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.005806593 0.189479015
+## sample estimates:
+## mean in group post  mean in group pre 
+##          0.7960921          0.6984493</code></pre>
+<pre class="r"><code>#annual species richness
 pre.ann.rich.rii &lt;- boot(pre.visits$understory.richness, bootmean, R=10000, stype = &quot;i&quot;)
 ci.ann.rich.rii &lt;- boot.ci(pre.ann.rich.rii)
 bca.pre.ann.rich.rii &lt;- ci.ann.rich.rii$bca
@@ -6452,10 +6496,10 @@ str(all.new)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    8 obs. of  8 variables:
 ##  $ means : num  0.6984 0.7961 0.0432 0.0299 0.1934 ...
 ##  $ conf  : num  0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95
-##  $ V3    : num  121.9 88.1 237.6 202 260.1 ...
-##  $ V4    : num  9564 9487 9738 9695 9761 ...
-##  $ V5    : num  0.6133 0.7184 -0.0167 -0.0305 0.1197 ...
-##  $ V6    : num  0.7558 0.8406 0.1013 0.0862 0.2716 ...
+##  $ V3    : num  147 117 242 229 250 ...
+##  $ V4    : num  9619 9569 9743 9729 9751 ...
+##  $ V5    : num  0.6159 0.7207 -0.0178 -0.0287 0.1174 ...
+##  $ V6    : num  0.758 0.8432 0.1015 0.0874 0.2714 ...
 ##  $ bloom : Factor w/ 2 levels &quot;post&quot;,&quot;pre&quot;: 2 1 2 1 2 1 2 1
 ##  $ metric: Factor w/ 4 levels &quot;arth.richness&quot;,..: 4 4 3 3 2 2 1 1</code></pre>
 <pre class="r"><code>all.new$metric</code></pre>
@@ -6465,12 +6509,7 @@ str(all.new)</code></pre>
 <pre class="r"><code>metrics &lt;- c(&quot;Arthropod \n Richness&quot;, &quot;Arthropod \n Abundance&quot;, &quot;Annual Species \n Richness&quot;, &quot;Annual Percent Cover&quot;)
 
 #write.csv(all.boot, &quot;Output Data/allboot.csv&quot;)
-#write.csv(all.new, &quot;Output Data/allnewboot.csv&quot;)
-
-ggplot(all.new, aes(x=metric, y=means)) + geom_errorbar(aes(ymin=V5, ymax=V6, fill = bloom), width=.1, position=position_dodge(width=0.5)) + geom_line(aes(fill = bloom),position=position_dodge(width=0.5)) + geom_point(aes(fill = bloom), position=position_dodge(width=0.5), colour=&quot;black&quot;,pch=21, size=5) + ylim(-1, 1) +  theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab(&quot;&quot;) + xlab(&quot;&quot;) + geom_hline(aes(yintercept=0)) + scale_x_discrete(limits=levels(all.new$metric), labels = metrics)+ scale_fill_manual(&quot;&quot;,values = c(&quot;black&quot;, &quot;lightgray&quot;), labels = c(&quot;Bloom period&quot;, &quot;Pre-bloom period&quot;))  + theme(legend.position = c(0.8, 0.05)) + coord_flip() + ylab(&quot;RII Microsite&quot;) + theme(axis.title.x = element_text(size =11)) + guides(fill = guide_legend(nrow = 2, byrow = TRUE)) </code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you need to
-## adjust the group aesthetic?</code></pre>
-<p><img src="index_files/figure-html/rii-1.png" width="672" /></p>
+#write.csv(all.new, &quot;Output Data/allnewboot.csv&quot;)</code></pre>
 <pre class="r"><code>sizes &lt;- read.csv(&quot;Clean Data/video_larreadimensions.csv&quot;)
 sizes$PlantID &lt;- sizes$plant.id
 mean(sizes$width)</code></pre>
@@ -6488,6 +6527,60 @@ mean(h$width, na.rm = TRUE)</code></pre>
 <pre class="r"><code>sd(h$height, na.rm = TRUE)</code></pre>
 <pre><code>## [1] 46.2388</code></pre>
 </div>
+</div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<pre class="r"><code>data &lt;- read.csv(&quot;Output Data/rtu_by_rep.csv&quot;)
+summary &lt;- data %&gt;% group_by(rtu, treatment, flowering) %&gt;% summarise(mean.visits = mean(visits.per.hour), se.visits = se(visits.per.hour), mean.flowers = mean(flowers.per.hour), se.flowers = se(flowers.per.hour))
+
+summary$t &lt;- paste(summary$treatment, summary$flowering)
+summary$t &lt;- as.factor(summary$t)
+summary$t &lt;- factor(summary$t, levels = c(&quot;shrub pre&quot;, &quot;open pre&quot;, &quot;shrub bloom&quot;, &quot;open bloom&quot;))
+
+summary$flowering &lt;- relevel(summary$flowering, &quot;pre&quot;)
+labels &lt;- c(pre = &quot;Pre-blooming&quot;, post = &quot;Blooming&quot;, bloom = &quot;Blooming&quot;)
+
+
+ggplot(summary, aes(rtu, mean.visits, group = t)) + geom_bar(aes (fill = t), stat = &quot;identity&quot;, position = &quot;dodge&quot;, color = &quot;black&quot;) + geom_errorbar(aes(ymin = mean.visits - se.visits, ymax = mean.visits + se.visits), width = 0.2, position = position_dodge(0.9)) + theme_Publication()  + ylab(&quot;Mean foraging bouts/hr &quot;) + scale_x_discrete(labels = c(&quot;Solitary Bee&quot;, &quot;Bombyliidae&quot;, &quot;Honeybee&quot;, &quot;Lepidoptera&quot;, &quot;Other&quot;, &quot;Syrphidae&quot;)) + theme(axis.text.x = element_text(angle = 90, vjust = 0.2), axis.title.y = element_text(size = 12)) + scale_fill_manual(&quot;&quot;, values = c(&quot;shrub pre&quot; =&quot;black&quot;, &quot;open pre&quot;= &quot;white&quot;, &quot;shrub bloom&quot;= &quot;black&quot;, &quot;open bloom&quot;= &quot;white&quot;)) + theme(legend.position = &quot;none&quot;, legend.title = element_blank(),axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank()) + xlab(&quot;&quot;) + facet_grid(~flowering, labeller=labeller(flowering = labels)) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(summary, aes(rtu, mean.flowers, group = t)) + geom_bar(aes (fill = t), stat = &quot;identity&quot;, position = &quot;dodge&quot;, color = &quot;black&quot;) + geom_errorbar(aes(ymin = mean.flowers - se.flowers, ymax = mean.flowers + se.flowers), width = 0.2, position = position_dodge(0.9)) + theme_Publication() + ylab(&quot;Mean flowers visited/hr&quot;) + scale_x_discrete(labels = c(&quot;Solitary bees&quot;, &quot;Bee flies&quot;, &quot;Honeybees&quot;, &quot;Butterflies and \n sphinx moths&quot;, &quot;Other&quot;, &quot;Hoverflies&quot;)) + theme(axis.text.x = element_text(angle = 90, vjust = 0.2, hjust = 1), axis.title.y = element_text(size = 12)) + scale_fill_manual(&quot;&quot;, values = c(&quot;shrub pre&quot; =&quot;black&quot;, &quot;open pre&quot;= &quot;white&quot;, &quot;shrub bloom&quot;= &quot;black&quot;, &quot;open bloom&quot;= &quot;white&quot;)) + xlab(&quot;&quot;) + facet_grid(~flowering) + theme(strip.background = element_blank(), strip.text = element_blank()) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>visits &lt;- read.csv(&quot;Output Data/byrep_cleaned.csv&quot;)
+metadata &lt;- read.csv(&quot;Output Data/metadata_nobeetle.csv&quot;)
+nobeetle &lt;- read.csv(&quot;Output Data/metadata_nobeetle.csv&quot;)
+incbeetle &lt;- read.csv(&quot;Output Data/metadata_yesbeetle.csv&quot;)
+onlybeetle &lt;- read.csv(&quot;Output Data/metadata_onlybeetle.csv&quot;)
+
+labels &lt;- c(pre = &quot;Pre-blooming&quot;, post = &quot;Blooming&quot;, bloom = &quot;Blooming&quot;)
+visits$flowering &lt;- relevel(visits$flowering, &quot;pre&quot;)
+metadata$blooming &lt;- relevel(metadata$blooming, &quot;pre&quot;)
+metadata$treatment &lt;- relevel(metadata$treatment, &quot;shrub&quot;)
+visits$treatment &lt;- relevel(visits$treatment, &quot;shrub&quot;)
+incbeetle$treatment &lt;- relevel(incbeetle$treatment, &quot;shrub&quot;)
+incbeetle$blooming &lt;- relevel(incbeetle$blooming, &quot;pre&quot;)
+onlybeetle$blooming &lt;- relevel(onlybeetle$blooming, &quot;pre&quot;)
+byrtu$flowering &lt;- relevel(byrtu$flowering, &quot;pre&quot;)
+
+a &lt;- ggplot(metadata, aes(treatment, percent.cover)) + 
+  stat_boxplot(geom =&#39;errorbar&#39;, width = 0.2) + geom_boxplot(aes(fill = treatment)) + theme_Publication() + ggtitle(&quot;Percent Annual Cover&quot;) + ylab(&quot;&quot;) + xlab(&quot;&quot;) + facet_grid(~blooming,labeller=labeller(blooming = labels))  +theme(plot.title = element_text(size = (10)))+ facet_grid(~blooming,labeller=labeller(blooming = labels)) + scale_fill_manual(&quot;&quot;, values = c(&quot;shrub&quot; =&quot;black&quot;, &quot;open&quot;= &quot;white&quot;)) + theme(legend.position = &quot;none&quot;) + stat_summary(fun.y=mean, colour=&quot;red&quot;, geom=&quot;point&quot;, shape=18, size=3,show_guide = FALSE) + theme(plot.margin=unit(c(1,0.1,0,1), &quot;cm&quot;), ,axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+b &lt;- ggplot(visits, aes(treatment, understory.richness)) + 
+  stat_boxplot(geom =&#39;errorbar&#39;, width = 0.2) + geom_boxplot(aes(fill = treatment)) + theme_Publication() + ggtitle(&quot;Annual Richness&quot;) + ylab(&quot;&quot;) + xlab(&quot;&quot;)  +theme(plot.title = element_text(size = (10)))+ facet_grid(~flowering,labeller=labeller(flowering = labels)) + scale_fill_manual(&quot;&quot;, values = c(&quot;shrub&quot; =&quot;black&quot;, &quot;open&quot;= &quot;white&quot;)) + theme(legend.position = &quot;none&quot;) + stat_summary(fun.y=mean, colour=&quot;red&quot;, geom=&quot;point&quot;, shape=18, size=3,show_guide = FALSE) + theme(plot.margin=unit(c(1,1,0,0.1), &quot;cm&quot;),axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+c &lt;- ggplot(metadata, aes(treatment, abun)) + 
+  stat_boxplot(geom =&#39;errorbar&#39;, width = 0.2) + geom_boxplot(aes(fill = treatment)) + theme_Publication() + ggtitle(&quot;Arthropod Abundance&quot;) + ylab(&quot;&quot;) + xlab(&quot;&quot;) + facet_grid(~blooming,labeller=labeller(blooming = labels))  +theme(plot.title = element_text(size = (10)))+ facet_grid(~blooming,labeller=labeller(blooming = labels)) + scale_fill_manual(&quot;&quot;, values = c(&quot;shrub&quot; =&quot;black&quot;, &quot;open&quot;= &quot;white&quot;)) + theme(legend.position = &quot;none&quot;) + stat_summary(fun.y=mean, colour=&quot;red&quot;, geom=&quot;point&quot;, shape=18, size=3,show_guide = FALSE) + theme(strip.background = element_blank(), strip.text = element_blank()) + theme(plot.margin=unit(c(0.1,0.1,1,1), &quot;cm&quot;),axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+
+d &lt;- ggplot(incbeetle, aes(treatment, Species)) + 
+  stat_boxplot(geom =&#39;errorbar&#39;, width = 0.2) + geom_boxplot(aes(fill = treatment)) + theme_Publication() + ggtitle(&quot;Arthropod Richness&quot;) + ylab(&quot;&quot;) + xlab(&quot;&quot;) + facet_grid(~blooming,labeller=labeller(blooming = labels))  +theme(plot.title = element_text(size = (10)))+ facet_grid(~blooming,labeller=labeller(blooming = labels)) + scale_fill_manual(&quot;&quot;, values = c(&quot;shrub&quot; =&quot;black&quot;, &quot;open&quot;= &quot;white&quot;)) + theme(legend.position = &quot;none&quot;) + stat_summary(fun.y=mean, colour=&quot;red&quot;, geom=&quot;point&quot;, shape=18, size=3,show_guide = FALSE) + theme(strip.background = element_blank(), strip.text = element_blank()) + theme(plot.margin=unit(c(0.1,1,1,0), &quot;cm&quot;),axis.title.x=element_blank(),axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+library(cowplot)
+plot_grid(a,b,c,d)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(all.new, aes(x=metric, y=means)) + geom_errorbar(aes(ymin=V5, ymax=V6, fill = bloom), width=.1, position=position_dodge(width=0.5)) + geom_line(aes(fill = bloom),position=position_dodge(width=0.5)) + geom_point(aes(fill = bloom), position=position_dodge(width=0.5), colour=&quot;black&quot;,pch=21, size=5) + ylim(-1, 1) +  theme_Publication() + theme(axis.text.x=element_text(angle=90, vjust=.5)) + ylab(&quot;&quot;) + xlab(&quot;&quot;) + geom_hline(aes(yintercept=0)) + scale_x_discrete(limits=levels(all.new$metric), labels = metrics)+ scale_fill_manual(&quot;&quot;,values = c(&quot;black&quot;, &quot;lightgray&quot;), labels = c(&quot;Full bloom&quot;, &quot;Pre-bloom&quot;))  + theme(legend.position = c(0.8, 0.1)) + coord_flip() + ylab(&quot;RII Microsite&quot;) + theme(axis.title.x = element_text(size =11)) + guides(fill = guide_legend(nrow = 2, byrow = TRUE)) </code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you need to
+## adjust the group aesthetic?</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
 </div>
 </div>
 
