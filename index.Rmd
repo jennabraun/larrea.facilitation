@@ -4,17 +4,16 @@ output:
   html_document:
     toc: true
     toc_float: true
+    highlight: "zenburn"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(ggplot2)
-library(lubridate)
 library(tidyr)
 library(vegan)
 library(lsmeans)
-#source(system.file("utils", "allFit.R", package="lme4"))
 library(glmmTMB)
 library(cowplot)
 library(boot)
@@ -44,391 +43,11 @@ knitr::include_graphics('./Images/site.jpg')
 ```
 
 
-# Data wrangling and clean up
-This section creates several .csv files that get used later for stats
-
-
-### Video data clean up
-This section takes the raw datas, wrangles it into three formats, adds covariates and outputs the cleaned data as .csv files which re then sourced in later scripts
-```{r, video data wrangling}
-#data wrangling for video data
-
-#import datasheets
-vids <- read.csv("Clean Data/videos_clean.csv")
-IDlist <- read.csv("Clean Data/video_repID.csv")
-str(vids)
-
-#clean up factor names
-vids$Rep <- gsub('\\s+', "", vids$Rep)
-vids$microsite <- gsub('\\s+', "", vids$microsite)
-vids$flowering <- gsub('\\s+', "", vids$flowering)
-vids$flowering <-gsub("post", "bloom", vids$flowering)
-vids$flowering <-gsub("Bloom", "bloom", vids$flowering)
-vids$microsite <-gsub("Shrub", "shrub", vids$microsite)
-
-#check for correc rep info
-vids$id.check <- paste(vids$video.date, vids$plant.id, vids$Rep, vids$microsite, vids$flowering)
-
-
-#need to know how many videos are empty
-id.counts <- count(vids, id.check)
-sum(id.counts$n)
-
-
-#subset out floral visits only ie instances where an insect touched a flower. Other insect uses were extracted from videos but not included in analyses
-
-vids$uniID <- paste(vids$Rep, vids$video.date)
-vids$uniID <- gsub('\\s+', "", vids$uniID)
-
-#subset flower visits where insect flies on
-flr <- filter(vids, flowers.visits != 0 & flies.on == "Y") 
-summary(flr)
-str(flr)
-
-#convert time to seconds then decimal time
-flr$pos.total.time <- as.POSIXct(strptime(flr$total.time, "%H:%M:%S"))
-flr$dec.total.time <- (hour(flr$pos.total.time) * 3600 + minute(flr$pos.total.time) * 60 + second(flr$pos.total.time)) / 3600
-flr <- mutate(flr, prop.fl.visited = flowers.visits/flower.fov, prop.un.fl.visited = unique.fl.visited/flower.fov)
-
-counts <- count(flr, uniID)
-sum(counts$n)
-
-#count(flr, Rep)
-#count(flr, uniID)
-#make fill ID list
-IDlist$uniID <- paste(IDlist$Rep, IDlist$Day)
-IDlist$uniID <- gsub('\\s+', "", IDlist$uniID)
-
-#exclude certain reps. The excluded reps are those where the battery ran out or some disturbance occurred
-IDlist <- filter(IDlist, Exclude != "Y")
-
-#count visits per rep
-counts <- flr %>% group_by(uniID) %>% summarise(total.visits = n()) 
-sum(counts$total.visits)
-
-#count the total number of flowers visited per video
-count.fl <- flr %>% group_by(uniID) %>% summarise(total.flowers = sum(flowers.visits)) 
-
-sum(count.fl$total.flowers)
-
-#add reps with zero visits. Need to included videos that received no visits
-
-zeros <- anti_join(IDlist, counts, by = "uniID")
-all.data <- bind_rows(zeros, counts)
-all.data <- dplyr::select(all.data, uniID, total.visits)
-
-#replace NAs with zeros
-all.data$total.visits[is.na(all.data$total.visits)] <- 0
-sum(all.data$total.visits)
-
-#join video length
-all.data <- IDlist %>% dplyr::select(Length, uniID) %>% right_join(all.data,., by = "uniID")
-
-#join covariates
-cov <- read.csv("Clean Data/video_cov.csv")
-str(cov)
-cov$uniID <- paste(cov$Cam, cov$Date)
-cov$uniID <- gsub('\\s+', "", cov$uniID)
-all.data <- right_join(cov, all.data, by = "uniID")
-sum(all.data$total.visits)
-
-#convert to decimal time to standardize visits
-all.data$pos.Length <- as.POSIXct(strptime(all.data$Length, "%H:%M:%S"))
-all.data$dec.Length <- (hour(all.data$pos.Length) * 3600 + minute(all.data$pos.Length) * 60 + second(all.data$pos.Length)) / 3600
-
-
-#plant visits per hour
-all.data <- mutate(all.data, visits.per.hour = total.visits/dec.Length)
-sum(all.data$total.visits)
-
-#number of flowers visited per hour
-all.data <- left_join(all.data, count.fl, by = "uniID")
-all.data$total.flowers[is.na(all.data$total.flowers)] <- 0
-all.data <- mutate(all.data, flowers.per.hour = total.flowers/dec.Length)
-sum(all.data$total.visits)
-
-#add weather data
-weather <- read.csv("Clean Data/video_weather.csv")
-weather.av <- weather %>% group_by(., Date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
-all.data <- right_join(weather.av, all.data, by = "Date")
-sum(all.data$total.visits)
-
-#data aggregrated to replicate
-write.csv(all.data, "Output Data/byrep_cleaned.csv")
-#data left as individual observations
-write.csv(flr, "Output Data/byobs_cleaned.csv")
-
-
-#I also want a dataframe grouped by rtu: Bees, syrphids, bombyliids, leps and others.
-
-#rtu.key is a table to classify the different rtu in datafile into categories
-
-rtu.key <- read.csv("Clean Data/video_rtu_key.csv")
-rtu.data <- left_join(rtu.key, flr, by = "highest.rtu")
-rtu.data <- dplyr::select(rtu.data, rtu.ag, plant.id, microsite, flowering, video.date, video.length, flower.fov, total.time, flowers.visits, unique.fl.visited, uniID)                    
-count.rtu.fl <- rtu.data %>% group_by(uniID, rtu.ag) %>% summarise(total.flowers = sum(flowers.visits), total.visits = n()) 
-
-#add zero rows
-#zeros.rtu <- anti_join(IDlist, count.rtu.fl, by = "uniID")
-#all.rtu.data <- bind_rows(zeros.rtu, count.rtu.fl)
-#all.rtu.data <- dplyr::select(all.rtu.data, uniID, rtu.ag, total.visits, total.flowers)
-
-#need to add the zero count rtu.
-#spread, fill in zeros, then gather back
-all.rtu.data <- count.rtu.fl
-id <- as.data.frame(IDlist$uniID)
-id$uniID <- id$`IDlist$uniID`
-id <- dplyr::select(id, uniID)
-id$syrphid <- 1
-id$bee <- 2
-id$other <- 3
-id$bombylid <- 4
-id$lep <- 5
-id$honeybee <- 6
-id <- gather(id, "rtu", "count", 2:7)
-count(id, rtu)
-
-id$join <- paste(id$uniID, id$rtu)
-id$test <- 1
-all.rtu.data$join <- paste(all.rtu.data$uniID, all.rtu.data$rtu.ag)
-
-test <- dplyr::full_join(id, all.rtu.data, by = "join")
-
-all.rtu <- dplyr::select(test, uniID.x, rtu, total.visits, total.flowers)
-all.rtu$total.visits[is.na(all.rtu$total.visits)] <- 0
-all.rtu$total.flowers[is.na(all.rtu$total.flowers)] <- 0
-
-all.rtu <- dplyr::rename(all.rtu, uniID = uniID.x)
-
-#join video length
-all.rtu <- IDlist %>% dplyr::select(Length, uniID) %>% right_join(all.rtu,., by = "uniID")
-
-#join covariates
-all.rtu <- right_join(cov, all.rtu, by = "uniID")
-
-#convert to decimal time to standardize visits
-all.rtu$pos.Length <- as.POSIXct(strptime(all.rtu$Length, "%H:%M:%S"))
-all.rtu$dec.Length <- (hour(all.rtu$pos.Length) * 3600 + minute(all.rtu$pos.Length) * 60 + second(all.rtu$pos.Length)) / 3600
-
-#plant visits per hour
-all.rtu <- mutate(all.rtu, visits.per.hour = total.visits/dec.Length)
-all.rtu <- mutate(all.rtu, flowers.per.hour = total.flowers/dec.Length)
-
-all.rtu <- dplyr::select(all.rtu, -SecondaryID, -Cam)
-
-#output rtu level observations (ag. by replicate)
-write.csv(all.rtu, "Output Data/rtu_by_rep.csv")
-```
-
-
-### Pan trap data wrangling
-This sections takes the long format ID sheet (pantrap_id.csv), converts it into wide format that vegan can use, and outputs the cleaned data as .csv to be sourced in later scripts
-
-```{r, pan trap wrangling}
-
-#by rep
-#need new simplified key to reflect species additions
-long <- read.csv("Clean Data/pantraps_ID.csv")
-long$highest.rtu <- gsub(" ","", long$highest.rtu)
-
-sum(long$Quantity)
-#sp.key <- read.csv("Clean Data/species_key.csv")
-long$Microsite <- gsub(" ","", long$Microsite)
-long$uniID <- paste(long$Date, long$PlantID, long$Microsite)
-#long <- inner_join(long, sp.key, by = "highest.rtu")
-#for pinned specimens need to collapse & add up the Quantity
-long.fil <- dplyr::select(long, uniID, highest.rtu, Quantity)
-long.ag <- long.fil %>% group_by(uniID, highest.rtu) %>% summarise(Quantity = sum(Quantity)) 
-sum(long.ag$Quantity)
-
-counts <- long.ag %>% group_by(highest.rtu) %>% summarise(Quantity = sum(Quantity))
-count(long.ag, highest.rtu)
-
-#count number of specimens of each rtu and write to a table
-sp_by_rep <- long %>% group_by(highest.rtu) %>% summarise(Quantity = sum(Quantity))
-write.csv(sp_by_rep, "Output Data/pans_sp_by_rep.csv")
-
-#output in long format
-write.csv(long.ag, "Output Data/pantraps_long.csv")
-
-#spread into wide format for vegan calculations
-wide <- long.ag %>% spread(highest.rtu, Quantity)
-
-#not including damaged specimens in analyses
-wide <- dplyr::select(wide, -damaged, -destroyed)
-
-#need to replace all 0 in data frame
-wide[is.na(wide)] <- 0
-
-
-write.csv(wide, "Output Data/pantraps_wide.csv")
-```
-
-
-### Pan trap diversity calculations
-This sections calculates diversity indices and exports full env/metadata .csv 
-
-Calculations excluding Melyrid beetles
-```{r, diversity calculations}
-
-insects <- read.csv("Output Data/pantraps_wide.csv", header = TRUE)
-row.names(insects) <- insects$uniID
-insects <- dplyr::select(insects, -X, -uniID)
-
-#filter out Melyrid beetles
-insects <- dplyr::select(insects, -Melyridae)
-metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
-metadata <- filter(metadata, species != "buckhorn")
-metadata$plant.id <- as.character(metadata$plant.id)
-str(metadata)
-metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
-row.names(metadata) <- metadata$uniID
-
-
-#check all ids in datasheets are found in the other
-#zero.row <- anti_join(metadata, insects, by = "uniID")
-#missing <- anti_join(insects, metadata, by = "uniID")
-#write.csv(zero.row, "zeroreps.csv")
-
-#check if insects and metadata are the same
-all.equal(rownames(insects), rownames(metadata))
-#sort into the same order
-metadata <- metadata[rownames(insects), ]
-#confirm - woo!
-all.equal(rownames(insects), rownames(metadata))
-
-#grab and wrangle weather stn data
-weather <- read.csv("Clean Data/pantraps_weather.csv")
-str(weather)
-
-weather.av <- weather %>% group_by(., date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
-metadata <- right_join(weather.av, metadata, by = "date")
-
-#calculate abundances using vegan
-metadata$abun <- apply(insects, 1, sum)
-#check for total
-sum(metadata$abun)
-H <- diversity(insects)
-simp <- diversity(insects, "simpson")
-S <- specnumber(insects)
-J <- H/log(S)
-metadata$H <- H
-metadata$Simpson <- simp
-metadata$Species <- S
-metadata$Even <- J
-
-summary(metadata)
-
-#no Melyrid beetle output
-write.csv(metadata, "Output Data/metadata_nobeetle.csv")
-write.csv(insects, "Output Data/wide_nobeetle.csv")
-```
-Calculations including Melyrid beetles
-```{r, div calculations including melyrids}
-#with beetles
-insects <- read.csv("Output Data/pantraps_wide.csv", header = TRUE)
-row.names(insects) <- insects$uniID
-insects <- dplyr::select(insects, -X, -uniID, -Zeroes)
-#filter out beetles
-#insects <- dplyr::select(insects, -Melyridae, -Melyridae.)
-metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
-metadata <- filter(metadata, species != "buckhorn")
-metadata$plant.id <- as.character(metadata$plant.id)
-str(metadata)
-metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
-row.names(metadata) <- metadata$uniID
-
-
-#check all ids in datasheets are found in the other
-#zero.row <- anti_join(metadata, insects, by = "uniID")
-#missing <- anti_join(insects, metadata, by = "uniID")
-#write.csv(zero.row, "zeroreps.csv")
-#check if insects and metadata are the same
-all.equal(rownames(insects), rownames(metadata))
-#sort into the same order
-metadata <- metadata[rownames(insects), ]
-#confirm - woo!
-all.equal(rownames(insects), rownames(metadata))
-
-#grab and wrangle weather stn data
-weather <- read.csv("Clean Data/pantraps_weather.csv")
-str(weather)
-
-weather.av <- weather %>% group_by(., date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
-metadata <- right_join(weather.av, metadata, by = "date")
-
-metadata$abun <- apply(insects, 1, sum)
-#check for total
-sum(metadata$abun)
-H <- diversity(insects)
-simp <- diversity(insects, "simpson")
-S <- specnumber(insects)
-J <- H/log(S)
-metadata$H <- H
-metadata$Simpson <- simp
-metadata$Species <- S
-metadata$Even <- J
-
-summary(metadata)
-
-#beetle output
-write.csv(metadata, "Output Data/metadata_yesbeetle.csv")
-write.csv(insects, "Output Data/wide_yesbeetle.csv")
-```
-Calculations for only Melyrid beetles
-```{r, div calcs only melyrids}
-##beetles only
-insects <- read.csv("Output Data/pantraps_wide.csv", header = TRUE)
-row.names(insects) <- insects$uniID
-insects <- dplyr::select(insects, -X, -uniID)
-#filter out beetles
-insects <- dplyr::select(insects, Melyridae)
-metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
-metadata <- filter(metadata, species != "buckhorn")
-metadata$plant.id <- as.character(metadata$plant.id)
-str(metadata)
-metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
-row.names(metadata) <- metadata$uniID
-
-#check if insects and metadata are the same
-all.equal(rownames(insects), rownames(metadata))
-#sort into the same order
-metadata <- metadata[rownames(insects), ]
-#confirm - woo!
-all.equal(rownames(insects), rownames(metadata))
-
-#grab and wrangle weather stn data
-weather <- read.csv("Clean Data/pantraps_weather.csv")
-str(weather)
-
-weather.av <- weather %>% group_by(., date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
-metadata <- right_join(weather.av, metadata, by = "date")
-
-metadata$abun <- apply(insects, 1, sum)
-#check for total
-sum(metadata$abun)
-H <- diversity(insects)
-simp <- diversity(insects, "simpson")
-S <- specnumber(insects)
-J <- H/log(S)
-metadata$H <- H
-metadata$Simpson <- simp
-metadata$Species <- S
-metadata$Even <- J
-
-
-summary(metadata)
-
-#no beetle output
-write.csv(metadata, "Output Data/metadata_onlybeetle.csv")
-write.csv(insects, "Output Data/wide_onlybeetle.csv")
-
-```
 
 ***
 #Statistics and modelling
 
-## Visitation and pollen deposition
+## Pollinator visitation
 
 ### Visitation modelling
 Hypothesis testing for visitation. GLMM are computationally difficult so workflow is: Base hypothesis model to test for additive vs. interactive effects of predictors. Then add each covariate the best base model. RTU specific responses require a different dataframe so those analyses are done separately. Very full models are not tractable. AllFit.R started throwing an error so moving from lme4 to glmmTMBB. Support for car::Anova in glmmTMB is in the development version.
@@ -462,17 +81,17 @@ Flower visits
 ```{r, visitation models base}
 #base hypothesis testing model
 #additive
-m1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot +  offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+m1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot +  offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 summary(m1)
 car::Anova(m1, type = 2)
 
 #interactive model
 
-m2 <- glmmTMB(total.flowers ~ treatment * flowering + flowers.pot + offset(log(dec.Length)) + (1|repID),  family = "nbinom2", data = byrep)
+m2 <- glmmTMB(total.flowers ~ treatment * flowering + flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID),  family = "nbinom2", data = byrep)
 summary(m2)
 car::Anova(m2, type =3)
 
-null <- glmmTMB(total.flowers ~ flowers.pot + offset(log(dec.Length)) + (1|repID),  family = "nbinom2", data = byrep)
+null <- glmmTMB(total.flowers ~ flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID),  family = "nbinom2", data = byrep)
 summary(null)
 
 anova(null, m1,m2)
@@ -485,19 +104,19 @@ car::Anova(m2, type = 3)
 Foraging bouts
 ```{r, visitation models (foraging)}
 #base additive model foraging instances
-m3 <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+m3 <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 summary(m3)
 car::Anova(m3, type = 2)
 
 
 #base interactive model
-m5 <- glmmTMB(total.visits ~ treatment * flowering + flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+m5 <- glmmTMB(total.visits ~ treatment * flowering + flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 summary(m5)
 car::Anova(m5, type = 3)
 
 
 #null model
-null <- glmmTMB(total.visits ~ flowers.pot + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+null <- glmmTMB(total.visits ~ flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 
 
 anova(null, m3,m5)
@@ -508,57 +127,39 @@ ggplot(byrep, aes(flowering, flowers.per.hour)) + geom_boxplot() + facet_grid(~t
 ```
 ###Testing importance of covariates
 using TMB because glmer will not coverge.
-Choosing family:
-```{r, visitation covariates}
-c1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + understory.richness+ offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
-summary(c1)
-
-c1.1 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + understory.richness+ offset(log(dec.Length)) + (1|repID), family = "nbinom1", data = byrep)
-summary(c1.1)
-AIC(c1, c1.1)
-#nbinom2 is better
-```
 
 Annual floral density
 ```{r}
-c2 <- glmmTMB(total.visits ~ treatment * flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+c2 <- glmmTMB(total.visits ~ treatment * flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2)
 car::Anova(c2, type = 3)
 
-c2.nest <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
-
-summary(c2.nest)
-
-
-c2.v <- glmmTMB(total.visits ~ treatment + flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+c2.v <- glmmTMB(total.visits ~ treatment + flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2.v)
 car::Anova(c2.v, type = 2)
 
-q <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|repID), family = nbinom1(link = "log"), data = byrep)
+q <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom1(link = "log"), data = byrep)
 car::Anova(q, type = 2)
 AIC(c2.v, q)
 
 #nbinom2 better
 
-c2.vnest <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
-summary(c2.vnest)
-
-
-#checking interactions
-c2.i <- glmmTMB(total.visits ~ treatment * flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
-summary(c2.i)
-car::Anova(c2.i, type = 3)
-
-c2.f <- glmmTMB(total.flowers ~ treatment * flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|repID), family = nbinom2(link = "log"), data = byrep)
+#flowers
+c2.f <- glmmTMB(total.flowers ~ treatment * flowering + het.annual.floral.density + flowers.pot + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
 summary(c2.f)
+car::Anova(c2.f, type = 3)
+
+c2.flowers <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + offset(log(dec.Length)) + (1|PlantID/repID), family = nbinom2(link = "log"), data = byrep)
+summary(c2.flowers)
+car::Anova(c2.flowers, type = 2)
 ```
 Number of blooming shrub neighbours
 ```{r}
-c3 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+c3 <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 summary(c3)
 car::Anova(c3, type = 2)
 
-c2.v <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+c2.v <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.shrub.blooming.neighbours + offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 summary(c2.v)
 car::Anova(c2.v)
 
@@ -566,14 +167,14 @@ car::Anova(c2.v)
 
 
 #each model with both covariates added
-c.visits <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours +  offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+c.visits <- glmmTMB(total.visits ~ treatment + flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours +  offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 summary(c.visits)
 car::Anova(c.visits, type = 2)
 
 
-c.flowers <- glmmTMB(total.flowers ~ treatment + flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours +  offset(log(dec.Length)) + (1|repID), family = "nbinom2", data = byrep)
+c.flowers <- glmmTMB(total.flowers ~ treatment * flowering + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours +  offset(log(dec.Length)) + (1|PlantID/repID), family = "nbinom2", data = byrep)
 summary(c.flowers)
-car::Anova(c.flowers, type = 2)
+t <- car::Anova(c.flowers, type = 2)
 ```
 
 
@@ -586,41 +187,40 @@ byrtu$treatment <- relevel(byrtu$treatment, "open")
 byrtu$flowering <- relevel(byrtu$flowering, "pre")
 
 #Full model (foraging instances)
-mFullPQ <- MASS::glmmPQL(total.visits~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
-car::Anova(mFullPQ, type = 3)
+mFullPQ <- MASS::glmmPQL(total.visits~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|PlantID/repID, family="quasipoisson", data = byrtu)
+summary(mFullPQ)
+t <- car::Anova(mFullPQ, type = 3)
 
-mP1 <- MASS::glmmPQL(total.visits~flowering * rtu + treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+mP1 <- MASS::glmmPQL(total.visits~flowering * rtu + treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|PlantID/repID, family="quasipoisson", data = byrtu)
 car::Anova(mP1, type = 3)
 
 
-mPt <- MASS::glmmPQL(total.visits~ flowering * rtu +  treatment + flowers.pot + het.annual.floral.density + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+mPt <- MASS::glmmPQL(total.visits~ flowering * rtu +  treatment + flowers.pot + het.annual.floral.density + offset(log(dec.Length)), random = ~1|PlantID/repID, family="quasipoisson", data = byrtu)
 summary(mPt)
 car::Anova(mPt, type = 3)
 lsmeans(mPt, pairwise~flowering|rtu)
 
 
 #full model flower visits
-mFullPQv <- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+mFullPQv <- MASS::glmmPQL(total.flowers~flowering * rtu * treatment + flowers.pot + het.annual.floral.density + het.shrub.blooming.neighbours + offset(log(dec.Length)), random = ~1|PlantID/repID, family="quasipoisson", data = byrtu)
 summary(mFullPQv)
-car::Anova(mFullPQv, type = 3)
+t <- car::Anova(mFullPQv, type = 3)
 
-m <- MASS::glmmPQL(total.flowers~flowering * rtu + treatment*flowering + flowers.pot +offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+m <- MASS::glmmPQL(total.flowers~flowering * rtu + treatment*flowering + flowers.pot +offset(log(dec.Length)), random = ~1|PlantID/repID, family="quasipoisson", data = byrtu)
 car::Anova(m, type = 3)
 
-mQ <- MASS::glmmPQL(total.flowers~flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+mQ <- MASS::glmmPQL(total.flowers~flowering * rtu + treatment + flowers.pot + offset(log(dec.Length)), random = ~1|PlantID/repID, family="quasipoisson", data = byrtu)
 summary(mQ)
 lsmeans(mQ, pairwise~flowering|rtu, adjust = "Tukey")
 car::Anova(mQ, type = 3)
 
 
-mQt <- MASS::glmmPQL(total.flowers~treatment * rtu + flowering + flowers.pot + offset(log(dec.Length)), random = ~1|repID, family="quasipoisson", data = byrtu)
+mQt <- MASS::glmmPQL(total.flowers~treatment * rtu + flowering + flowers.pot + offset(log(dec.Length)), random = ~1|PlantID/repID, family="quasipoisson", data = byrtu)
 summary(mQt)
 
 #RTU by microsite not significant
 
 
-
-#treatment not significant, pairwaise constrast for syrphids is
 
 ```
 
@@ -645,7 +245,7 @@ cov$uniID <- paste(cov$Cam, cov$Date)
 cov$uniID <- gsub('\\s+', "", cov$uniID)
 
 rtu.data <- right_join(cov, byobs, by = "uniID")
-rtu.data <- dplyr::select(rtu.data, plant.id, microsite, flowering.x, video.date, video.length, flower.fov, flowers.pot, total.time, flowers.visits, unique.fl.visited, uniID, dec.total.time)                    
+rtu.data <- dplyr::select(rtu.data, plant.id, microsite, flowering.x, video.date, video.length, flower.fov, flowers.pot, total.time, flowers.visits, unique.fl.visited, uniID, dec.total.time, het.annual.floral.density)                    
 rtu.data$repID <- paste(rtu.data$plant.id, rtu.data$microsite)
 rtu.data$microsite <-as.factor(rtu.data$microsite)
 rtu.data$microsite <- relevel(rtu.data$microsite, "open")
@@ -658,24 +258,28 @@ ggplot(rtu.data, aes(microsite, dec.total.time)) + geom_boxplot() + facet_grid(~
 ggplot(rtu.data, aes(flowering, dec.total.time)) + geom_boxplot() + facet_grid(~microsite)
 ggplot(rtu.data, aes(dec.total.time)) + geom_density()
 
-#using gamma because continuous and positive, looks like it fits 
+#using gamma because continuous and positive with no zeros, looks like it fits 
 
-m1 <- glmmTMB(dec.total.time ~ flowering + microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+m1 <- glmmTMB(dec.total.time ~ flowering + microsite + flowers.pot + (1|plant.id/repID), family = Gamma(link = "log"), data = rtu.data)
 summary(m1)
 car::Anova(m1, type =2)
-m2 <- glmmTMB(dec.total.time ~ flowering * microsite + flowers.pot + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+m2 <- glmmTMB(dec.total.time ~ flowering * microsite + flowers.pot + (1|plant.id/repID), family = Gamma(link = "log"), data = rtu.data)
 car::Anova(m2, type = 3)
-m3 <- glmmTMB(dec.total.time ~ flowering + microsite + (1|repID), family = Gamma(link = "log"), data = rtu.data)
+m3 <- glmmTMB(dec.total.time ~ flowering + microsite + (1|plant.id/repID), family = Gamma(link = "log"), data = rtu.data)
 car::Anova(m3, type = 2)
-null <- glmmTMB(dec.total.time ~(1|repID), family = Gamma(link = "log"), data = rtu.data)
+null <- glmmTMB(dec.total.time ~(1|plant.id/repID), family = Gamma(link = "log"), data = rtu.data)
 anova(m1, m2, m3, null)
+
+
+#with covariates
+m4 <- glmmTMB(dec.total.time ~ flowering + microsite + flowers.pot + het.annual.floral.density + (1|plant.id/repID), family = Gamma(link = "log"), data = rtu.data)
+summary(m4)
+car::Anova(m4, type = 2)
+
+
 AIC(m1, m2, m3, null)
 
-#t1 <- glmmTMB(dec.total.time ~ flowering * rtu.ag  + (1|repID), family = Gamma(link = "log"), data = rtu.data)
-#summary(t1)
-#convergence issues, not including rtu anyways
 
-#ggplot(rtu.data, aes(microsite, dec.total.time, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering)
 
 labels <- c(pre = "Pre-blooming", post = "Blooming", bloom = "Blooming")
 
@@ -683,35 +287,7 @@ labels <- c(pre = "Pre-blooming", post = "Blooming", bloom = "Blooming")
 
 ```
 
-###Proportion of unique flowers visited per foraging instance
-```{r, proportion }
-rtu.data <- mutate(rtu.data, prop.visited = unique.fl.visited/flower.fov)
 
-ggplot(rtu.data, aes(prop.visited, color = flowering)) + geom_density()
-
-source(system.file("other_methods","lsmeans_methods.R",package="glmmTMB"))
-
-
-
-#proportions should use logistic model
-
-m1 <- glmmTMB(cbind(unique.fl.visited,flower.fov) ~ flowering * flowers.pot + microsite  + (1|repID), family = binomial, data = rtu.data)
-
-summary(m1)
-
-car::Anova(m1, type = 3)
-lsmeans(m1, pairwise~flowering*microsite)
-
-m2 <- glmmTMB(cbind(unique.fl.visited,flower.fov) ~ flowering + microsite + flowers.pot + (1|repID), family = binomial, data = rtu.data)
-summary(m2)
-car::Anova(m2, type = 3)
-
-m2null <- glmmTMB(prop.visited ~(1|repID), family = Gamma(link = "log"), data = rtu.data)
-
-anova(m2null, m1, m2)
-AIC(m1, m2, m2null)
-
-ggplot(rtu.data, aes(microsite, prop.visited)) + geom_boxplot() + facet_grid(~flowering)
 
 #ggplot(rtu.data, aes(microsite, prop.visited, fill = rtu.ag)) + geom_boxplot() + facet_grid(~flowering, labeller=labeller(flowering = labels)) + scale_fill_brewer(palette= "Spectral") + theme_Publication() + xlab("Microsite") + ylab("Proportion of flowers visited") + labs(fill="") + theme(legend.text = element_text(size = 16)) + scale_fill_manual("", values = c("bee" ="#D53E4F", "bombylid"= "#FC8D59", "honeybee"= "#FEE08B", "lep"= "#D3D3D3", "other"= "#99D594", "syrphid" = "#3288BD"), labels = c("Solitary Bee", "Bombyliidae", "Honeybee", "Lepidoptera", "Other", "Syrphidae"))
 ```
@@ -999,6 +575,168 @@ ggplot(visits, aes(treatment, het.cactus.blooming.neighbours)) + geom_boxplot() 
 These are models for abundance, species richness, bee abundance and bee richness from pan traps.
 
 ***
+
+
+### Pan trap diversity calculations
+This sections calculates diversity indices and exports full env/metadata .csv 
+
+Calculations excluding Melyrid beetles
+```{r, diversity calculations}
+
+insects <- read.csv("Output Data/pantraps_wide.csv", header = TRUE)
+row.names(insects) <- insects$uniID
+insects <- dplyr::select(insects, -X, -uniID)
+
+#filter out Melyrid beetles
+insects <- dplyr::select(insects, -Melyridae)
+metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
+metadata <- filter(metadata, species != "buckhorn")
+metadata$plant.id <- as.character(metadata$plant.id)
+str(metadata)
+metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
+row.names(metadata) <- metadata$uniID
+
+
+#check all ids in datasheets are found in the other
+#zero.row <- anti_join(metadata, insects, by = "uniID")
+#missing <- anti_join(insects, metadata, by = "uniID")
+#write.csv(zero.row, "zeroreps.csv")
+
+#check if insects and metadata are the same
+all.equal(rownames(insects), rownames(metadata))
+#sort into the same order
+metadata <- metadata[rownames(insects), ]
+#confirm - woo!
+all.equal(rownames(insects), rownames(metadata))
+
+#grab and wrangle weather stn data
+weather <- read.csv("Clean Data/pantraps_weather.csv")
+str(weather)
+
+weather.av <- weather %>% group_by(., date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
+metadata <- right_join(weather.av, metadata, by = "date")
+
+#calculate abundances using vegan
+metadata$abun <- apply(insects, 1, sum)
+#check for total
+sum(metadata$abun)
+H <- diversity(insects)
+simp <- diversity(insects, "simpson")
+S <- specnumber(insects)
+J <- H/log(S)
+metadata$H <- H
+metadata$Simpson <- simp
+metadata$Species <- S
+metadata$Even <- J
+
+summary(metadata)
+
+#no Melyrid beetle output
+write.csv(metadata, "Output Data/metadata_nobeetle.csv")
+write.csv(insects, "Output Data/wide_nobeetle.csv")
+```
+Calculations including Melyrid beetles
+```{r, div calculations including melyrids}
+#with beetles
+insects <- read.csv("Output Data/pantraps_wide.csv", header = TRUE)
+row.names(insects) <- insects$uniID
+insects <- dplyr::select(insects, -X, -uniID, -Zeroes)
+#filter out beetles
+#insects <- dplyr::select(insects, -Melyridae, -Melyridae.)
+metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
+metadata <- filter(metadata, species != "buckhorn")
+metadata$plant.id <- as.character(metadata$plant.id)
+str(metadata)
+metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
+row.names(metadata) <- metadata$uniID
+
+
+#check all ids in datasheets are found in the other
+#zero.row <- anti_join(metadata, insects, by = "uniID")
+#missing <- anti_join(insects, metadata, by = "uniID")
+#write.csv(zero.row, "zeroreps.csv")
+#check if insects and metadata are the same
+all.equal(rownames(insects), rownames(metadata))
+#sort into the same order
+metadata <- metadata[rownames(insects), ]
+#confirm - woo!
+all.equal(rownames(insects), rownames(metadata))
+
+#grab and wrangle weather stn data
+weather <- read.csv("Clean Data/pantraps_weather.csv")
+str(weather)
+
+weather.av <- weather %>% group_by(., date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
+metadata <- right_join(weather.av, metadata, by = "date")
+
+metadata$abun <- apply(insects, 1, sum)
+#check for total
+sum(metadata$abun)
+H <- diversity(insects)
+simp <- diversity(insects, "simpson")
+S <- specnumber(insects)
+J <- H/log(S)
+metadata$H <- H
+metadata$Simpson <- simp
+metadata$Species <- S
+metadata$Even <- J
+
+summary(metadata)
+
+#beetle output
+write.csv(metadata, "Output Data/metadata_yesbeetle.csv")
+write.csv(insects, "Output Data/wide_yesbeetle.csv")
+```
+Calculations for only Melyrid beetles
+```{r, div calcs only melyrids}
+##beetles only
+insects <- read.csv("Output Data/pantraps_wide.csv", header = TRUE)
+row.names(insects) <- insects$uniID
+insects <- dplyr::select(insects, -X, -uniID)
+#filter out beetles
+insects <- dplyr::select(insects, Melyridae)
+metadata <- read.csv("Clean Data/pantraps_cov.csv", header = TRUE)
+metadata <- filter(metadata, species != "buckhorn")
+metadata$plant.id <- as.character(metadata$plant.id)
+str(metadata)
+metadata$uniID <- paste(metadata$date, metadata$plant.id, metadata$treatment)
+row.names(metadata) <- metadata$uniID
+
+#check if insects and metadata are the same
+all.equal(rownames(insects), rownames(metadata))
+#sort into the same order
+metadata <- metadata[rownames(insects), ]
+#confirm - woo!
+all.equal(rownames(insects), rownames(metadata))
+
+#grab and wrangle weather stn data
+weather <- read.csv("Clean Data/pantraps_weather.csv")
+str(weather)
+
+weather.av <- weather %>% group_by(., date) %>% summarise(., mean.Solar = mean(Solar), mean.Wind = mean(Wind), mean.MaxWind = mean(Max), mean.Temp = mean(Air.Temperature))
+metadata <- right_join(weather.av, metadata, by = "date")
+
+metadata$abun <- apply(insects, 1, sum)
+#check for total
+sum(metadata$abun)
+H <- diversity(insects)
+simp <- diversity(insects, "simpson")
+S <- specnumber(insects)
+J <- H/log(S)
+metadata$H <- H
+metadata$Simpson <- simp
+metadata$Species <- S
+metadata$Even <- J
+
+
+summary(metadata)
+
+#no beetle output
+write.csv(metadata, "Output Data/metadata_onlybeetle.csv")
+write.csv(insects, "Output Data/wide_onlybeetle.csv")
+```
+
+
 Arthropod abundance - Melyridae beetles excluded
 ```{r, arthropod abundance m excluded}
 metadata <- read.csv("Output Data/metadata_nobeetle.csv")
